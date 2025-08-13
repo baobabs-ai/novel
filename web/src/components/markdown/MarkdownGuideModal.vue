@@ -3,37 +3,37 @@ import avaterUrl from '@/image/avater.jpg';
 
 const guides = [
   `
-# 一级标题
-## 二级标题
-### 三级标题`,
+# Level 1 Title
+## Level 2 Title
+### Level 3 Title`,
 
   `
-**粗体**
-*斜体*
-~~删除线~~
-[链接](https://www.esjzone.cc/)`,
+**Bold**
+*Italic*
+~~Strikethrough~~
+[Link](https://www.esjzone.cc/)`,
 
   `
-- 无序列表
-- 无序列表
-  - 加空格可以缩进
-  - 加空格可以缩进
-- 无序列表`,
+- Unordered List
+- Unordered List
+  - Add spaces to indent
+  - Add spaces to indent
+- Unordered List`,
 
   `
-1. 有序列表
-1. 有序列表
-1. 有序列表`,
+1. Ordered List
+1. Ordered List
+1. Ordered List`,
 
   `
-下面是分隔线，和文本要用空行隔开
+The following is a separator line, which should be separated from the text by a blank line
 
 ---`,
   `
-| 左对齐 | 居中 | 右对齐 |
+| Left Align | Center | Right Align |
 | :- | :-: | -: |
-| 文本 | 文本 | 文本 |
-| 文本 | 文本 | 文本 |`,
+| Text | Text | Text |
+| Text | Text | Text |`,
 
   `
 ![](${avaterUrl})`,
@@ -41,13 +41,13 @@ const guides = [
 </script>
 
 <template>
-  <c-modal title="格式教程">
-    <n-p>评论不支持标题、表格、图片等高级功能。</n-p>
+  <c-modal title="Formatting Tutorial">
+    <n-p>Comments do not support advanced features such as titles, tables, and images.</n-p>
     <n-table :bordered="false" style="table-layout: fixed; width: 100%">
       <thead>
         <tr>
-          <th><b>语法</b></th>
-          <th><b>预览</b></th>
+          <th><b>Syntax</b></th>
+          <th><b>Preview</b></th>
         </tr>
       </thead>
       <tbody>

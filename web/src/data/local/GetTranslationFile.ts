@@ -25,11 +25,11 @@ export const getTranslationFile = async (
   ].join('.');
 
   const metadata = await dao.getMetadata(id);
-  if (metadata === undefined) throw Error('小说不存在');
+  if (metadata === undefined) throw Error('Novel does not exist');
 
   const getZhLinesList = async (chapterId: string) => {
     const chapter = await dao.getChapter(id, chapterId);
-    if (chapter === undefined) throw Error('章节不存在');
+    if (chapter === undefined) throw Error('Chapter does not exist');
 
     const jpLines = chapter.paragraphs;
     const zhLinesList: Array<Array<string>> = [];
@@ -47,7 +47,7 @@ export const getTranslationFile = async (
   };
 
   const file = await dao.getFile(id);
-  if (file === undefined) throw Error('原始文件不存在');
+  if (file === undefined) throw Error('Original file does not exist');
 
   const myFile = await parseFile(file.file);
 
@@ -57,7 +57,7 @@ export const getTranslationFile = async (
       const { jpLines, zhLinesList } = await getZhLinesList(chapterId);
 
       if (zhLinesList.length === 0) {
-        buffer.push('// 该分段翻译缺失。');
+        buffer.push('// This segment of translation is missing.');
       } else {
         const combinedLinesList = zhLinesList;
         if (mode === 'jp-zh') {
@@ -72,7 +72,7 @@ export const getTranslationFile = async (
     }
     myFile.text = buffer.join('\n');
   } else if (myFile.type === 'epub') {
-    // 防止部分阅读器使用竖排
+    // Prevent some readers from using vertical text
     myFile.packageDoc
       .getElementsByTagName('spine')
       .item(0)
@@ -87,7 +87,7 @@ export const getTranslationFile = async (
       }
     }
 
-    // 清除css格式
+    // Clear css format
     myFile.cleanStyle();
   } else if (myFile.type === 'srt') {
     const { zhLinesList } = await getZhLinesList('0');

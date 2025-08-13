@@ -94,7 +94,7 @@ class WebNovelFileRepository(
                 zhPath,
                 novel,
                 chapters,
-                jp = mode != NovelFileMode.Zh,
+                jp = mode != NovelFileMode.En,
                 zh = mode != NovelFileMode.Jp,
             )
 
@@ -102,7 +102,7 @@ class WebNovelFileRepository(
                 zhPath,
                 novel,
                 chapters,
-                jp = mode != NovelFileMode.Zh,
+                jp = mode != NovelFileMode.En,
                 zh = mode != NovelFileMode.Jp,
             )
         }
@@ -152,12 +152,12 @@ private fun generateWriteInfoFromChapter(
 
     val paragraphs = when (mode) {
         NovelFileMode.Jp -> listOf(jpParagraphs).map { ParagraphsWriteData(it, true) }
-        NovelFileMode.Zh -> zhParagraphsList.map { ParagraphsWriteData(it, true) }
-        NovelFileMode.JpZh ->
+        NovelFileMode.En -> zhParagraphsList.map { ParagraphsWriteData(it, true) }
+        NovelFileMode.JpEn ->
             listOf(jpParagraphs).map { ParagraphsWriteData(it, false) } +
                     zhParagraphsList.map { ParagraphsWriteData(it, true) }
 
-        NovelFileMode.ZhJp ->
+        NovelFileMode.EnJp ->
             zhParagraphsList.map { ParagraphsWriteData(it, true) } +
                     listOf(jpParagraphs).map { ParagraphsWriteData(it, false) }
     }

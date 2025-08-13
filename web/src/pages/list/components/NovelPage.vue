@@ -152,12 +152,12 @@ const invertSelection = (optionIndex: number) => {
     vertical
     style="width: 100%; margin-top: 8px"
   >
-    <c-action-wrapper v-if="search !== undefined" title="搜索" size="large">
+    <c-action-wrapper v-if="search !== undefined" title="Search" size="large">
       <input-with-suggestion
         v-model:value="queryEdit"
         :suggestions="search.suggestions"
         :tags="search.tags"
-        :placeholder="`中/日文标题或作者`"
+        :placeholder="`English/Japanese title or author`"
         style="flex: 0 1 400px; margin-right: 8px"
         :input-props="{ spellcheck: false }"
         @select="onUpdateQuery"

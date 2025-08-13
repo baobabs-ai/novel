@@ -28,44 +28,44 @@ class Syosetu(
         }
 
         private val rangeIds = mapOf(
-            "每日" to "daily",
-            "每周" to "weekly",
-            "每月" to "monthly",
-            "季度" to "quarter",
-            "每年" to "yearly",
-            "总计" to "total",
+            "Daily" to "daily",
+            "Weekly" to "weekly",
+            "Monthly" to "monthly",
+            "Quarterly" to "quarter",
+            "Yearly" to "yearly",
+            "Total" to "total",
         )
         private val statusIds = mapOf(
-            "全部" to "total",
-            "短篇" to "t",
-            "连载" to "r",
-            "完结" to "er",
+            "All" to "total",
+            "Short Story" to "t",
+            "Serializing" to "r",
+            "Finished" to "er",
         )
         private val genreIdsV1 = mapOf(
-            "恋爱：异世界" to "101",
-            "恋爱：现实世界" to "102",
-            "幻想：高幻想" to "201",
-            "幻想：低幻想" to "202",
-            "文学：纯文学" to "301",
-            "文学：人性剧" to "302",
-            "文学：历史" to "303",
-            "文学：推理" to "304",
-            "文学：恐怖" to "305",
-            "文学：动作" to "306",
-            "文学：喜剧" to "307",
-            "科幻：VR游戏" to "401",
-            "科幻：宇宙" to "402",
-            "科幻：空想科学" to "403",
-            "科幻：惊悚" to "404",
-            "其他：童话" to "9901",
-            "其他：诗" to "9902",
-            "其他：散文" to "9903",
-            "其他：其他" to "9999",
+            "Romance: Isekai" to "101",
+            "Romance: Real World" to "102",
+            "Fantasy: High Fantasy" to "201",
+            "Fantasy: Low Fantasy" to "202",
+            "Literature: Pure Literature" to "301",
+            "Literature: Human Drama" to "302",
+            "Literature: History" to "303",
+            "Literature: Mystery" to "304",
+            "Literature: Horror" to "305",
+            "Literature: Action" to "306",
+            "Literature: Comedy" to "307",
+            "Sci-Fi: VR Game" to "401",
+            "Sci-Fi: Space" to "402",
+            "Sci-Fi: Science Fiction" to "403",
+            "Sci-Fi: Thriller" to "404",
+            "Other: Fairy Tale" to "9901",
+            "Other: Poem" to "9902",
+            "Other: Essay" to "9903",
+            "Other: Other" to "9999",
         )
         private val genreIdsV2 = mapOf(
-            "恋爱" to "1",
-            "幻想" to "2",
-            "文学/科幻/其他" to "o",
+            "Romance" to "1",
+            "Fantasy" to "2",
+            "Literature/Sci-Fi/Other" to "o",
         )
     }
 
@@ -80,16 +80,16 @@ class Syosetu(
         val page = options["page"]?.toIntOrNull()?.plus(1) ?: 1
 
         val path = when (options["type"]) {
-            "流派" -> {
+            "Genre" -> {
                 val genreId = genreIdsV1[genreFilter] ?: return emptyPage()
                 "genrelist/type/${rangeId}_${genreId}_${statusId}"
             }
 
-            "综合" -> {
+            "Comprehensive" -> {
                 "list/type/${rangeId}_${statusId}"
             }
 
-            "异世界转生/转移" -> {
+            "Isekai Tensei/Ten'i" -> {
                 val genreId = genreIdsV2[genreFilter] ?: return emptyPage()
                 "isekailist/type/${rangeId}_${genreId}_${statusId}"
             }
@@ -179,10 +179,10 @@ class Syosetu(
             .text()
             .let {
                 when (it) {
-                    "完結済" -> WebNovelType.已完结
-                    "連載中" -> WebNovelType.连载中
-                    "短編" -> WebNovelType.短篇
-                    else -> throw RuntimeException("无法解析的小说类型:$it")
+                    "完結済" -> WebNovelType.Finished
+                    "連載中" -> WebNovelType.Serializing
+                    "短編" -> WebNovelType.ShortStory
+                    else -> throw RuntimeException("Unable to parse novel type:$it")
                 }
             }
 
@@ -203,7 +203,7 @@ class Syosetu(
             ?.text()
             ?.let {
                 if (it == "R18") attentions.add(WebNovelAttention.R18)
-                else throw RuntimeException("无法解析的小说标签:$it")
+                else throw RuntimeException("Unable to parse novel tag:$it")
             }
 
         val points = row("総合評価")
@@ -222,7 +222,7 @@ class Syosetu(
         val toc = if (doc1.selectFirst("div.p-eplist") == null) {
             listOf(
                 RemoteNovelMetadata.TocItem(
-                    title = "无名",
+                    title = "Untitled",
                     chapterId = "default",
                 )
             )
@@ -291,7 +291,7 @@ class Syosetu(
                 .firstElementChild()
                 ?.firstElementChild()
                 ?.takeIf { it.tagName() == "img" }
-                ?.let { "<图片>https:${it.attr("src")}" }
+                ?.let { "<image>https:${it.attr("src")}" }
                 ?: p.text()
         }
         return RemoteChapter(paragraphs = paragraphs)

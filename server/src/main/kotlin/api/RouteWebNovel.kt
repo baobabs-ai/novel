@@ -93,25 +93,25 @@ fun Route.routeWebNovel() {
                     queryString = loc.query?.ifBlank { null },
                     filterProvider = loc.provider,
                     filterType = when (loc.type) {
-                        1 -> WebNovelFilter.Type.连载中
-                        2 -> WebNovelFilter.Type.已完结
-                        3 -> WebNovelFilter.Type.短篇
-                        else -> WebNovelFilter.Type.全部
+                        1 -> WebNovelFilter.Type.Serializing
+                        2 -> WebNovelFilter.Type.Finished
+                        3 -> WebNovelFilter.Type.ShortStory
+                        else -> WebNovelFilter.Type.All
                     },
                     filterLevel = when (loc.level) {
-                        1 -> WebNovelFilter.Level.一般向
+                        1 -> WebNovelFilter.Level.ForEveryone
                         2 -> WebNovelFilter.Level.R18
-                        else -> WebNovelFilter.Level.全部
+                        else -> WebNovelFilter.Level.All
                     },
                     filterTranslate = when (loc.translate) {
                         1 -> WebNovelFilter.Translate.GPT3
                         2 -> WebNovelFilter.Translate.Sakura
-                        else -> WebNovelFilter.Translate.全部
+                        else -> WebNovelFilter.Translate.All
                     },
                     filterSort = when (loc.sort) {
-                        1 -> WebNovelFilter.Sort.点击
-                        2 -> WebNovelFilter.Sort.相关
-                        else -> WebNovelFilter.Sort.更新
+                        1 -> WebNovelFilter.Sort.Click
+                        2 -> WebNovelFilter.Sort.Related
+                        else -> WebNovelFilter.Sort.Update
                     },
                     page = loc.page,
                     pageSize = loc.pageSize,
@@ -270,7 +270,7 @@ fun Route.routeWebNovel() {
 }
 
 private fun throwNovelNotFound(): Nothing =
-    throwNotFound("小说不存在")
+    throwNotFound("Novel not found")
 
 private val disgustingFascistNovelList = mapOf(
     Syosetu.id to listOf(
@@ -295,11 +295,11 @@ private val disgustingFascistNovelList = mapOf(
 
 private fun validateId(providerId: String, novelId: String) {
     if (providerId == Syosetu.id && novelId != novelId.lowercase()) {
-        throw BadRequestException("成为小说家id应当小写")
+        throw BadRequestException("Syosetu id should be lowercase")
     }
     disgustingFascistNovelList.get(providerId)?.let {
         if (novelId in it) {
-            throw BadRequestException("该小说包含法西斯内容，不予显示")
+            throw BadRequestException("This novel contains fascist content and will not be displayed")
         }
     }
 }
@@ -337,7 +337,7 @@ class WebNovelApi(
         val filterLevelAllowed = if (user != null && user.isOldAss()) {
             filterLevel
         } else {
-            WebNovelFilter.Level.一般向
+            WebNovelFilter.Level.ForEveryone
         }
 
         return metadataRepo
@@ -361,7 +361,7 @@ class WebNovelApi(
     ): Page<WebNovelOutlineDto> {
         return metadataRepo
             .listRank(providerId, options)
-            .getOrElse { throwInternalServerError("从源站获取失败:" + it.message) }
+            .getOrElse { throwInternalServerError("Failed to get from source site:" + it.message) }
             .map { it.asDto() }
     }
 
@@ -461,7 +461,7 @@ class WebNovelApi(
                 if (it is NovelIdShouldBeReplacedException) {
                     throwBadRequest(it.message!!)
                 } else {
-                    throwInternalServerError("从源站获取失败:" + it.message)
+                    throwInternalServerError("Failed to get from source site:" + it.message)
                 }
             }
         val dto = buildNovelDto(novel, user)
@@ -495,14 +495,14 @@ class WebNovelApi(
     ): ChapterDto {
         validateId(providerId, novelId)
         val novel = metadataRepo.getNovelAndSave(providerId, novelId)
-            .getOrElse { throwInternalServerError("从源站获取失败:" + it.message) }
+            .getOrElse { throwInternalServerError("Failed to get from source site:" + it.message) }
 
         val toc = novel.toc.filter { it.chapterId != null }
         val currIndex = toc.indexOfFirst { it.chapterId == chapterId }
-        if (currIndex == -1) throwInternalServerError("章节不在目录中")
+        if (currIndex == -1) throwInternalServerError("Chapter not in table of contents")
 
         val chapter = chapterRepo.getOrSyncRemote(providerId, novelId, chapterId)
-            .getOrElse { throwInternalServerError("从源站获取失败:" + it.message) }
+            .getOrElse { throwInternalServerError("Failed to get from source site:" + it.message) }
 
         return ChapterDto(
             titleJp = toc[currIndex].titleJp,
@@ -530,7 +530,7 @@ class WebNovelApi(
         user.shouldBeOldAss()
 
         if (wenkuId.isNotBlank() && wenkuMetadataRepo.get(wenkuId) == null) {
-            throwNotFound("文库版不存在")
+            throwNotFound("Wenku version does not exist")
         }
 
         val metadata = metadataRepo.get(providerId, novelId)
@@ -605,7 +605,7 @@ class WebNovelApi(
         val novel = metadataRepo.get(providerId, novelId)
             ?: throwNovelNotFound()
         if (novel.glossary == glossary)
-            throwBadRequest("修改为空")
+            throwBadRequest("Glossary is unchanged")
         metadataRepo.updateGlossary(
             providerId = providerId,
             novelId = novelId,
@@ -673,7 +673,7 @@ class WebNovelTranslateV2Api(
         validateId(providerId, novelId)
 
         val novel = metadataRepo.getNovelAndSave(providerId, novelId, 10)
-            .getOrElse { throwInternalServerError("从源站获取失败:" + it.message) }
+            .getOrElse { throwInternalServerError("Failed to get from source site:" + it.message) }
 
         val chapterTranslationOutlines = chapterRepo.getTranslationOutlines(
             providerId = providerId,
@@ -746,7 +746,7 @@ class WebNovelTranslateV2Api(
             chapterId = chapterId,
             forceSync = sync,
         ).getOrElse {
-            throwInternalServerError("从源站获取失败:" + it.message)
+            throwInternalServerError("Failed to get from source site:" + it.message)
         }
 
         val (oldGlossaryIdRaw, oldGlossary, oldTranslation) = chapter.run {
@@ -826,19 +826,19 @@ class WebNovelTranslateV2Api(
         sakuraVersion: String?,
     ): TranslateStateDto {
         if (translatorId == TranslatorId.Sakura && sakuraVersion != "0.9") {
-            throwBadRequest("旧版本Sakura不再允许上传")
+            throwBadRequest("Old version of Sakura is no longer allowed to upload")
         }
 
         val novel = metadataRepo.get(providerId, novelId)
             ?: throwNovelNotFound()
         if ((glossaryId ?: "no glossary") != (novel.glossaryUuid ?: "no glossary")) {
-            throwBadRequest("术语表失效")
+            throwBadRequest("Glossary is invalid")
         }
 
         val chapter = chapterRepo.get(providerId, novelId, chapterId)
-            ?: throwNotFound("章节不存在")
+            ?: throwNotFound("Chapter does not exist")
         if (chapter.paragraphs.size != paragraphsZh.size) {
-            throwBadRequest("翻译文本长度不匹配")
+            throwBadRequest("Translated text length does not match")
         }
 
         val zh = chapterRepo.updateTranslation(

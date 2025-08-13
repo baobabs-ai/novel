@@ -66,12 +66,12 @@ const submitJob = (id: 'gpt' | 'sakura') => {
   };
   const success = workspace.addJob(job);
   if (success) {
-    message.success('排队成功');
+    message.success('Queued successfully');
     if (shouldTopJob.value) {
       workspace.topJob(job);
     }
   } else {
-    message.error('排队失败：翻译任务已经存在');
+    message.error('Queue failed: translation task already exists');
   }
 };
 </script>
@@ -82,21 +82,21 @@ const submitJob = (id: 'gpt' | 'sakura') => {
       <n-text>{{ volume.volumeId }}</n-text>
 
       <n-text depth="3">
-        总计 {{ volume.total }} / 百度 {{ volume.baidu }} / 有道
+        Total {{ volume.total }} / Baidu {{ volume.baidu }} / Youdao
         {{ volume.youdao }} / GPT {{ volume.gpt }} / Sakura {{ volume.sakura }}
       </n-text>
 
       <n-flex :size="8">
         <c-button
           v-if="setting.enabledTranslator.includes('baidu')"
-          label="更新百度"
+          label="Update Baidu"
           size="tiny"
           secondary
           @action="startTranslateTask('baidu')"
         />
         <c-button
           v-if="setting.enabledTranslator.includes('youdao')"
-          label="更新有道"
+          label="Update Youdao"
           size="tiny"
           secondary
           @action="startTranslateTask('youdao')"
@@ -104,22 +104,22 @@ const submitJob = (id: 'gpt' | 'sakura') => {
 
         <c-button
           v-if="setting.enabledTranslator.includes('gpt')"
-          label="排队GPT"
+          label="Queue GPT"
           size="tiny"
           secondary
           @action="submitJob('gpt')"
         />
         <c-button
           v-if="setting.enabledTranslator.includes('sakura')"
-          label="排队Sakura"
+          label="Queue Sakura"
           size="tiny"
           secondary
           @action="submitJob('sakura')"
         />
         <c-button-confirm
           v-if="whoami.asAdmin"
-          :hint="`真的要删除《${volume.volumeId}》吗？`"
-          label="删除"
+          :hint="`Are you sure you want to delete '${volume.volumeId}'?`"
+          label="Delete"
           type="error"
           size="tiny"
           secondary
@@ -129,7 +129,7 @@ const submitJob = (id: 'gpt' | 'sakura') => {
     </n-flex>
 
     <c-button
-      label="下载"
+      label="Download"
       :icon="FileDownloadOutlined"
       tag="a"
       :href="file.url"

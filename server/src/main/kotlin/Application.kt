@@ -72,7 +72,7 @@ fun main() {
             exception<Throwable> { call, cause ->
                 val httpMethod = call.request.httpMethod.value
                 val uri = call.request.uri
-                call.application.environment.log.error("未捕获异常 $httpMethod-$uri:", cause)
+                call.application.environment.log.error("Uncaught exception $httpMethod-$uri:", cause)
                 call.respondText(text = "500: $cause", status = HttpStatusCode.InternalServerError)
             }
         }

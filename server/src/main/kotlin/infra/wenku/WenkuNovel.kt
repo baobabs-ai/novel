@@ -10,26 +10,26 @@ import org.bson.conversions.Bson
 import org.bson.types.ObjectId
 
 object WenkuNovelFilter {
-    enum class Level { 全部, 一般向, 成人向, 严肃向 }
+    enum class Level { All, ForAllAges, ForAdults, Serious }
 }
 
 @Serializable
 enum class WenkuNovelLevel {
-    @SerialName("一般向")
-    一般向,
+    @SerialName("For All Ages")
+    ForAllAges,
 
-    @SerialName("成人向")
-    成人向,
+    @SerialName("For Adults")
+    ForAdults,
 
-    @SerialName("严肃向")
-    严肃向,
+    @SerialName("Serious")
+    Serious,
 }
 
 @Serializable
 data class WenkuNovelListItem(
     val id: String,
     val title: String,
-    val titleZh: String,
+    val titleEn: String,
     val cover: String?,
     val favored: String?,
 )
@@ -38,7 +38,7 @@ data class WenkuNovelListItem(
 data class WenkuNovel(
     @Contextual @SerialName("_id") val id: ObjectId,
     val title: String,
-    val titleZh: String,
+    val titleEn: String,
     val cover: String? = null,
     val authors: List<String>,
     val artists: List<String>,
@@ -64,7 +64,7 @@ data class WenkuNovel(
 data class WenkuNovelVolume(
     val asin: String,
     val title: String,
-    val titleZh: String? = null,
+    val titleEn: String? = null,
     val cover: String,
     val coverHires: String? = null,
     val publisher: String? = null,
@@ -74,7 +74,7 @@ data class WenkuNovelVolume(
 
 data class WenkuNovelVolumeList(
     val jp: List<WenkuNovelVolumeJp>,
-    val zh: List<String>,
+    val en: List<String>,
 )
 
 @Serializable

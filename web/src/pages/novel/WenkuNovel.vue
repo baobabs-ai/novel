@@ -36,7 +36,7 @@ store.loadNovel().then((result) => {
 const translateOptions = ref<InstanceType<typeof TranslateOptions>>();
 
 const deleteVolume = (volumeId: string) =>
-  doAction(store.deleteVolume(volumeId), '删除', message);
+  doAction(store.deleteVolume(volumeId), 'Delete', message);
 
 const buildSearchLink = (tag: string) => `/wenku?query="${tag}"`;
 
@@ -100,20 +100,20 @@ const showWebNovelsModal = ref(false);
             >
               <b>
                 {{
-                  novelResult.value.titleZh
-                    ? novelResult.value.titleZh
+                  novelResult.value.titleEn
+                    ? novelResult.value.titleEn
                     : novelResult.value.title
                 }}
               </b>
             </n-h2>
 
-            <ReuseTagGroup label="作者" :tags="novelResult.value.authors" />
-            <ReuseTagGroup label="画师" :tags="novelResult.value.artists" />
+            <ReuseTagGroup label="Authors" :tags="novelResult.value.authors" />
+            <ReuseTagGroup label="Artists" :tags="novelResult.value.artists" />
             <ReuseTagGroup
-              label="出版"
+              label="Publisher"
               :tags="[
-                novelResult.value.publisher ?? '未知出版商',
-                novelResult.value.imprint ?? '未知文库',
+                novelResult.value.publisher ?? 'Unknown Publisher',
+                novelResult.value.imprint ?? 'Unknown Imprint',
               ]"
             />
           </n-flex>
@@ -129,7 +129,7 @@ const showWebNovelsModal = ref(false);
           v-if="whoami.allowAdvancedFeatures"
           :to="`/wenku-edit/${novelId}`"
         >
-          <c-button label="编辑" :icon="EditNoteOutlined" />
+          <c-button label="Edit" :icon="EditNoteOutlined" />
         </router-link>
 
         <favorite-button
@@ -139,13 +139,13 @@ const showWebNovelsModal = ref(false);
 
         <c-button
           v-if="metadata.webIds.length > 0"
-          label="网络"
+          label="Web"
           :icon="LanguageOutlined"
           @action="showWebNovelsModal = true"
         />
 
         <c-modal
-          title="相关网络小说"
+          title="Related Web Novels"
           v-model:show="showWebNovelsModal"
           :extra-height="100"
         >
@@ -159,9 +159,9 @@ const showWebNovelsModal = ref(false);
         </c-modal>
       </n-flex>
 
-      <n-p>原名：{{ metadata.title }}</n-p>
+      <n-p>Original Title: {{ metadata.title }}</n-p>
       <n-p v-if="metadata.latestPublishAt">
-        最新出版于
+        Latest publication at
         <n-time :time="metadata.latestPublishAt * 1000" type="date" />
       </n-p>
       <!-- eslint-disable-next-line vue/no-v-html -->
@@ -196,9 +196,9 @@ const showWebNovelsModal = ref(false);
         </c-x-scrollbar>
       </template>
 
-      <section-header title="目录" />
+      <section-header title="Table of Contents" />
       <template v-if="whoami.isSignedIn">
-        <upload-button :allow-zh="whoami.isAdmin" :novel-id="novelId" />
+        <upload-button :allow-en="whoami.isAdmin" :novel-id="novelId" />
 
         <translate-options
           ref="translateOptions"
@@ -226,7 +226,7 @@ const showWebNovelsModal = ref(false);
           <n-divider style="margin: 0" />
 
           <n-ul>
-            <n-li v-for="volumeId in metadata.volumeZh" :key="volumeId">
+            <n-li v-for="volumeId in metadata.volumeEn" :key="volumeId">
               <n-a
                 :href="`/files-wenku/${novelId}/${encodeURIComponent(volumeId)}`"
                 target="_blank"
@@ -237,8 +237,8 @@ const showWebNovelsModal = ref(false);
 
               <c-button-confirm
                 v-if="whoami.asAdmin"
-                :hint="`真的要删除《${volumeId}》吗？`"
-                label="删除"
+                :hint="`Are you sure you want to delete '${volumeId}'?`"
+                label="Delete"
                 text
                 type="error"
                 style="margin-left: 16px"
@@ -250,21 +250,21 @@ const showWebNovelsModal = ref(false);
 
         <n-empty
           v-if="
-            metadata.volumeJp.length === 0 && metadata.volumeZh.length === 0
+            metadata.volumeJp.length === 0 && metadata.volumeEn.length === 0
           "
-          description="请不要创建一个空页面"
+          description="Please do not create an empty page"
         />
 
         <n-empty
           v-if="
             !whoami.isAdmin &&
             metadata.volumeJp.length === 0 &&
-            metadata.volumeZh.length > 0
+            metadata.volumeEn.length > 0
           "
-          description="网站已撤下中文小说板块，请上传日文生成翻译"
+          description="The Chinese novel section has been removed from the website, please upload the Japanese version to generate the translation"
         />
       </template>
-      <n-p v-else>游客无法查看内容，请先登录。</n-p>
+      <n-p v-else>Visitors cannot view the content, please log in first.</n-p>
 
       <comment-list
         v-if="!setting.hideCommmentWenkuNovel"

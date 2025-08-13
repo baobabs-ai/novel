@@ -81,10 +81,10 @@ fun Route.routeWenkuNovel() {
                     page = loc.page,
                     pageSize = loc.pageSize,
                     filterLevel = when (loc.level) {
-                        1 -> WenkuNovelFilter.Level.一般向
-                        2 -> WenkuNovelFilter.Level.成人向
-                        3 -> WenkuNovelFilter.Level.严肃向
-                        else -> WenkuNovelFilter.Level.全部
+                        1 -> WenkuNovelFilter.Level.ForAllAges
+                        2 -> WenkuNovelFilter.Level.ForAdults
+                        3 -> WenkuNovelFilter.Level.Serious
+                        else -> WenkuNovelFilter.Level.All
                     },
                 )
             }
@@ -139,7 +139,7 @@ fun Route.routeWenkuNovel() {
                 val user = call.user()
                 val filePart = call.receiveMultipart().firstFilePart()
                 call.tryRespond {
-                    if (filePart == null) throwBadRequest("请求里没有文件")
+                    if (filePart == null) throwBadRequest("No file in request")
                     service.createVolume(
                         user = user,
                         novelId = loc.parent.novelId,
@@ -221,11 +221,11 @@ fun Route.routeWenkuNovel() {
 }
 
 private fun throwNovelNotFound(): Nothing =
-    throwNotFound("小说不存在")
+    throwNotFound("Novel not found")
 
 private fun validateVolumeId(volumeId: String) {
     if (!volumeId.endsWith("txt") && !volumeId.endsWith("epub"))
-        throwBadRequest("不支持的文件格式")
+        throwBadRequest("Unsupported file format")
 }
 
 class WenkuNovelApi(
@@ -245,10 +245,10 @@ class WenkuNovelApi(
         validatePageSize(pageSize)
 
         val filterLevelAllowed = if (
-            filterLevel == WenkuNovelFilter.Level.成人向 &&
+            filterLevel == WenkuNovelFilter.Level.ForAdults &&
             (user == null || !user.isOldAss())
         ) {
-            WenkuNovelFilter.Level.一般向
+            WenkuNovelFilter.Level.ForAllAges
         } else {
             filterLevel
         }
@@ -292,9 +292,9 @@ class WenkuNovelApi(
         val metadata = metadataRepo.get(novelId)
             ?: throwNovelNotFound()
 
-        if (metadata.level == WenkuNovelLevel.成人向) {
+        if (metadata.level == WenkuNovelLevel.ForAdults) {
             if (user == null) {
-                throwUnauthorized("请先登录")
+                throwUnauthorized("Please log in first")
             } else {
                 user.shouldBeOldAss()
             }
@@ -452,7 +452,7 @@ class WenkuNovelApi(
         val novel = metadataRepo.get(novelId)
             ?: throwNovelNotFound()
         if (glossary == novel.glossary)
-            throwBadRequest("术语表没有改变")
+            throwBadRequest("Glossary has not changed")
         metadataRepo.updateGlossary(
             novelId = novelId,
             glossary = glossary,
@@ -491,8 +491,8 @@ class WenkuNovelApi(
             )
         } catch (e: VolumeCreateException) {
             when (e) {
-                is VolumeCreateException.VolumeAlreadyExist -> throwConflict("卷已经存在")
-                is VolumeCreateException.VolumeUnpackFailure -> throwInternalServerError("解包失败,由于${e.cause?.message}")
+                is VolumeCreateException.VolumeAlreadyExist -> throwConflict("Volume already exists")
+                is VolumeCreateException.VolumeUnpackFailure -> throwInternalServerError("Unpacking failed, due to ${e.cause?.message}")
             }
         }
 
@@ -536,10 +536,10 @@ class WenkuNovelApi(
         validateVolumeId(volumeId)
 
         if (translations.isEmpty())
-            throwBadRequest("没有设置翻译类型")
+            throwBadRequest("No translation type set")
 
         if (mode == NovelFileMode.Jp)
-            throwBadRequest("不支持的类型")
+            throwBadRequest("Unsupported type")
 
         val newFileName = volumeRepo.makeTranslationVolumeFile(
             novelId = novelId,
@@ -547,7 +547,7 @@ class WenkuNovelApi(
             mode = mode,
             translationsMode = translationsMode,
             translations = translations.distinct(),
-        ) ?: throwNotFound("卷不存在")
+        ) ?: throwNotFound("Volume not found")
 
         return newFileName
     }
@@ -577,7 +577,7 @@ class WenkuNovelTranslateV2Api(
         val novel = metadataRepo.get(novelId)
             ?: throwNovelNotFound()
         val volume = volumeRepo.getVolume(novelId, volumeId)
-            ?: throwNotFound("卷不存在")
+            ?: throwNotFound("Volume not found")
 
         val toc = volume.listChapter().map {
             val chapterGlossary = volume.getChapterGlossary(translatorId, it)
@@ -624,9 +624,9 @@ class WenkuNovelTranslateV2Api(
         val novel = metadataRepo.get(novelId)
             ?: throwNovelNotFound()
         val volume = volumeRepo.getVolume(novelId, volumeId)
-            ?: throwNotFound("卷不存在")
+            ?: throwNotFound("Volume not found")
         val chapter = volume.getChapter(chapterId)
-            ?: throwNotFound("章节不存在")
+            ?: throwNotFound("Chapter not found")
 
         val oldTranslation = volume.getTranslation(translatorId, chapterId)
         val chapterGlossary = volume.getChapterGlossary(translatorId, chapterId)
@@ -663,7 +663,7 @@ class WenkuNovelTranslateV2Api(
         sakuraVersion: String?,
     ): Int {
         if (translatorId == TranslatorId.Sakura && sakuraVersion != "0.9") {
-            throwBadRequest("旧版本Sakura不再允许上传")
+            throwBadRequest("Old version of Sakura is no longer allowed to upload")
         }
 
         validateVolumeId(volumeId)
@@ -671,17 +671,17 @@ class WenkuNovelTranslateV2Api(
         val novel = metadataRepo.get(novelId)
             ?: throwNovelNotFound()
         if ((glossaryId ?: "no glossary") != (novel.glossaryUuid ?: "no glossary")) {
-            throwBadRequest("术语表失效")
+            throwBadRequest("Glossary is invalid")
         }
 
         val volume = volumeRepo.getVolume(novelId, volumeId)
-            ?: throwNotFound("卷不存在")
+            ?: throwNotFound("Volume not found")
 
         val jpLines = volume.getChapter(chapterId)
-            ?: throwNotFound("章节不存在")
+            ?: throwNotFound("Chapter not found")
 
         if (jpLines.size != paragraphsZh.size)
-            throwBadRequest("翻译行数不匹配")
+            throwBadRequest("Translated line number does not match")
 
         volume.setTranslation(
             translatorId = translatorId,
