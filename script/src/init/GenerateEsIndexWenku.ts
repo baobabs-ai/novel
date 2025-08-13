@@ -15,7 +15,7 @@ export const generateEsIndexWenku = async () => {
       mappings: {
         properties: {
           title: { type: 'text', analyzer: 'icu_analyzer' },
-          titleZh: { type: 'text', analyzer: 'icu_analyzer' },
+          titleEn: { type: 'text', analyzer: 'icu_analyzer' },
           authors: { type: 'keyword' },
           artists: { type: 'keyword' },
           keywords: { type: 'keyword' },
@@ -34,7 +34,7 @@ export const generateEsIndexWenku = async () => {
   const total = await col.countDocuments();
   const novels = col.find().project({
     title: 1,
-    titleZh: 1,
+    titleEn: 1,
     cover: 1,
     authors: 1,
     artists: 1,
@@ -74,5 +74,5 @@ export const generateEsIndexWenku = async () => {
   }
 
   const stat = await es.count({ index });
-  console.log(`完成 Mongo:${total} ES:${stat.count}`);
+  console.log(`Finished Mongo:${total} ES:${stat.count}`);
 };

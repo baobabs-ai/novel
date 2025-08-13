@@ -1,14 +1,14 @@
 export interface WenkuNovelOutlineDto {
   id: string;
   title: string;
-  titleZh: string;
+  titleEn: string;
   cover: string;
   favored?: string;
 }
 
 export interface WenkuNovelDto {
   title: string;
-  titleZh: string;
+  titleEn: string;
   cover?: string;
   authors: string[];
   artists: string[];
@@ -16,21 +16,21 @@ export interface WenkuNovelDto {
   publisher?: string;
   imprint?: string;
   latestPublishAt?: number;
-  level: '一般向' | '成人向' | '严肃向';
+  level: 'For All Ages' | 'For Adults' | 'Serious';
   introduction: string;
   webIds: string[];
   volumes: WenkuVolumeDto[];
   glossary: { [key: string]: string };
   visited: number;
   favored?: string;
-  volumeZh: string[];
+  volumeEn: string[];
   volumeJp: VolumeJpDto[];
 }
 
 export interface WenkuVolumeDto {
   asin: string;
   title: string;
-  titleZh?: string;
+  titleEn?: string;
   cover: string;
   coverHires?: string;
   publisher?: string;
@@ -49,7 +49,7 @@ export interface VolumeJpDto {
 
 export interface AmazonNovel {
   title: string;
-  titleZh?: string;
+  titleEn?: string;
   r18: boolean;
   authors: string[];
   artists: string[];
@@ -74,120 +74,120 @@ type PresetKeywords = {
 
 const groupsNonR18: PresetKeywordsGroup[] = [
   {
-    title: '视角',
-    presetKeywords: ['男主视角', '女主视角', 'TS视角', '群像'],
+    title: 'Perspective',
+    presetKeywords: ['Male Lead', 'Female Lead', 'TS', 'Ensemble Cast'],
   },
   {
-    title: '人物',
+    title: 'Characters',
     presetKeywords: [
-      '青梅竹马',
-      '兄妹',
-      '姐弟',
-      '亲子',
-      '师生',
-      '萝莉',
-      '人外',
-      '伪娘',
-      '龙傲天',
-      '傲娇',
-      '病娇',
-      '恶役',
+      'Childhood Friend',
+      'Brother-Sister',
+      'Sister-Brother',
+      'Parent-Child',
+      'Teacher-Student',
+      'Loli',
+      'Non-human',
+      'Trap',
+      'Long Aotian',
+      'Tsundere',
+      'Yandere',
+      'Villainess',
     ],
   },
   {
-    title: '世界',
+    title: 'World',
     presetKeywords: [
-      '现代',
-      '科幻',
-      '奇幻',
-      '历史',
-      '末日',
-      '校园',
-      '游戏',
-      '职场',
-      '中华',
-      '和风',
+      'Modern',
+      'Sci-Fi',
+      'Fantasy',
+      'Historical',
+      'Apocalypse',
+      'School',
+      'Game',
+      'Workplace',
+      'Chinese Style',
+      'Japanese Style',
     ],
   },
   {
-    title: '氛围',
-    presetKeywords: ['治愈', '欢乐', '扭曲', '残酷', '致郁', '猎奇', '悬疑'],
+    title: 'Atmosphere',
+    presetKeywords: ['Healing', 'Happy', 'Twisted', 'Cruel', 'Depressing', 'Bizarre', 'Suspense'],
   },
   {
-    title: '主题',
+    title: 'Theme',
     presetKeywords: [
-      '纯爱',
-      '后宫',
-      '逆后宫',
-      '百合',
-      '耽美',
+      'Pure Love',
+      'Harem',
+      'Reverse Harem',
+      'Yuri',
+      'BL',
       'NTR',
-      '战斗',
-      '冒险',
-      '异能',
-      '机战',
-      '战争',
-      '经营',
-      '日常',
-      '推理',
-      '竞技',
-      '旅行',
-      '穿越',
-      '复仇',
-      '误解系',
-      '活该系',
+      'Battle',
+      'Adventure',
+      'Supernatural Powers',
+      'Mecha',
+      'War',
+      'Management',
+      'Slice of Life',
+      'Mystery',
+      'Competition',
+      'Travel',
+      'Transmigration',
+      'Revenge',
+      'Misunderstanding',
+      'Deserved it',
     ],
   },
   {
-    title: '其他',
-    presetKeywords: ['动画化', '漫画化', '衍生作'],
+    title: 'Other',
+    presetKeywords: ['Anime Adaptation', 'Manga Adaptation', 'Spinoff'],
   },
 ];
 
 const explanationsNonR18: PresetKeywordsExplanation[] = [
   {
-    word: '男主视角, 女主视角, TS视角, 群像',
+    word: 'Male Lead, Female Lead, TS, Ensemble Cast',
     explanation:
-      '小说的主视角，绝大多数情况只选择其中一个。单纯双主角不要添加“群像”。',
+      'The main perspective of the novel, in most cases, only one is selected. Do not add "Ensemble Cast" for simple dual protagonists.',
   },
   {
-    word: '龙傲天',
-    explanation: '不分男女，但必须得是主视角。',
+    word: 'Long Aotian',
+    explanation: 'Regardless of gender, but it must be the main perspective.',
   },
   {
-    word: '科幻',
-    explanation: '科幻风格的世界观，例如近未来的地球、空想科学的异世界、宇宙。',
+    word: 'Sci-Fi',
+    explanation: 'Sci-fi style worldview, such as near-future Earth, fantasy science fiction otherworld, and space.',
   },
   {
-    word: '奇幻',
-    explanation: '奇幻风格的世界观，例如常见的异世界。',
+    word: 'Fantasy',
+    explanation: 'Fantasy style worldview, such as a common otherworld.',
   },
   {
-    word: '游戏',
+    word: 'Game',
     explanation:
-      '小说的主要场地在游戏中，包括现实游戏和穿越到游戏世界，注意并不是有状态面板就算是游戏世界。',
+      'The main venue of the novel is in a game, including real games and transmigration to a game world. Note that having a status panel does not mean it is a game world.',
   },
   {
-    word: '治愈',
-    explanation: '“治愈”表示剧情轻松，例如慢生活系。',
+    word: 'Healing',
+    explanation: '"Healing" means the plot is light, such as a slow life series.',
   },
   {
-    word: '扭曲, 残酷, 致郁, 猎奇',
+    word: 'Twisted, Cruel, Depressing, Bizarre',
     explanation:
-      '“扭曲”表示存在情感纠葛的剧情，简单的多角恋党争不算。“残酷”表示存在黑暗的设定或情节，例如死亡游戏或大逃杀。“致郁”表示存在让人郁闷的情节，注意致郁不一定意味着角色死亡。“猎奇”表示存在重口或血腥描写。',
+      '"Twisted" indicates a plot with emotional entanglement, simple love triangles do not count. "Cruel" indicates a dark setting or plot, such as a death game or battle royale. "Depressing" indicates a plot that makes people depressed, note that depressing does not necessarily mean character death. "Bizarre" indicates heavy or bloody descriptions.',
   },
   {
-    word: '后宫, 逆后宫, 百合, 耽美',
-    explanation: '这几个标签都采用广义解释。伪后宫、伪百合都可以使用。',
+    word: 'Harem, Reverse Harem, Yuri, BL',
+    explanation: 'These tags are all interpreted broadly. Pseudo-harem and pseudo-yuri can be used.',
   },
   {
-    word: '穿越',
-    explanation: '转生和穿越都可以使用这个标签。',
+    word: 'Transmigration',
+    explanation: 'Both reincarnation and transmigration can use this tag.',
   },
   {
-    word: '动画化, 漫画化, 衍生作',
+    word: 'Anime Adaptation, Manga Adaptation, Spinoff',
     explanation:
-      '只有小说是本体的情况，才可以添加“动画化”和“漫画化”标签。如果本体是其他类型的作品，请添加“衍生作”。',
+      'Only when the novel is the main body can the "Anime Adaptation" and "Manga Adaptation" tags be added. If the main body is another type of work, please add "Spinoff".',
   },
 ];
 

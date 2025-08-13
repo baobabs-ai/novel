@@ -20,7 +20,7 @@ class WenkuNovelEsDataSource(
     data class WenkuNovelMetadataEsModel(
         val id: String,
         val title: String,
-        val titleZh: String,
+        val titleEn: String,
         val cover: String?,
         val authors: List<String>,
         val artists: List<String>,
@@ -49,10 +49,10 @@ class WenkuNovelEsDataSource(
 
                 // Filter level
                 when (filterLevel) {
-                    WenkuNovelFilter.Level.全部 -> null
-                    WenkuNovelFilter.Level.一般向 -> WenkuNovelLevel.一般向
-                    WenkuNovelFilter.Level.成人向 -> WenkuNovelLevel.成人向
-                    WenkuNovelFilter.Level.严肃向 -> WenkuNovelLevel.严肃向
+                    WenkuNovelFilter.Level.All -> null
+                    WenkuNovelFilter.Level.ForAllAges -> WenkuNovelLevel.ForAllAges
+                    WenkuNovelFilter.Level.ForAdults -> WenkuNovelLevel.ForAdults
+                    WenkuNovelFilter.Level.Serious -> WenkuNovelLevel.Serious
                 }?.let {
                     mustQueries.add(term(WenkuNovelMetadataEsModel::level, it.serialName()))
                 }
@@ -82,7 +82,7 @@ class WenkuNovelEsDataSource(
                         simpleQueryString(
                             queryWords.joinToString(" "),
                             WenkuNovelMetadataEsModel::title,
-                            WenkuNovelMetadataEsModel::titleZh,
+                            WenkuNovelMetadataEsModel::titleEn,
                             WenkuNovelMetadataEsModel::authors,
                             WenkuNovelMetadataEsModel::artists,
                             WenkuNovelMetadataEsModel::keywords,
@@ -115,7 +115,7 @@ class WenkuNovelEsDataSource(
             document = WenkuNovelMetadataEsModel(
                 id = novel.id.toHexString(),
                 title = novel.title,
-                titleZh = novel.titleZh,
+                titleEn = novel.titleEn,
                 cover = novel.cover,
                 authors = novel.authors,
                 artists = novel.artists,

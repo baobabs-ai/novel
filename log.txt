@@ -1,0 +1,140 @@
+Chinese -> English
+================
+轻小说机翻机器人 -> Light Novel Machine Translation Robot
+输入网络小说链接直接跳转，或搜索本站缓存... -> Enter the web novel link to jump directly, or search the site's cache...
+搜索 -> Search
+我的收藏 -> My Favorites
+网络小说 -> Web Novels
+文库小说 -> Library Novels
+论坛 -> Forum
+使用说明 -> Instructions
+QQ群 -> QQ Group
+禁止使用脚本绕过翻译器提交翻译文本，哪怕你觉得自己提交的是正经翻译。 -> It is forbidden to use scripts to bypass the translator to submit translated text, even if you think you are submitting a proper translation.
+FishHawk长期996,网站开发速度大幅下降已成常态，论坛反馈目前没有精力维护，有问题加群@吧 -> FishHawk has been working long hours, and the website development speed has dropped significantly. The forum feedback is currently not maintained. If you have any questions, please join the group and @.
+更多 -> More
+网络小说-最多点击 -> Web Novels - Most Clicks
+文库小说-最新更新 -> Library Novels - Latest Updates
+将小说链接复制到网站首页的输入框里，点击搜索，如果链接正确，将会跳转到小说页面。更高级的用法，例如生成机翻、高级搜索等，参见 <c-a to="/forum/64f3d63f794cbb1321145c07">使用教程</c-a> 。有什么问题和建议请在 <c-a to="/forum">论坛</c-a> 中发帖讨论。 -> Copy the novel link into the input box on the home page and click search. If the link is correct, it will jump to the novel page. For more advanced usage, such as generating machine translation, advanced search, etc., please refer to the <c-a to="/forum/64f3d63f794cbb1321145c07">Tutorial</c-a>. If you have any questions or suggestions, please post them in the <c-a to="/forum">Forum</c-a>.
+使用教程 -> Tutorial
+支持的小说站如下: -> Supported novel sites are as follows:
+成为小说家吧 -> Shōsetsuka ni Narō
+Pixiv系列/短篇 -> Pixiv Series/Short Stories
+交流群： <n-a :href="qqLink" target="_blank">819513328</n-a> ，验证答案是“绿色”。 -> Communication group: <n-a :href="qqLink" target="_blank">819513328</n-a>, the verification answer is "green".
+绿色 -> green
+titleZh -> titleEn
+一般向 -> For All Ages
+成人向 -> For Adults
+严肃向 -> Serious
+volumeZh -> volumeEn
+视角 -> Perspective
+男主视角 -> Male Lead
+女主视角 -> Female Lead
+TS视角 -> TS
+群像 -> Ensemble Cast
+人物 -> Characters
+青梅竹马 -> Childhood Friend
+兄妹 -> Brother-Sister
+姐弟 -> Sister-Brother
+亲子 -> Parent-Child
+师生 -> Teacher-Student
+萝莉 -> Loli
+人外 -> Non-human
+伪娘 -> Trap
+龙傲天 -> Long Aotian
+傲娇 -> Tsundere
+病娇 -> Yandere
+恶役 -> Villainess
+世界 -> World
+现代 -> Modern
+科幻 -> Sci-Fi
+奇幻 -> Fantasy
+历史 -> Historical
+末日 -> Apocalypse
+校园 -> School
+游戏 -> Game
+职场 -> Workplace
+中华 -> Chinese Style
+和风 -> Japanese Style
+氛围 -> Atmosphere
+治愈 -> Healing
+欢乐 -> Happy
+扭曲 -> Twisted
+残酷 -> Cruel
+致郁 -> Depressing
+猎奇 -> Bizarre
+悬疑 -> Suspense
+主题 -> Theme
+纯爱 -> Pure Love
+后宫 -> Harem
+逆后宫 -> Reverse Harem
+百合 -> Yuri
+耽美 -> BL
+NTR -> NTR
+战斗 -> Battle
+冒险 -> Adventure
+异能 -> Supernatural Powers
+机战 -> Mecha
+战争 -> War
+经营 -> Management
+日常 -> Slice of Life
+推理 -> Mystery
+竞技 -> Competition
+旅行 -> Travel
+穿越 -> Transmigration
+复仇 -> Revenge
+误解系 -> Misunderstanding
+活该系 -> Deserved it
+其他 -> Other
+动画化 -> Anime Adaptation
+漫画化 -> Manga Adaptation
+衍生作 -> Spinoff
+激活权限 -> Activate permission
+清理pinia留下的垃圾 -> Clean up the garbage left by pinia
+主题 -> Theme
+处理Safari的奇妙问题 -> Handle Safari's weird issues
+防止Safari返回上一页时的灰屏 -> Prevent gray screen when Safari returns to the previous page
+禁用浏览器聚焦时的自动缩放，但浏览器还是会允许用户手动缩放 -> Disable automatic scaling when the browser is focused, but the browser still allows users to manually scale
+仅在支持 -webkit-touch-callout 的设备上生效（iOS 特有） -> Only works on devices that support -webkit-touch-callout (iOS specific)
+小说的主视角，绝大多数情况只选择其中一个。单纯双主角不要添加“群像”。 -> The main perspective of the novel, in most cases, only one is selected. Do not add "Ensemble Cast" for simple dual protagonists.
+不分男女，但必须得是主视角。 -> Regardless of gender, but it must be the main perspective.
+科幻风格的世界观，例如近未来的地球、空想科学的异世界、宇宙。 -> Sci-fi style worldview, such as near-future Earth, fantasy science fiction otherworld, and space.
+奇幻风格的世界观，例如常见的异世界。 -> Fantasy style worldview, such as a common otherworld.
+小说的主要场地在游戏中，包括现实游戏和穿越到游戏世界，注意并不是有状态面板就算是游戏世界。 -> The main venue of the novel is in a game, including real games and transmigration to a game world. Note that having a status panel does not mean it is a game world.
+“治愈”表示剧情轻松，例如慢生活系。 -> "Healing" means the plot is light, such as a slow life series.
+“扭曲”表示存在情感纠葛的剧情，简单的多角恋党争不算。“残酷”表示存在黑暗的设定或情节，例如死亡游戏或大逃杀。“致郁”表示存在让人郁闷的情节，注意致郁不一定意味着角色死亡。“猎奇”表示存在重口或血腥描写。 -> "Twisted" indicates a plot with emotional entanglement, simple love triangles do not count. "Cruel" indicates a dark setting or plot, such as a death game or battle royale. "Depressing" indicates a plot that makes people depressed, note that depressing does not necessarily mean character death. "Bizarre" indicates heavy or bloody descriptions.
+这几个标签都采用广义解释。伪后宫、伪百合都可以使用。 -> These tags are all interpreted broadly. Pseudo-harem and pseudo-yuri can be used.
+转生和穿越都可以使用这个标签。 -> Both reincarnation and transmigration can use this tag.
+只有小说是本体的情况，才可以添加“动画化”和“漫画化”标签。如果本体是其他类型的作品，请添加“衍生作”。 -> Only when the novel is the main body can the "Anime Adaptation" and "Manga Adaptation" tags be added. If the main body is another type of work, please add "Spinoff".
+操作额度耗尽，等明天再试吧 -> The operation quota is exhausted, please try again tomorrow
+请求超时 -> Request timed out
+默认收藏夹 -> Default Favorites
+收藏夹最多只能创建20个 -> You can only create up to 20 favorites
+无法删除默认收藏夹 -> Cannot delete default favorites
+中文 -> English
+中日 -> English-Japanese
+日中 -> Japanese-English
+优先 -> Priority
+并列 -> Parallel
+亮色主题 -> Light Theme
+暗色主题 -> Dark Theme
+跟随系统 -> Follow System
+分页 -> Pagination
+滚动 -> Scroll
+添加时间 -> Add Time
+阅读时间 -> Read Time
+标题 -> Title
+简体中文 -> Simplified Chinese
+繁体中文 -> Traditional Chinese
+日文 -> Japanese
+默认 -> Default
+左右 -> Left-Right
+上下 -> Up-Down
+关闭 -> Off
+正常 -> Normal
+加粗 -> Bold
+实线 -> Solid
+虚线 -> Dashed
+点状 -> Dotted
+浅色 -> Light
+深色 -> Dark
+自定义 -> Custom

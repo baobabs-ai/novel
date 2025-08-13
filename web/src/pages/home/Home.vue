@@ -93,13 +93,13 @@ const showHowToUseModal = ref(false);
 const linkExample = [
   ['Kakuyomu', 'https://kakuyomu.jp/works/16817139555217983105'],
   [
-    '成为小说家吧',
+    'Shōsetsuka ni Narō',
     'https://ncode.syosetu.com/n0833hi <br /> https://novel18.syosetu.com/n3192gh',
   ],
   ['Novelup', 'https://novelup.plus/story/206612087'],
   ['Hameln', 'https://syosetu.org/novel/297874/'],
   [
-    'Pixiv系列/短篇',
+    'Pixiv Series/Short Stories',
     'https://www.pixiv.net/novel/series/9406879 <br/> https://www.pixiv.net/novel/show.php?id=18304868',
   ],
   ['Alphapolis', 'https://www.alphapolis.co.jp/novel/638978238/525733370'],
@@ -127,19 +127,19 @@ const githubLink = 'https://github.com/auto-novel/auto-novel';
           filter: drop-shadow(0.05em 0.05em black);
         "
       >
-        轻小说机翻机器人
+        Light Novel Machine Translation Robot
       </n-h1>
       <n-input-group>
         <n-input
           v-model:value="url"
           size="large"
-          placeholder="输入网络小说链接直接跳转，或搜索本站缓存..."
+          placeholder="Enter the web novel link to jump directly, or search the site's cache..."
           :input-props="{ spellcheck: false }"
           @keyup.enter="query(url)"
           :style="{ 'background-color': vars.bodyColor }"
         />
         <n-button size="large" type="primary" @click="query(url)">
-          搜索
+          Search
         </n-button>
       </n-input-group>
     </div>
@@ -160,7 +160,7 @@ const githubLink = 'https://github.com/auto-novel/auto-novel';
         <n-button quaternary style="width: 100%; height: 64px">
           <n-flex align="center" vertical style="font-size: 12px">
             <n-icon size="24" :component="StarBorderOutlined" />
-            我的收藏
+            My Favorites
           </n-flex>
         </n-button>
       </router-link>
@@ -169,7 +169,7 @@ const githubLink = 'https://github.com/auto-novel/auto-novel';
         <n-button quaternary style="width: 100%; height: 64px">
           <n-flex align="center" vertical style="font-size: 12px">
             <n-icon size="24" :component="LanguageOutlined" />
-            网络小说
+            Web Novels
           </n-flex>
         </n-button>
       </router-link>
@@ -178,7 +178,7 @@ const githubLink = 'https://github.com/auto-novel/auto-novel';
         <n-button quaternary style="width: 100%; height: 64px">
           <n-flex align="center" vertical style="font-size: 12px">
             <n-icon size="24" :component="BookOutlined" />
-            文库小说
+            Wenku Novels
           </n-flex>
         </n-button>
       </router-link>
@@ -187,7 +187,7 @@ const githubLink = 'https://github.com/auto-novel/auto-novel';
         <n-button quaternary style="width: 100%; height: 64px">
           <n-flex align="center" vertical style="font-size: 12px">
             <n-icon size="24" :component="ForumOutlined" />
-            论坛
+            Forum
           </n-flex>
         </n-button>
       </router-link>
@@ -198,11 +198,11 @@ const githubLink = 'https://github.com/auto-novel/auto-novel';
       <Migrate />
       <n-flex>
         <n-button text type="primary" @click="showHowToUseModal = true">
-          使用说明
+          Instructions
         </n-button>
         /
         <n-button text type="primary" @click="showQQModal = true">
-          QQ群
+          QQ Group
         </n-button>
         /
         <n-a :href="telegramLink" target="_blank">Telegram</n-a>
@@ -210,49 +210,49 @@ const githubLink = 'https://github.com/auto-novel/auto-novel';
         <n-a :href="githubLink" target="_blank">Github</n-a>
       </n-flex>
       <n-p>
-        禁止使用脚本绕过翻译器提交翻译文本，哪怕你觉得自己提交的是正经翻译。
+        It is forbidden to use scripts to bypass the translator to submit translated text, even if you think you are submitting a proper translation.
       </n-p>
       <n-p>
-        FishHawk长期996,网站开发速度大幅下降已成常态，论坛反馈目前没有精力维护，有问题加群@吧
+        FishHawk has been working long hours, and the website development speed has dropped significantly. The forum feedback is currently not maintained. If you have any questions, please join the group and @.
       </n-p>
     </bulletin>
 
     <template v-if="whoami.isSignedIn">
-      <section-header title="我的收藏">
+      <section-header title="My Favorites">
         <router-link to="/favorite/web">
-          <c-button label="更多" :icon="ReadMoreOutlined" />
+          <c-button label="More" :icon="ReadMoreOutlined" />
         </router-link>
       </section-header>
       <PanelWebNovel :list-result="favoriteList" />
       <n-divider />
     </template>
 
-    <section-header title="网络小说-最多点击">
+    <section-header title="Web Novels - Most Clicks">
       <router-link to="/novel">
-        <c-button label="更多" :icon="ReadMoreOutlined" />
+        <c-button label="More" :icon="ReadMoreOutlined" />
       </router-link>
     </section-header>
     <PanelWebNovel :list-result="mostVisitedWeb" />
     <n-divider />
 
-    <section-header title="文库小说-最新更新">
+    <section-header title="Wenku Novels - Latest Updates">
       <router-link to="/wenku">
-        <c-button label="更多" :icon="ReadMoreOutlined" />
+        <c-button label="More" :icon="ReadMoreOutlined" />
       </router-link>
     </section-header>
     <PanelWenkuNovel :list-result="latestUpdateWenku" />
     <n-divider />
   </div>
 
-  <c-modal title="使用说明" v-model:show="showHowToUseModal">
+  <c-modal title="Instructions" v-model:show="showHowToUseModal">
     <n-p>
-      将小说链接复制到网站首页的输入框里，点击搜索，如果链接正确，将会跳转到小说页面。更高级的用法，例如生成机翻、高级搜索等，参见
-      <c-a to="/forum/64f3d63f794cbb1321145c07">使用教程</c-a>
-      。有什么问题和建议请在
-      <c-a to="/forum">论坛</c-a>
-      中发帖讨论。
+      Copy the novel link into the input box on the home page and click search. If the link is correct, it will jump to the novel page. For more advanced usage, such as generating machine translation, advanced search, etc., please refer to the
+      <c-a to="/forum/64f3d63f794cbb1321145c07">Tutorial</c-a>
+      . If you have any questions or suggestions, please post them in the
+      <c-a to="/forum">Forum</c-a>
+      .
     </n-p>
-    <n-p>支持的小说站如下:</n-p>
+    <n-p>Supported novel sites are as follows:</n-p>
     <n-p v-for="[name, link] of linkExample" :key="name">
       <b>{{ name }}</b>
       <br />
@@ -261,11 +261,11 @@ const githubLink = 'https://github.com/auto-novel/auto-novel';
     </n-p>
   </c-modal>
 
-  <c-modal title="QQ群" v-model:show="showQQModal">
+  <c-modal title="QQ Group" v-model:show="showQQModal">
     <n-p>
-      交流群：
+      Communication group:
       <n-a :href="qqLink" target="_blank">819513328</n-a>
-      ，验证答案是“绿色”。
+      , the verification answer is "green".
       <br />
       <n-qr-code :size="150" :value="qqLink" />
     </n-p>

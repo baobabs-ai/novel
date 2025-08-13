@@ -19,26 +19,26 @@ class Kakuyomu(
     companion object {
         const val id = "kakuyomu"
         private val rangeIds = mapOf(
-            "每日" to "daily",
-            "每周" to "weekly",
-            "每月" to "monthly",
-            "每年" to "yearly",
-            "总计" to "entire",
+            "Daily" to "daily",
+            "Weekly" to "weekly",
+            "Monthly" to "monthly",
+            "Yearly" to "yearly",
+            "Total" to "entire",
         )
         private val genreIds = mapOf(
-            "综合" to "all",
-            "异世界幻想" to "fantasy",
-            "现代幻想" to "action",
-            "科幻" to "sf",
-            "恋爱" to "love_story",
-            "浪漫喜剧" to "romance",
-            "现代戏剧" to "drama",
-            "恐怖" to "horror",
-            "推理" to "mystery",
-            "散文·纪实" to "nonfiction",
-            "历史·时代·传奇" to "history",
-            "创作论·评论" to "criticism",
-            "诗·童话·其他" to "others",
+            "Comprehensive" to "all",
+            "Isekai Fantasy" to "fantasy",
+            "Modern Fantasy" to "action",
+            "Sci-Fi" to "sf",
+            "Romance" to "love_story",
+            "Romantic Comedy" to "romance",
+            "Modern Drama" to "drama",
+            "Horror" to "horror",
+            "Mystery" to "mystery",
+            "Essay/Non-fiction" to "nonfiction",
+            "History/Era/Legend" to "history",
+            "Creation Theory/Commentary" to "criticism",
+            "Poem/Fairy Tale/Other" to "others",
         )
     }
 
@@ -117,9 +117,9 @@ class Kakuyomu(
             }
 
         val type = when (val status = work.string("serialStatus")) {
-            "COMPLETED" -> WebNovelType.已完结
-            "RUNNING" -> WebNovelType.连载中
-            else -> throw RuntimeException("无法解析的小说类型:$status")
+            "COMPLETED" -> WebNovelType.Finished
+            "RUNNING" -> WebNovelType.Serializing
+            else -> throw RuntimeException("Unable to parse novel type:$status")
         }
 
         val attentions = buildList {
@@ -187,7 +187,7 @@ class Kakuyomu(
         doc.select("rt").remove()
         val paragraphs = doc.select("div.widget-episodeBody > p").map { it.text() }
         if (paragraphs.isEmpty()) {
-            throw RuntimeException("付费章节，无法获取")
+            throw RuntimeException("Paid chapter, cannot be obtained")
         }
         return RemoteChapter(paragraphs = paragraphs)
     }

@@ -17,8 +17,8 @@ import java.nio.file.Path
 import kotlin.io.path.*
 
 sealed class VolumeCreateException(message: String, cause: Throwable? = null) : Exception(message, cause) {
-    class VolumeAlreadyExist : VolumeCreateException("卷已经存在")
-    class VolumeUnpackFailure(cause: Throwable) : VolumeCreateException("卷解包失败", cause)
+    class VolumeAlreadyExist : VolumeCreateException("Volume already exists")
+    class VolumeUnpackFailure(cause: Throwable) : VolumeCreateException("Volume unpacking failed", cause)
 }
 
 @OptIn(ExperimentalPathApi::class)
@@ -95,7 +95,7 @@ class WenkuNovelVolumeDiskDataSource(
 
         if (volumeTooLarge) {
             volumePath.deleteIfExists()
-            throw RuntimeException("文件大小不能超过40MB")
+            throw RuntimeException("File size cannot exceed 40MB")
         }
 
         if (unpack) {

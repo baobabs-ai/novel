@@ -16,13 +16,13 @@ const message = useMessage();
 const favoredRepository = Locator.favoredRepository();
 const { favoreds } = favoredRepository;
 
-// 删除小说
+// Delete novel
 const showDeleteModal = ref(false);
 
 const openDeleteModal = () => {
   const novels = props.selectedNovels;
   if (novels.length === 0) {
-    message.info('没有选中小说');
+    message.info('No novel selected');
     return;
   }
   showDeleteModal.value = true;
@@ -43,21 +43,21 @@ const deleteSelected = async () => {
   }
   const success = novels.length - failed;
 
-  message.info(`${success}本小说被删除，${failed}本失败`);
+  message.info(`${success} novels deleted, ${failed} failed`);
 };
 
-// 移动小说
+// Move novel
 const targetFavoredId = ref(props.favoredId);
 
 const moveToFavored = async () => {
   const novels = props.selectedNovels;
   if (novels.length === 0) {
-    message.info('没有选中小说');
+    message.info('No novel selected');
     return;
   }
 
   if (targetFavoredId.value === props.favoredId) {
-    message.info('无需移动');
+    message.info('No need to move');
     return;
   }
 
@@ -74,7 +74,7 @@ const moveToFavored = async () => {
   }
   const success = novels.length - failed;
 
-  message.info(`${success}本小说已移动，${failed}本失败`);
+  message.info(`${success} novels moved, ${failed} failed`);
   window.location.reload();
 };
 </script>
@@ -86,19 +86,19 @@ const moveToFavored = async () => {
         <n-flex align="baseline">
           <n-button-group size="small">
             <c-button
-              label="全选"
+              label="Select All"
               :round="false"
               @action="$emit('selectAll')"
             />
             <c-button
-              label="反选"
+              label="Invert Selection"
               :round="false"
               @action="$emit('invertSelection')"
             />
           </n-button-group>
 
           <c-button
-            label="删除"
+            label="Delete"
             secondary
             :round="false"
             size="small"
@@ -106,31 +106,31 @@ const moveToFavored = async () => {
             @click="openDeleteModal"
           />
           <c-modal
-            :title="`确定删除 ${
+            :title="`Are you sure you want to delete ${
               selectedNovels.length === 1
-                ? selectedNovels[0].titleZh ?? selectedNovels[0].title
-                : `${selectedNovels.length}本小说`
-            }？`"
+                ? selectedNovels[0].titleEn ?? selectedNovels[0].title
+                : `${selectedNovels.length} novels`
+            }?`"
             v-model:show="showDeleteModal"
           >
             <template #action>
-              <c-button label="确定" type="primary" @action="deleteSelected" />
+              <c-button label="Confirm" type="primary" @action="deleteSelected" />
             </template>
           </c-modal>
         </n-flex>
-        <n-text depth="3"> 已选择{{ selectedNovels.length }}本小说 </n-text>
+        <n-text depth="3"> {{ selectedNovels.length }} novels selected </n-text>
       </n-flex>
     </n-list-item>
 
     <n-list-item v-if="favoreds.wenku.length > 1">
-      <n-p>移动小说功能暂时关闭</n-p>
+      <n-p>Move novel function is temporarily closed</n-p>
       <n-flex v-if="false" vertical>
-        <b>移动小说（低配版，很慢，等到显示移动完成）</b>
+        <b>Move novel (low-spec version, very slow, wait until it shows completion)</b>
 
         <n-radio-group v-model:value="targetFavoredId">
           <n-flex align="center">
             <c-button
-              label="移动"
+              label="Move"
               size="small"
               :round="false"
               @action="moveToFavored"

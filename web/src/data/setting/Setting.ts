@@ -16,9 +16,9 @@ export interface Setting {
   //
   menuCollapsed: boolean;
   //
-  downloadFilenameType: 'jp' | 'zh';
+  downloadFilenameType: 'jp' | 'en';
   downloadFormat: {
-    mode: 'zh' | 'zh-jp' | 'jp-zh';
+    mode: 'en' | 'en-jp' | 'jp-en';
     translationsMode: 'parallel' | 'priority';
     translations: TranslatorId[];
     type: 'epub' | 'txt';
@@ -30,7 +30,7 @@ export interface Setting {
     desc: boolean;
   };
   //
-  locale: 'zh-cn' | 'zh-tw';
+  locale: 'en-us' | 'zh-tw';
   searchLocaleAware: boolean;
 }
 
@@ -51,9 +51,9 @@ export namespace Setting {
     //
     menuCollapsed: false,
     //
-    downloadFilenameType: 'zh',
+    downloadFilenameType: 'en',
     downloadFormat: {
-      mode: 'zh-jp',
+      mode: 'en-jp',
       translationsMode: 'priority',
       translations: ['sakura', 'gpt', 'youdao', 'baidu'],
       type: 'epub',
@@ -65,7 +65,7 @@ export namespace Setting {
       desc: true,
     },
     //
-    locale: 'zh-cn',
+    locale: 'en-us',
     searchLocaleAware: false,
   };
 
@@ -80,11 +80,11 @@ export namespace Setting {
       setting.enabledTranslator = ['baidu', 'youdao', 'gpt', 'sakura'];
     }
     if ((setting.downloadFormat.mode as string) === 'mix') {
-      setting.downloadFormat.mode = 'zh-jp';
+      setting.downloadFormat.mode = 'en-jp';
     } else if ((setting.downloadFormat.mode as string) === 'mix-reverse') {
-      setting.downloadFormat.mode = 'jp-zh';
+      setting.downloadFormat.mode = 'jp-en';
     } else if ((setting.downloadFormat.mode as string) === 'jp') {
-      setting.downloadFormat.mode = 'zh';
+      setting.downloadFormat.mode = 'en';
     }
     // 2024-03-05
     if (setting.workspaceSound === undefined) {
@@ -97,13 +97,13 @@ export namespace Setting {
   };
 
   export const downloadModeOptions = [
-    { label: '中文', value: 'zh' },
-    { label: '中日', value: 'zh-jp' },
-    { label: '日中', value: 'jp-zh' },
+    { label: 'English', value: 'en' },
+    { label: 'English-Japanese', value: 'en-jp' },
+    { label: 'Japanese-English', value: 'jp-en' },
   ];
   export const downloadTranslationModeOptions = [
-    { label: '优先', value: 'priority' },
-    { label: '并列', value: 'parallel' },
+    { label: 'Priority', value: 'priority' },
+    { label: 'Parallel', value: 'parallel' },
   ];
   export const downloadTypeOptions = [
     { label: 'EPUB', value: 'epub' },
@@ -111,27 +111,27 @@ export namespace Setting {
   ];
 
   export const themeOptions = [
-    { label: '亮色主题', value: 'light' },
-    { label: '暗色主题', value: 'dark' },
-    { label: '跟随系统', value: 'system' },
+    { label: 'Light Theme', value: 'light' },
+    { label: 'Dark Theme', value: 'dark' },
+    { label: 'Follow System', value: 'system' },
   ];
   export const paginationModeOptions = [
-    { label: '分页', value: 'pagination' },
-    { label: '滚动', value: 'scroll' },
+    { label: 'Pagination', value: 'pagination' },
+    { label: 'Scroll', value: 'scroll' },
   ];
   export const localVolumeOrderOptions = [
-    { value: 'byCreateAt', label: '添加时间' },
-    { value: 'byReadAt', label: '阅读时间' },
-    { value: 'byId', label: '标题' },
+    { value: 'byCreateAt', label: 'Add Time' },
+    { value: 'byReadAt', label: 'Read Time' },
+    { value: 'byId', label: 'Title' },
   ];
   export const localeOptions = [
-    { label: '简体中文', value: 'zh-cn' },
-    { label: '繁体中文', value: 'zh-tw' },
+    { label: 'English', value: 'en-us' },
+    { label: 'Traditional Chinese', value: 'zh-tw' },
   ];
 }
 
 export interface ReaderSetting {
-  mode: 'jp' | 'zh' | 'zh-jp' | 'jp-zh';
+  mode: 'jp' | 'en' | 'en-jp' | 'jp-en';
   translationsMode: 'parallel' | 'priority';
   translations: TranslatorId[];
   clickArea: 'default' | 'left-right' | 'up-down' | 'none';
@@ -150,13 +150,13 @@ export interface ReaderSetting {
     fontColor: string;
   };
   mixJpOpacity: number;
-  mixZhOpacity: number;
+  mixEnOpacity: number;
   textUnderline: 'none' | 'solid' | 'dashed' | 'dotted';
 }
 
 export namespace ReaderSetting {
   export const defaultValue: ReaderSetting = {
-    mode: 'zh-jp',
+    mode: 'en-jp',
     translationsMode: 'priority',
     translations: ['sakura', 'gpt', 'youdao', 'baidu'],
     clickArea: 'default',
@@ -175,7 +175,7 @@ export namespace ReaderSetting {
       fontColor: '#000000',
     },
     mixJpOpacity: 0.4,
-    mixZhOpacity: 0.75,
+    mixEnOpacity: 0.75,
     textUnderline: 'none',
   };
 
@@ -186,9 +186,9 @@ export namespace ReaderSetting {
       );
     }
     if ((setting.mode as unknown) === 'mix') {
-      setting.mode = 'zh-jp';
+      setting.mode = 'en-jp';
     } else if ((setting.mode as unknown) === 'mix-reverse') {
-      setting.mode = 'jp-zh';
+      setting.mode = 'jp-en';
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const theme = setting.theme as any;
@@ -210,45 +210,45 @@ export namespace ReaderSetting {
   };
 
   export const modeOptions = [
-    { label: '日文', value: 'jp' },
-    { label: '中文', value: 'zh' },
-    { label: '中日', value: 'zh-jp' },
-    { label: '日中', value: 'jp-zh' },
+    { label: 'Japanese', value: 'jp' },
+    { label: 'English', value: 'en' },
+    { label: 'English-Japanese', value: 'en-jp' },
+    { label: 'Japanese-English', value: 'jp-en' },
   ];
   export const translationModeOptions = [
-    { label: '优先', value: 'priority' },
-    { label: '并列', value: 'parallel' },
+    { label: 'Priority', value: 'priority' },
+    { label: 'Parallel', value: 'parallel' },
   ];
 
   export const clickAreaOptions = [
-    { label: '默认', value: 'default' },
-    { label: '左右', value: 'left-right' },
-    { label: '上下', value: 'up-down' },
-    { label: '关闭', value: 'none' },
+    { label: 'Default', value: 'default' },
+    { label: 'Left-Right', value: 'left-right' },
+    { label: 'Up-Down', value: 'up-down' },
+    { label: 'Off', value: 'none' },
   ];
 
   export const speakLanguagesOptions = [
-    { label: '中文', value: 'zh' },
-    { label: '日文', value: 'jp' },
+    { label: 'English', value: 'en' },
+    { label: 'Japanese', value: 'jp' },
   ];
 
   export const fontWeightOptions = [
-    { label: '正常', value: 400 },
-    { label: '加粗', value: 600 },
+    { label: 'Normal', value: 400 },
+    { label: 'Bold', value: 600 },
   ];
 
   export const textUnderlineOptions = [
-    { label: '关闭', value: 'none' },
-    { label: '实线', value: 'solid' },
-    { label: '虚线', value: 'dashed' },
-    { label: '点状', value: 'dotted' },
+    { label: 'Off', value: 'none' },
+    { label: 'Solid', value: 'solid' },
+    { label: 'Dashed', value: 'dashed' },
+    { label: 'Dotted', value: 'dotted' },
   ];
 
   export const themeModeOptions = [
-    { label: '浅色', value: 'light' },
-    { label: '深色', value: 'dark' },
-    { label: '跟随系统', value: 'system' },
-    { label: '自定义', value: 'custom' },
+    { label: 'Light', value: 'light' },
+    { label: 'Dark', value: 'dark' },
+    { label: 'Follow System', value: 'system' },
+    { label: 'Custom', value: 'custom' },
   ];
   export const themeOptions = [
     { bodyColor: '#FFFFFF', fontColor: '#000000' },

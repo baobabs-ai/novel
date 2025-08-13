@@ -11,7 +11,7 @@ export const formatError = (error: unknown) => {
   if (error instanceof HTTPError) {
     let messageOverride: string | null = null;
     if (error.response.status === 429) {
-      messageOverride = '操作额度耗尽，等明天再试吧';
+      messageOverride = 'The operation quota is exhausted, please try again tomorrow';
     }
     return error.response
       .text()
@@ -19,7 +19,7 @@ export const formatError = (error: unknown) => {
         (message) => `[${error.response.status}]${messageOverride ?? message}`,
       );
   } else if (error instanceof TimeoutError) {
-    return '请求超时';
+    return 'Request timed out';
   } else {
     return `${error}`;
   }

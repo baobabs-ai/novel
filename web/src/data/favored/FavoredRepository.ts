@@ -8,9 +8,9 @@ import { LSKey } from '../LocalStorage';
 
 export const createFavoredRepository = () => {
   const favoreds = useLocalStorage<FavoredList>(LSKey.Favored, {
-    web: [{ id: 'default', title: '默认收藏夹' }],
-    wenku: [{ id: 'default', title: '默认收藏夹' }],
-    local: [{ id: 'default', title: '默认收藏夹' }],
+    web: [{ id: 'default', title: 'Default Favorites' }],
+    wenku: [{ id: 'default', title: 'Default Favorites' }],
+    local: [{ id: 'default', title: 'Default Favorites' }],
   });
 
   let remoteFetched = false;
@@ -28,7 +28,7 @@ export const createFavoredRepository = () => {
   ) => {
     const specificFavoreds = favoreds.value[type];
     if (specificFavoreds.length >= 20) {
-      throw new Error('收藏夹最多只能创建20个');
+      throw new Error('You can only create up to 20 favorites');
     }
     let id: string;
     if (type === 'web') {
@@ -59,7 +59,7 @@ export const createFavoredRepository = () => {
 
   const deleteFavored = async (type: 'web' | 'wenku' | 'local', id: string) => {
     if (id === 'default') {
-      throw new Error('无法删除默认收藏夹');
+      throw new Error('Cannot delete default favorites');
     }
     if (type === 'web') {
       await FavoredApi.deleteFavoredWeb(id);

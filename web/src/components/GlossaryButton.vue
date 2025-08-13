@@ -63,7 +63,7 @@ const updateGlossary = async () => {
 const submitGlossary = () =>
   doAction(
     updateGlossary().then(() => {
-      // 触发组件外的术语表本体更新。有点傻，但够用。
+      // Trigger the update of the glossary body outside the component. A bit silly, but it works.
       for (const key in props.value) {
         delete props.value[key];
       }
@@ -71,7 +71,7 @@ const submitGlossary = () =>
         props.value[key] = glossary.value[key];
       }
     }),
-    '术语表提交',
+    'Glossary submitted',
     message,
   );
 
@@ -117,18 +117,18 @@ const exportGlossary = async (ev: MouseEvent) => {
     ev.target as HTMLElement,
   );
   if (isSuccess) {
-    message.success('导出成功：已复制到剪贴板');
+    message.success('Exported successfully: copied to clipboard');
   } else {
-    message.success('导出失败');
+    message.success('Export failed');
   }
 };
 
 const importGlossary = () => {
   const importedGlossary = Glossary.fromText(importGlossaryRaw.value);
   if (importedGlossary === undefined) {
-    message.error('导入失败：术语表格式不正确');
+    message.error('Import failed: incorrect glossary format');
   } else {
-    message.success('导入成功');
+    message.success('Imported successfully');
     for (const jp in importedGlossary) {
       const zh = importedGlossary[jp];
       glossary.value[jp] = zh;
@@ -148,13 +148,13 @@ const downloadGlossaryAsJsonFile = async (ev: MouseEvent) => {
 
 <template>
   <c-button
-    :label="`术语表[${Object.keys(value).length}]`"
+    :label="`Glossary[${Object.keys(value).length}]`"
     v-bind="$attrs"
     @action="toggleGlossaryModal()"
   />
 
   <c-modal
-    title="编辑术语表"
+    title="Edit Glossary"
     v-model:show="showGlossaryModal"
     :extra-height="120"
   >
@@ -168,9 +168,9 @@ const downloadGlossaryAsJsonFile = async (ev: MouseEvent) => {
           <n-text style="font-size: 12px">{{ gnidHint }}</n-text>
 
           <n-text>
-            使用前务必先阅读
-            <c-a to="/forum/660ab4da55001f583649a621">术语表使用指南</c-a>
-            ，不要滥用术语表。
+            Be sure to read the
+            <c-a to="/forum/660ab4da55001f583649a621">Glossary Usage Guide</c-a>
+            before use, and do not abuse the glossary.
           </n-text>
         </template>
 
@@ -180,11 +180,11 @@ const downloadGlossaryAsJsonFile = async (ev: MouseEvent) => {
             v-model:value="termsToAdd"
             size="small"
             separator="=>"
-            :placeholder="['日文', '中文']"
+            :placeholder="['Japanese', 'English']"
             :input-props="{ spellcheck: false }"
           />
           <c-button
-            label="添加"
+            label="Add"
             :round="false"
             size="small"
             @action="addTerm"
@@ -195,26 +195,26 @@ const downloadGlossaryAsJsonFile = async (ev: MouseEvent) => {
           v-model:value="importGlossaryRaw"
           type="textarea"
           size="small"
-          placeholder="批量导入术语表"
+          placeholder="Batch import glossary"
           :input-props="{ spellcheck: false }"
           :rows="1"
         />
 
         <n-flex align="center" :wrap="false">
           <c-button
-            label="导出"
+            label="Export"
             :round="false"
             size="small"
             @action="exportGlossary"
           />
           <c-button
-            label="导入"
+            label="Import"
             :round="false"
             size="small"
             @action="importGlossary"
           />
           <c-button
-            label="下载json文件"
+            label="Download json file"
             :round="false"
             size="small"
             @action="downloadGlossaryAsJsonFile"
@@ -223,7 +223,7 @@ const downloadGlossaryAsJsonFile = async (ev: MouseEvent) => {
             v-if="whoami.isAdmin"
             secondary
             type="error"
-            label="清空"
+            label="Clear"
             :round="false"
             size="small"
             @action="clearTerm"
@@ -232,7 +232,7 @@ const downloadGlossaryAsJsonFile = async (ev: MouseEvent) => {
         <n-flex align="center" :wrap="false">
           <c-button
             :disabled="deletedTerms.length === 0"
-            label="撤销删除"
+            label="Undo Delete"
             :round="false"
             size="small"
             @action="undoDeleteTerm"
@@ -270,7 +270,7 @@ const downloadGlossaryAsJsonFile = async (ev: MouseEvent) => {
           <n-input
             v-model:value="glossary[wordJp]"
             size="tiny"
-            placeholder="请输入中文翻译"
+            placeholder="Please enter English translation"
             :theme-overrides="{
               border: '0',
               color: 'transprent',
@@ -281,7 +281,7 @@ const downloadGlossaryAsJsonFile = async (ev: MouseEvent) => {
     </n-table>
 
     <template #action>
-      <c-button label="提交" type="primary" @action="submitGlossary()" />
+      <c-button label="Submit" type="primary" @action="submitGlossary()" />
     </template>
   </c-modal>
 </template>

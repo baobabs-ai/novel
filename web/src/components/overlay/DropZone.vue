@@ -5,7 +5,7 @@ import { useEventListener } from '@vueuse/core';
 const showDropZone = ref(false);
 const dragFlag = { isDragStart: false };
 
-// 将文件从操作系统拖拽到浏览器内，不会触发 dragstart 和 dragend 事件
+// Dragging files from the operating system into the browser will not trigger dragstart and dragend events
 useEventListener(document, ['dragenter', 'dragstart', 'dragend'], (e) => {
   if (e.type === 'dragstart') {
     dragFlag.isDragStart = true;

@@ -12,10 +12,10 @@ import org.bson.conversions.Bson
 import org.bson.types.ObjectId
 
 object WebNovelFilter {
-    enum class Type { 全部, 连载中, 已完结, 短篇 }
-    enum class Level { 全部, 一般向, R18 }
-    enum class Translate { 全部, GPT3, Sakura }
-    enum class Sort { 更新, 点击, 相关 }
+    enum class Type { All, Serializing, Finished, ShortStory }
+    enum class Level { All, ForEveryone, R18 }
+    enum class Translate { All, GPT3, Sakura }
+    enum class Sort { Update, Click, Related }
 }
 
 @Serializable
@@ -26,26 +26,26 @@ enum class WebNovelAttention {
     @SerialName("R18")
     R18,
 
-    @SerialName("残酷描写")
-    残酷描写,
+    @SerialName("Cruel Description")
+    CruelDescription,
 
-    @SerialName("暴力描写")
-    暴力描写,
+    @SerialName("Violence Description")
+    ViolenceDescription,
 
-    @SerialName("性描写")
-    性描写,
+    @SerialName("Sexual Description")
+    SexualDescription,
 }
 
 @Serializable
 enum class WebNovelType {
-    @SerialName("连载中")
-    连载中,
+    @SerialName("Serializing")
+    Serializing,
 
-    @SerialName("已完结")
-    已完结,
+    @SerialName("Finished")
+    Finished,
 
-    @SerialName("短篇")
-    短篇,
+    @SerialName("Short Story")
+    ShortStory,
 }
 
 @Serializable
@@ -54,7 +54,7 @@ data class WebNovelListItem(
     @SerialName("bookId")
     val novelId: String,
     val titleJp: String,
-    val titleZh: String?,
+    val titleEn: String?,
     val type: WebNovelType?,
     val attentions: List<WebNovelAttention>,
     val keywords: List<String>,
@@ -80,9 +80,9 @@ class WebNovel(
     val novelId: String,
     val wenkuId: String? = null,
     val titleJp: String,
-    val titleZh: String? = null,
+    val titleEn: String? = null,
     val authors: List<WebNovelAuthor>,
-    val type: WebNovelType = WebNovelType.连载中,
+    val type: WebNovelType = WebNovelType.Serializing,
     val attentions: List<WebNovelAttention> = emptyList(),
     val keywords: List<String> = emptyList(),
     val points: Int?,
@@ -123,7 +123,7 @@ data class WebNovelAuthor(
 @Serializable
 data class WebNovelTocItem(
     val titleJp: String,
-    val titleZh: String?,
+    val titleEn: String?,
     @SerialName("episodeId")
     val chapterId: String?,
     @Contextual val createAt: Instant? = null,

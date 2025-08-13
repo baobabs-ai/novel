@@ -16,12 +16,12 @@ type SmartImportCallback = {
 };
 
 const parseTitle = (title: string) => {
-  // 替换全角空格
+  // Replace full-width spaces
   title.replaceAll('　', ' ');
 
   const irrelevantKeywords = [
-    '特典',
-    '限定', // 例如：【電子書籍限定書き下ろしSS付き】 https://www.amazon.co.jp/zh/dp/B0CJ2G42MK
+    '特典', // bonus
+    '限定', // limited, for example: 【電子書籍限定書き下ろしSS付き】 https://www.amazon.co.jp/zh/dp/B0CJ2G42MK
   ];
 
   const imprintKeywords = [
@@ -64,7 +64,7 @@ const parseTitle = (title: string) => {
       title = title.replace(matched, '');
     } else if (includeImprintKeywords(content)) {
       title = title.replace(matched, '');
-      // 例如：(電撃文庫 か 5-17) https://www.amazon.co.jp/-/zh/dp/4840224072
+      // for example: (電撃文庫 か 5-17) https://www.amazon.co.jp/-/zh/dp/4840224072
       imprint = content.trim().replace(/\s+[\u3040-\u30FF]\s+\d+-\d+/, '');
     }
   }
@@ -80,12 +80,12 @@ const parseTitle = (title: string) => {
 
 const checkIsNovelByTitle = (title: string) => {
   const titleKeywords = [
-    '試し読', // 试读，例如：https://www.amazon.co.jp/dp/B0BTDKR5LZ
-    '分冊版', // 漫画，例如：https://www.amazon.co.jp/dp/B08CRKP52T
-    'コミックライド', // 漫画文库，例如：https://www.amazon.co.jp/dp/B0CGR4GB8H
-    'グラストCOMICS', //  漫画文库，例如：https://www.amazon.co.jp/dp/B09D7DD219
-    'ゼノンコミックス', // 漫画文库，https://www.amazon.co.jp/zh/dp/B09PR85NJG
-    '巻セット', // 系列，例如：https://www.amazon.co.jp/dp/B0CLBTVDLP
+    '試し読', // trial reading, for example: https://www.amazon.co.jp/dp/B0BTDKR5LZ
+    '分冊版', // manga, for example: https://www.amazon.co.jp/dp/B08CRKP52T
+    'コミックライド', // manga bunko, for example: https://www.amazon.co.jp/dp/B0CGR4GB8H
+    'グラストCOMICS', // manga bunko, for example: https://www.amazon.co.jp/dp/B09D7DD219
+    'ゼノンコミックス', // manga bunko, https://www.amazon.co.jp/zh/dp/B09PR85NJG
+    '巻セット', // series, for example: https://www.amazon.co.jp/dp/B0CLBTVDLP
   ];
   if (titleKeywords.some((it) => title.includes(it))) {
     return false;
@@ -95,7 +95,7 @@ const checkIsNovelByTitle = (title: string) => {
 
 const checkIsNovelByDetail = (otherVersion: string[], breadcrumbs: string) => {
   const otherVersionKeywords = [
-    'コミック', // 例如：https://www.amazon.co.jp/dp/B09Z9XB924
+    'コミック', // for example: https://www.amazon.co.jp/dp/B09Z9XB924
   ];
   for (const keyword of otherVersionKeywords) {
     if (otherVersion.some((it) => it.includes(keyword))) {
@@ -104,7 +104,7 @@ const checkIsNovelByDetail = (otherVersion: string[], breadcrumbs: string) => {
   }
 
   const breadcrumbsKeywords = [
-    'コミック', // 例如：https://www.amazon.co.jp/dp/B0C6QLX6MR
+    'コミック', // for example: https://www.amazon.co.jp/dp/B0C6QLX6MR
   ];
   if (breadcrumbsKeywords.some((it) => breadcrumbs.includes(it))) {
     return false;
@@ -154,7 +154,7 @@ const getNovelBySearch = async (
   query: string,
   log: Logger,
 ): Promise<AmazonNovel> => {
-  log(`导入小说 开始搜索\n`);
+  log(`Importing novel, starting search\n`);
   const searchItems = (await search(query))
     .filter(({ title }) => title.includes(query) && checkIsNovelByTitle(title))
     .sort((a, b) => a.title.localeCompare(b.title));
@@ -166,7 +166,7 @@ const getNovelBySearch = async (
     }
     serialAsinSet.add(serialAsin);
 
-    log(`尝试导入小说系列 ${serialAsin}`);
+    log(`Attempting to import novel series ${serialAsin}`);
     const product = await getProduct(asin);
     if (
       product.type !== 'volume' ||
@@ -175,7 +175,7 @@ const getNovelBySearch = async (
         product.volume.breadcrumbs,
       )
     ) {
-      log('检测系列不是小说，跳过\n');
+      log('Detected that the series is not a novel, skipping\n');
       continue;
     }
     return getNovelByAsin(serialAsin);
@@ -185,17 +185,17 @@ const getNovelBySearch = async (
     ({ serialAsin }) => serialAsin === undefined,
   );
   if (volumes.length === 0) {
-    throw Error('搜索结果为空');
+    throw Error('Search results are empty');
   }
 
-  log('导入搜索结果\n');
+  log('Importing search results\n');
   return getNovelFromVolumes(volumes);
 };
 
 const getVolume = async (asin: string) => {
   const product = await getProduct(asin);
   if (product.type !== 'volume') {
-    throw new Error(`ASIN不对应小说:${asin}`);
+    throw new Error(`ASIN does not correspond to a novel: ${asin}`);
   }
   const { title, cover, coverHires, publisher, publishAt } = product.volume;
   const { title: realTitle, imprint } = parseTitle(title);
@@ -225,11 +225,11 @@ export const smartImport = async (
       if (asin === undefined) {
         novel = await getNovelBySearch(urlOrQuery, log);
       } else {
-        log(`导入小说 ${asin}\n`);
+        log(`Importing novel ${asin}\n`);
         novel = await getNovelByAsin(asin);
       }
     } catch (e) {
-      log(`导入小说失败：${e}`);
+      log(`Failed to import novel: ${e}`);
       return;
     }
     const volumesNew = novel.volumes.filter(
@@ -240,12 +240,12 @@ export const smartImport = async (
 
     try {
       const translator = await Translator.create({ id: 'youdao' });
-      const titleZh = await translator.translatePlain(novel.title);
-      const introductionZh = await translator.translatePlain(
+      const titleEn = await translator.translatePlain(novel.title);
+      const introductionEn = await translator.translatePlain(
         novel.introduction,
       );
-      novel.titleZh = titleZh;
-      novel.introduction = introductionZh;
+      novel.titleEn = titleEn;
+      novel.introduction = introductionEn;
     } catch {}
 
     populateNovel(novel);
@@ -265,7 +265,7 @@ export const smartImport = async (
             populateVolume(newVolume);
           })
           .catch((e) => {
-            log(`导入分卷失败 ${asin} ${e}`);
+            log(`Failed to import volume ${asin} ${e}`);
           });
     }),
     5,
@@ -273,9 +273,9 @@ export const smartImport = async (
       const processing = context.promises.length;
       const finished = context.finished;
       const size = volumesNeedPopulate.length;
-      log(`导入分卷[${finished}/${size}] ${processing}本处理中`);
+      log(`Importing volumes [${finished}/${size}] ${processing} in progress`);
     },
   );
 
-  log('\n结束');
+  log('\nFinished');
 };

@@ -16,7 +16,7 @@ defineProps<{ listResult?: Result<WenkuNovelOutlineDto[]> }>();
         <router-link :to="`/wenku/${item.id}`">
           <ImageCard
             :src="item.cover"
-            :title="item.titleZh ? item.titleZh : item.title"
+            :title="item.titleEn ? item.titleEn : item.title"
           />
         </router-link>
       </n-grid-item>

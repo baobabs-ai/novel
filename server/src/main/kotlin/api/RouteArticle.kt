@@ -205,7 +205,7 @@ class ArticleApi(
     }
 
     private fun throwArticleNotFound(): Nothing =
-        throwNotFound("文章不存在")
+        throwNotFound("Article not found")
 
     @Serializable
     data class ArticleDto(
@@ -262,17 +262,17 @@ class ArticleApi(
 
     private fun validateTitle(title: String) {
         if (title.length < 2) {
-            throwBadRequest("标题长度不能少于2个字符")
+            throwBadRequest("Title length cannot be less than 2 characters")
         } else if (title.length > 80) {
-            throwBadRequest("标题长度不能超过80个字符")
+            throwBadRequest("Title length cannot exceed 80 characters")
         }
     }
 
     private fun validateContent(content: String) {
         if (content.length < 2) {
-            throwBadRequest("内容长度不能少于2个字符")
+            throwBadRequest("Content length cannot be less than 2 characters")
         } else if (content.length > 20_000) {
-            throwBadRequest("内容长度不能超过2万个字符")
+            throwBadRequest("Content length cannot exceed 20,000 characters")
         }
     }
 
@@ -305,7 +305,7 @@ class ArticleApi(
         validateContent(content)
 
         if (!(user.role atLeast UserRole.Maintainer) && !articleRepo.isArticleCreateBy(id = id, userId = user.id)) {
-            throwUnauthorized("只有文章作者才有权限编辑")
+            throwUnauthorized("Only the author has permission to edit")
         }
 
         articleRepo.updateTitleAndContent(
