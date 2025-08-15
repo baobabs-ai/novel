@@ -40,7 +40,7 @@ const md = new MarkdownIt({
   linkify: true,
 })
   .use(MarkdownItAnchor)
-  // spoiler会在点击时切换高亮（未点击时是hover高亮）
+  // spoiler will switch to highlight when clicked (hover highlight when not clicked)
   .use(spoiler, {
     tag: 'span',
     attrs: [
@@ -74,7 +74,7 @@ const md = new MarkdownIt({
   })
   .disable(getRules(props.mode));
 
-// 将 class=starRating 渲染为rating 组件
+// Render class=starRating as a rating component
 onMounted(() => {
   const starElements = document.querySelectorAll('.starRating');
   starElements.forEach((starEl) => {

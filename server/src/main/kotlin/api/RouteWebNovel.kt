@@ -93,13 +93,13 @@ fun Route.routeWebNovel() {
                     queryString = loc.query?.ifBlank { null },
                     filterProvider = loc.provider,
                     filterType = when (loc.type) {
-                        1 -> WebNovelFilter.Type.Serializing
-                        2 -> WebNovelFilter.Type.Finished
+                        1 -> WebNovelFilter.Type.Ongoing
+                        2 -> WebNovelFilter.Type.Completed
                         3 -> WebNovelFilter.Type.ShortStory
                         else -> WebNovelFilter.Type.All
                     },
                     filterLevel = when (loc.level) {
-                        1 -> WebNovelFilter.Level.ForEveryone
+                        1 -> WebNovelFilter.Level.ForAllAges
                         2 -> WebNovelFilter.Level.R18
                         else -> WebNovelFilter.Level.All
                     },
@@ -337,7 +337,7 @@ class WebNovelApi(
         val filterLevelAllowed = if (user != null && user.isOldAss()) {
             filterLevel
         } else {
-            WebNovelFilter.Level.ForEveryone
+            WebNovelFilter.Level.ForAllAges
         }
 
         return metadataRepo
@@ -361,7 +361,7 @@ class WebNovelApi(
     ): Page<WebNovelOutlineDto> {
         return metadataRepo
             .listRank(providerId, options)
-            .getOrElse { throwInternalServerError("Failed to get from source site:" + it.message) }
+            .getOrElse { throwInternalServerError("Failed to get from source site: " + it.message) }
             .map { it.asDto() }
     }
 
@@ -461,7 +461,7 @@ class WebNovelApi(
                 if (it is NovelIdShouldBeReplacedException) {
                     throwBadRequest(it.message!!)
                 } else {
-                    throwInternalServerError("Failed to get from source site:" + it.message)
+                    throwInternalServerError("Failed to get from source site: " + it.message)
                 }
             }
         val dto = buildNovelDto(novel, user)
@@ -495,14 +495,14 @@ class WebNovelApi(
     ): ChapterDto {
         validateId(providerId, novelId)
         val novel = metadataRepo.getNovelAndSave(providerId, novelId)
-            .getOrElse { throwInternalServerError("Failed to get from source site:" + it.message) }
+            .getOrElse { throwInternalServerError("Failed to get from source site: " + it.message) }
 
         val toc = novel.toc.filter { it.chapterId != null }
         val currIndex = toc.indexOfFirst { it.chapterId == chapterId }
         if (currIndex == -1) throwInternalServerError("Chapter not in table of contents")
 
         val chapter = chapterRepo.getOrSyncRemote(providerId, novelId, chapterId)
-            .getOrElse { throwInternalServerError("Failed to get from source site:" + it.message) }
+            .getOrElse { throwInternalServerError("Failed to get from source site: " + it.message) }
 
         return ChapterDto(
             titleJp = toc[currIndex].titleJp,

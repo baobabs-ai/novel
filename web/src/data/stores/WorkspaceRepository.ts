@@ -11,7 +11,7 @@ import { LSKey } from '../LocalStorage';
 interface Workspace<T> {
   workers: T[];
   jobs: TranslateJob[];
-  // 为了兼容性，仍使用 uncompletedJobs
+  // For compatibility, still use uncompletedJobs
   uncompletedJobs: TranslateJobRecord[];
 }
 
@@ -143,8 +143,8 @@ export const createSakuraWorkspaceRepository = () =>
   createWorkspaceRepository<SakuraWorker>(
     LSKey.WorkspaceSakura,
     [
-      { id: '共享', endpoint: 'https://sakura-share.one' },
-      { id: '本机', endpoint: 'http://127.0.0.1:8080' },
+      { id: 'Share', endpoint: 'https://sakura-share.one' },
+      { id: 'Local', endpoint: 'http://127.0.0.1:8080' },
       { id: 'AutoDL', endpoint: 'http://127.0.0.1:6006' },
     ],
     (workspace) => {
@@ -166,7 +166,7 @@ export const createSakuraWorkspaceRepository = () =>
         ) === undefined
       ) {
         workspace.value.workers.unshift({
-          id: '共享',
+          id: 'Share',
           endpoint: 'https://sakura-share.one',
         });
       }

@@ -38,7 +38,7 @@ const loadReplies = async (page: number) => {
     pageCount.value = result.value.pageNumber;
     comment.replies = result.value.items;
   } else {
-    message.error('回复加载错误：' + result.error.message);
+    message.error('Error loading replies:' + result.error.message);
   }
 };
 
@@ -55,8 +55,8 @@ function onReplied() {
 
 const copyComment = (comment: Comment1) =>
   copyToClipBoard(comment.content).then((isSuccess) => {
-    if (isSuccess) message.success('复制成功');
-    else message.error('复制失败');
+    if (isSuccess) message.success('Copied successfully');
+    else message.error('Copy failed');
   });
 
 const deleteComment = (commentToDelete: Comment1) =>
@@ -130,7 +130,7 @@ const showInput = ref(false);
     :site="site"
     :draft-id="draftId"
     :parent="comment.id"
-    :placeholder="`回复${comment.user.username}`"
+    :placeholder="`Reply to ${comment.user.username}`"
     style="padding-top: 8px"
     @replied="onReplied()"
     @cancel="showInput = false"

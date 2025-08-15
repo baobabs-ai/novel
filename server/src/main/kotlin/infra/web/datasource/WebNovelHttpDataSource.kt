@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicLong
 
 class TokenBucketRateLimiter(
     private val capacity: Long,
-    private val refillRate: Double  // 令牌/毫秒
+    private val refillRate: Double  // tokens/ms
 ) {
     private val tokens = AtomicLong(capacity)
     private var lastRefillTime = Clock.System.now().epochSeconds

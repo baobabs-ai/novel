@@ -163,7 +163,7 @@ class UserReadHistoryWebApi(
             return
         }
         val novel = metadataRepo.get(providerId, novelId)
-            ?: throwNotFound("小说不存在")
+            ?: throwNotFound("Novel does not exist")
         historyRepo.updateReadHistory(
             userId = user.id,
             novelId = novel.id.toHexString(),
@@ -177,7 +177,7 @@ class UserReadHistoryWebApi(
         novelId: String,
     ) {
         val novel = metadataRepo.get(providerId, novelId)
-            ?: throwNotFound("小说不存在")
+            ?: throwNotFound("Novel does not exist")
         historyRepo.deleteReadHistory(
             userId = user.id,
             novelId = novel.id.toHexString(),

@@ -29,14 +29,14 @@ export const translateWenku = async (
   // Task
   let task: WenkuTranslateTask;
   try {
-    callback.log(`获取未翻译章节 ${volumeId}`);
+    callback.log(`Getting untranslated chapters ${volumeId}`);
     task = await getTranslateTask();
   } catch (e) {
     if (e instanceof DOMException && e.name === 'AbortError') {
-      callback.log(`中止翻译任务`);
+      callback.log(`Aborting translation task`);
       return 'abort';
     } else {
-      callback.log(`发生错误，结束翻译任务：${e}`);
+      callback.log(`An error occurred, ending the translation task: ${e}`);
       return;
     }
   }
@@ -60,7 +60,7 @@ export const translateWenku = async (
 
   callback.onStart(chapters.length);
   if (chapters.length === 0) {
-    callback.log(`没有需要更新的章节`);
+    callback.log(`No chapters to update`);
   }
 
   const forceSeg = level === 'all';
@@ -70,7 +70,7 @@ export const translateWenku = async (
       const cTask = await getChapterTranslateTask(chapterId);
 
       if (!forceSeg && cTask.glossaryId === cTask.oldGlossaryId) {
-        callback.log(`无需翻译`);
+        callback.log(`No translation needed`);
         callback.onChapterSuccess({});
       } else {
         const textsZh = await translator.translate(cTask.paragraphJp, {
@@ -80,7 +80,7 @@ export const translateWenku = async (
           force: forceSeg,
           signal,
         });
-        callback.log('上传章节');
+        callback.log('Uploading chapter');
         const state = await updateChapterTranslation(chapterId, {
           glossaryId: cTask.glossaryId,
           paragraphsZh: textsZh,
@@ -89,13 +89,13 @@ export const translateWenku = async (
       }
     } catch (e) {
       if (e === 'quit') {
-        callback.log(`发生错误，结束翻译任务`);
+        callback.log(`An error occurred, ending the translation task`);
         return;
       } else if (e instanceof DOMException && e.name === 'AbortError') {
-        callback.log(`中止翻译任务`);
+        callback.log(`Aborting translation task`);
         return 'abort';
       } else {
-        callback.log(`发生错误，跳过：${await formatError(e)}`);
+        callback.log(`An error occurred, skipping: ${await formatError(e)}`);
         callback.onChapterFailure();
       }
     }

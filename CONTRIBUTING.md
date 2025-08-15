@@ -1,48 +1,48 @@
-# 贡献代码
+# Contributing Code
 
-感谢您有兴趣为这个项目做出贡献！为了高效协作，请遵循以下规范。
+Thank you for your interest in contributing to this project! To collaborate effectively, please follow these guidelines.
 
-- 在编写代码前，请先通过 Issue 或群组讨论你的变更计划，确保与现有开发方向一致。
-- 提交 Pull Request 时，请保持内容精简，每次聚焦一个独立的修改点，以便快速检视和合入。
-- 如果对当前代码设计有疑问，可以在群组里 @FishHawk 提问。
-- 如果使用 AI 辅助编写，请务必自己检视一遍。
+- Before writing code, please discuss your planned changes via an Issue or in the group to ensure they align with the current development direction.
+- When submitting a Pull Request, please keep it concise and focused on a single change to facilitate quick review and merging.
+- If you have questions about the current code design, you can ask @FishHawk in the group.
+- If you use AI to assist with writing, please be sure to review the code yourself.
 
-## 如何参与前端开发
+## How to Contribute to Frontend Development
 
-网站基于 Vue3 + TypeScript + Vite + [Naive ui](https://www.naiveui.com/zh-CN) 开发。
+The website is developed based on Vue3 + TypeScript + Vite + [Naive ui](https://www.naiveui.com/zh-CN).
 
-首先准备开发环境：
+First, prepare the development environment:
 
 ```bash
 git clone git@github.com:auto-novel/auto-novel.git
 cd web
-pnpm install --frozen-lockfile # 安装依赖
-pnpm prepare                   # 设置Git钩子
+pnpm install --frozen-lockfile # Install dependencies
+pnpm prepare                   # Set up Git hooks
 ```
 
-然后根据你的需要，选择合适的方式启动开发服务器：
+Then, according to your needs, choose the appropriate way to start the development server:
 
 ```bash
-pnpm dev        # 启动开发服务器，连接到机翻站 生产环境 后端服务器
-pnpm dev:local  # 启动开发服务器，连接到 本地启动 的后端服务器，http://localhost:8081
-pnpm dev --host # 启动开发服务器，连接到机翻站 生产环境 后端服务器，同时允许局域网访问，支持使用手机访问调试
+pnpm dev        # Start the development server, connecting to the production environment backend server of the machine translation site
+pnpm dev:local  # Start the development server, connecting to a locally started backend server at http://localhost:8081
+pnpm dev --host # Start the development server, connecting to the production environment backend server of the machine translation site, and allowing LAN access for debugging on mobile phones
 ```
 
-注意，如果开发服务器连接到机翻站**生产环境**后端，请避免在开发过程中污染网站数据库。出于安全考虑，开发环境中屏蔽了上传章节翻译请求。
+Note: If the development server is connected to the **production** backend of the machine translation site, please avoid polluting the website's database during development. For security reasons, requests to upload chapter translations are blocked in the development environment.
 
-## 如何参与后端开发
+## How to Contribute to Backend Development
 
-后端基于 JVM17 + Kotlin + Ktor 开发，推荐使用 IntelliJ IDEA 打开项目。
+The backend is developed based on JVM17 + Kotlin + Ktor. It is recommended to open the project with IntelliJ IDEA.
 
-如果你的修改涉及数据库，你需要自己[部署数据库](https://github.com/auto-novel/auto-novel/blob/main/README.md#部署)并设置环境变量：
+If your changes involve the database, you need to [deploy the database](https://github.com/auto-novel/auto-novel/blob/main/README.md#部署) yourself and set the environment variables:
 
 ```bash
-DB_HOST_TEST=127.0.0.1 # 数据库 IP 地址
+DB_HOST_TEST=127.0.0.1 # Database IP address
 ```
 
-如果你的修改不涉及 Http API，可以使用 kotest 编写单元测试调试，推荐安装 kotest 插件。
+If your changes do not involve the Http API, you can use kotest to write unit tests for debugging. It is recommended to install the kotest plugin.
 
-如果你的修改涉及 Http API，你可以使用 `pnpm dev:local` 启动开发服务器，参考「如何参与前端开发」一节。
+If your changes involve the Http API, you can use `pnpm dev:local` to start the development server. Refer to the "How to Contribute to Frontend Development" section.
 
 > [!NOTE]
-> NixOS 开发环境配置可以参见 [flake.nix](https://gist.github.com/kurikomoe/9dd60f9613e0b8f75c137779d223da4f)。由于使用了 devenv，因此需要 `--impure`。
+> NixOS development environment configuration can be found at [flake.nix](https://gist.github.com/kurikomoe/9dd60f9613e0b8f75c137779d223da4f). Since devenv is used, `--impure` is required.

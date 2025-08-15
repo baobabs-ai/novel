@@ -12,8 +12,8 @@ import org.bson.conversions.Bson
 import org.bson.types.ObjectId
 
 object WebNovelFilter {
-    enum class Type { All, Serializing, Finished, ShortStory }
-    enum class Level { All, ForEveryone, R18 }
+    enum class Type { All, Ongoing, Completed, ShortStory }
+    enum class Level { All, ForAllAges, R18 }
     enum class Translate { All, GPT3, Sakura }
     enum class Sort { Update, Click, Related }
 }
@@ -38,11 +38,11 @@ enum class WebNovelAttention {
 
 @Serializable
 enum class WebNovelType {
-    @SerialName("Serializing")
-    Serializing,
+    @SerialName("Ongoing")
+    Ongoing,
 
-    @SerialName("Finished")
-    Finished,
+    @SerialName("Completed")
+    Completed,
 
     @SerialName("Short Story")
     ShortStory,
@@ -82,7 +82,7 @@ class WebNovel(
     val titleJp: String,
     val titleEn: String? = null,
     val authors: List<WebNovelAuthor>,
-    val type: WebNovelType = WebNovelType.Serializing,
+    val type: WebNovelType = WebNovelType.Ongoing,
     val attentions: List<WebNovelAttention> = emptyList(),
     val keywords: List<String> = emptyList(),
     val points: Int?,

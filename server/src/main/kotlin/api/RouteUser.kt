@@ -33,6 +33,6 @@ class UserApi(
 ) {
     suspend fun listFavored(userId: String): UserFavoredList {
         return userFavoredRepo.getFavoredList(userId)
-            ?: throwNotFound("用户不存在")
+            ?: throwNotFound("User does not exist")
     }
 }

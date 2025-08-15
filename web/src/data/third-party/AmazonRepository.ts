@@ -11,11 +11,11 @@ export const createAmazonRepository = () => {
     });
 
     if (response.status === 404) {
-      throw Error('小说不存在，请删除cookie并使用日本IP重试');
+      throw Error('Novel does not exist, please delete cookies and try again with a Japanese IP');
     } else if (response.status === 0) {
-      throw Error('触发年龄限制，请按说明使用插件');
+      throw Error('Age limit triggered, please use the plugin as instructed');
     } else if (!response.ok) {
-      throw Error(`未知错误，${response.status}`);
+      throw Error(`Unknown error, ${response.status}`);
     }
     const html = await response.text();
     const parser = new DOMParser();

@@ -11,8 +11,8 @@ const emit = defineEmits<{
 }>();
 
 const translationOptions: { label: string; value: TranslatorId }[] = [
-  { label: '百度', value: 'baidu' },
-  { label: '有道', value: 'youdao' },
+  { label: 'Baidu', value: 'baidu' },
+  { label: 'Youdao', value: 'youdao' },
   { label: 'GPT', value: 'gpt' },
   { label: 'Sakura', value: 'sakura' },
 ];

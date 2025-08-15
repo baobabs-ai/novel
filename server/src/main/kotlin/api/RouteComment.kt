@@ -174,10 +174,10 @@ class CommentApi(
         id: String,
     ) {
         if (!(user.role atLeast UserRole.Maintainer) && !commentRepo.isCommentCanRevoke(id = id, userId = user.id)) {
-            throwUnauthorized("只有评论作者才有权限删除")
+            throwUnauthorized("Only the comment author has permission to delete")
         }
         val isDeleted = commentRepo.deleteComment(id)
-        if (!isDeleted) throwNotFound("评论不存在")
+        if (!isDeleted) throwNotFound("Comment does not exist")
     }
 
     suspend fun createComment(
@@ -190,13 +190,13 @@ class CommentApi(
             user.shouldBeOldAss()
         }
         if (content.isBlank()) {
-            throwBadRequest("回复内容不能为空")
+            throwBadRequest("Reply content cannot be empty")
         }
         if (
             parent != null &&
             !commentRepo.increaseNumReplies(parent)
         ) {
-            throwNotFound("回复的评论不存在")
+            throwNotFound("The replied comment does not exist")
         }
 
         if (site.startsWith("article-")) {
@@ -213,7 +213,7 @@ class CommentApi(
     }
 
     private fun throwCommentNotFound(): Nothing =
-        throwNotFound("评论不存在")
+        throwNotFound("Comment does not exist")
 
     suspend fun updateCommentHidden(
         user: User,

@@ -10,10 +10,10 @@ const parseSerial = (doc: Document) => {
       .split('\\n')
       .map((it) => it.trim())
       .forEach((contribution) => {
-        if (contribution.endsWith('(著)')) {
-          authorsSet.add(contribution.replace(/(\(著\))$/, '').trim());
-        } else if (contribution.endsWith('(イラスト)')) {
-          artistsSet.add(contribution.replace(/(\(イラスト\))$/, '').trim());
+        if (contribution.endsWith('(author)')) {
+          authorsSet.add(contribution.replace(/(\(author\))$/, '').trim());
+        } else if (contribution.endsWith('(illustrator)')) {
+          artistsSet.add(contribution.replace(/(\(illustrator\))$/, '').trim());
         }
       });
   });
@@ -21,10 +21,10 @@ const parseSerial = (doc: Document) => {
     doc.getElementsByClassName('series-childAsin-item-details-contributor'),
   ).forEach((element) => {
     const contribution = element.textContent!.trim().replace(/(,)$/, '').trim();
-    if (contribution.endsWith('(著)')) {
-      authorsSet.add(contribution.replace(/(\(著\))$/, '').trim());
-    } else if (contribution.endsWith('(イラスト)')) {
-      artistsSet.add(contribution.replace(/(\(イラスト\))$/, '').trim());
+    if (contribution.endsWith('(author)')) {
+      authorsSet.add(contribution.replace(/(\(author\))$/, '').trim());
+    } else if (contribution.endsWith('(illustrator)')) {
+      artistsSet.add(contribution.replace(/(\(illustrator\))$/, '').trim());
     }
   });
 

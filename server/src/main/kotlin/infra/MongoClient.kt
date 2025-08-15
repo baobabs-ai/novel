@@ -38,7 +38,7 @@ class MongoClient(host: String, port: Int?) {
         override fun deserialize(decoder: Decoder): Instant {
             decoder as BsonDecoder
             return when (val a = decoder.decodeBsonValue()) {
-                is BsonString -> Instant.parse(a.value) // 暂时兼容旧的数据格式
+                is BsonString -> Instant.parse(a.value) // Temporarily compatible with old data formats
                 is BsonDateTime -> Instant.fromEpochMilliseconds(a.value)
                 else -> throw SerializationException("Unsupported reading date")
             }

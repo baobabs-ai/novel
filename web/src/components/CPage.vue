@@ -82,7 +82,7 @@ onKeyDown('ArrowLeft', (e) => {
   if (pageContent.value === undefined) return;
   const page = props.page;
   if (page > 1) {
-    // hacky:防止在编辑搜索栏时跳转
+    // hacky: prevent jumping when editing the search bar
     if (e.target instanceof Element && e.target.tagName === 'INPUT') {
       return;
     }
@@ -95,7 +95,7 @@ onKeyDown('ArrowRight', (e) => {
   if (pageContent.value === undefined) return;
   const page = props.page;
   if (page < pageNumber.value) {
-    // hacky:防止在编辑搜索栏时跳转
+    // hacky: prevent jumping when editing the search bar
     if (e.target instanceof Element && e.target.tagName === 'INPUT') {
       return;
     }
@@ -215,7 +215,7 @@ const loadMore = async () => {
         <n-spin />
       </template>
       <template v-else-if="innerPage >= pageNumber && pageNumber > 1">
-        没有更多了
+        No more
       </template>
     </div>
   </template>

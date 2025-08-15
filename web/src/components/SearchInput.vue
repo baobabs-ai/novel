@@ -21,5 +21,5 @@ const attrs = useAttrs();
     <template #suffix><n-icon :component="SearchOutlined" /></template>
   </n-input>
 
-  <tag-button label="正则" v-model:checked="value.enableRegexMode" />
+  <tag-button label="Regex" v-model:checked="value.enableRegexMode" />
 </template>

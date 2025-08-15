@@ -26,7 +26,7 @@ data class User(
 
 fun User.shouldBeAtLeast(role: UserRole) {
     if (!(this.role atLeast role)) {
-        throwUnauthorized("只有${role.name}及以上的用户才有权限执行此操作")
+        throwUnauthorized("Only users with ${role.name} or higher permission can perform this action")
     }
 }
 
@@ -36,7 +36,7 @@ fun User.isOldAss(): Boolean {
 
 fun User.shouldBeOldAss() {
     if (!isOldAss()) {
-        throwUnauthorized("你还太年轻了")
+        throwUnauthorized("You are too young")
     }
 }
 
@@ -53,7 +53,7 @@ fun Application.authentication(secret: String) = install(Authentication) {
             }
         }
         challenge { _, _ ->
-            call.respond(HttpStatusCode.Unauthorized, "Token不合法或者过期")
+            call.respond(HttpStatusCode.Unauthorized, "Token is illegal or expired")
         }
     }
 }
@@ -98,7 +98,7 @@ private val PostAuthenticationInterceptors = createRouteScopedPlugin(name = "Use
                 ),
             )
             if (user.role === UserRole.Banned) {
-                call.respond(HttpStatusCode.Unauthorized, "用户已被封禁")
+                call.respond(HttpStatusCode.Unauthorized, "User has been banned")
             } else {
                 call.attributes.put(AuthenticatedUserKey, user)
             }

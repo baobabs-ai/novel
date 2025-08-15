@@ -56,9 +56,9 @@ class Kakuyomu(
                 .select("b.widget-workCard-flags > span")
                 .mapNotNull {
                     when (it.text()) {
-                        "残酷描写有り" -> WebNovelAttention.残酷描写
-                        "暴力描写有り" -> WebNovelAttention.暴力描写
-                        "性描写有り" -> WebNovelAttention.性描写
+                        "残酷描写有り" -> WebNovelAttention.CruelDescription
+                        "暴力描写有り" -> WebNovelAttention.ViolenceDescription
+                        "性描写有り" -> WebNovelAttention.SexualDescription
                         else -> null
                     }
                 }
@@ -118,14 +118,14 @@ class Kakuyomu(
 
         val type = when (val status = work.string("serialStatus")) {
             "COMPLETED" -> WebNovelType.Finished
-            "RUNNING" -> WebNovelType.Serializing
+            "RUNNING" -> WebNovelType.Ongoing
             else -> throw RuntimeException("Unable to parse novel type:$status")
         }
 
         val attentions = buildList {
-            if (work.boolean("isCruel")) add(WebNovelAttention.残酷描写)
-            if (work.boolean("isViolent")) add(WebNovelAttention.暴力描写)
-            if (work.boolean("isSexual")) add(WebNovelAttention.性描写)
+            if (work.boolean("isCruel")) add(WebNovelAttention.CruelDescription)
+            if (work.boolean("isViolent")) add(WebNovelAttention.ViolenceDescription)
+            if (work.boolean("isSexual")) add(WebNovelAttention.SexualDescription)
         }
 
         val keywords = work

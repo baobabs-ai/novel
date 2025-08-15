@@ -20,33 +20,33 @@ const parseTitle = (title: string) => {
   title.replaceAll('　', ' ');
 
   const irrelevantKeywords = [
-    '特典', // bonus
-    '限定', // limited, for example: 【電子書籍限定書き下ろしSS付き】 https://www.amazon.co.jp/zh/dp/B0CJ2G42MK
+    'Bonus', // bonus
+    'Limited', // limited, for example: 【電子書籍限定書き下ろしSS付き】 https://www.amazon.co.jp/zh/dp/B0CJ2G42MK
   ];
 
   const imprintKeywords = [
-    '文庫',
+    'Bunko',
     'book',
     'novel',
     'fiction',
     'ノベル',
     'ブックス',
     //
-    '電撃の新文芸',
-    'サーガフォレスト',
-    'ムーンドロップス',
-    '蜜猫ｎｏｖｅｌｓ',
-    'ベリーズファンタジー',
-    'アルファポリス',
-    'アイリスNEO',
-    'メリッサ',
-    'フォーユー出版',
-    '濃蜜ラブルージュ',
-    '講談社タイガ',
-    '集英社文芸単行本',
-    'ストレートエッジ',
-    '講談社ＢＯＸ',
-    '光文社新書',
+    'Dengeki no Shin Bungei',
+    'Saga Forest',
+    'Moon Drops',
+    'Mitsu-neko novels',
+    'Berry\'s Fantasy',
+    'Alphapolis',
+    'Iris NEO',
+    'Melissa',
+    'For You Publishing',
+    'Nomitsu Love Rouge',
+    'Kodansha Taiga',
+    'Shueisha Bungei Tankobon',
+    'Straight Edge',
+    'Kodansha BOX',
+    'Kobunsha Shinsho',
   ];
 
   const includeIrrelevantKeywords = (s: string) =>
@@ -80,12 +80,12 @@ const parseTitle = (title: string) => {
 
 const checkIsNovelByTitle = (title: string) => {
   const titleKeywords = [
-    '試し読', // trial reading, for example: https://www.amazon.co.jp/dp/B0BTDKR5LZ
-    '分冊版', // manga, for example: https://www.amazon.co.jp/dp/B08CRKP52T
-    'コミックライド', // manga bunko, for example: https://www.amazon.co.jp/dp/B0CGR4GB8H
-    'グラストCOMICS', // manga bunko, for example: https://www.amazon.co.jp/dp/B09D7DD219
-    'ゼノンコミックス', // manga bunko, https://www.amazon.co.jp/zh/dp/B09PR85NJG
-    '巻セット', // series, for example: https://www.amazon.co.jp/dp/B0CLBTVDLP
+    'Trial reading', // trial reading, for example: https://www.amazon.co.jp/dp/B0BTDKR5LZ
+    'Split volume version', // manga, for example: https://www.amazon.co.jp/dp/B08CRKP52T
+    'Comic Ride', // manga bunko, for example: https://www.amazon.co.jp/dp/B0CGR4GB8H
+    'Glast COMICS', // manga bunko, for example: https://www.amazon.co.jp/dp/B09D7DD219
+    'Zenon Comics', // manga bunko, https://www.amazon.co.jp/zh/dp/B09PR85NJG
+    'Volume set', // series, for example: https://www.amazon.co.jp/dp/B0CLBTVDLP
   ];
   if (titleKeywords.some((it) => title.includes(it))) {
     return false;

@@ -71,7 +71,7 @@ export class Epub extends BaseFile {
   }
 
   // ==============================
-  // 读取文件内容
+  // Read file content
   // ==============================
 
   private parseProperties(attr: string | null) {
@@ -175,7 +175,7 @@ export class Epub extends BaseFile {
     const navEls = Array.from(doc.getElementsByTagName('nav'));
     const tocNavEl =
       navEls.find((navEl) => navEl.getAttribute('epub:type') === 'toc') ??
-      navEls.find((navEl) => navEl.id === 'toc'); // 为了兼容不标准的epub
+      navEls.find((navEl) => navEl.id === 'toc'); // For compatibility with non-standard epubs
     const tocOlEl = tocNavEl?.querySelector(':scope > ol');
     if (!tocOlEl) throw new Error('Nav toc not exist');
     this.navItems = parseTocList(tocOlEl);
@@ -269,7 +269,7 @@ export class Epub extends BaseFile {
   }
 
   // ==============================
-  // 将内容写入文件
+  // Write content to file
   // ==============================
 
   private fixHrefExtension() {

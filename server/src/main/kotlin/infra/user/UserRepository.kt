@@ -27,8 +27,8 @@ class UserRepository(
         val model = UserDbModel(
             id = ObjectId(),
             username = username,
-            favoredWeb = listOf(UserFavored(id = "default", title = "默认收藏夹")),
-            favoredWenku = listOf(UserFavored(id = "default", title = "默认收藏夹")),
+            favoredWeb = listOf(UserFavored(id = "default", title = "Default Favorites")),
+            favoredWenku = listOf(UserFavored(id = "default", title = "Default Favorites")),
         )
         val userId = userCollection
             .insertOne(model)

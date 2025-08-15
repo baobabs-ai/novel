@@ -59,10 +59,10 @@ class Hameln(
             .selectFirst("td:matches(^$label\$)")!!
             .nextElementSibling()!!
 
-        val title = row("タイトル")
+        val title = row("Title")
             .text()
 
-        val author = row("作者")
+        val author = row("Author")
             .let { el ->
                 WebNovelAuthor(
                     name = el.text(),
@@ -72,46 +72,46 @@ class Hameln(
                 )
             }
 
-        val type = row("話数")
+        val type = row("Number of chapters")
             .text()
             .let {
                 when {
-                    it.startsWith("連載(完結)") -> WebNovelType.已完结
-                    it.startsWith("連載(未完)") -> WebNovelType.连载中
-                    it.startsWith("連載(連載中)") -> WebNovelType.连载中
-                    it.startsWith("短編") -> WebNovelType.短篇
-                    else -> throw RuntimeException("无法解析的小说类型:$it")
+                    it.startsWith("連載(完結)") -> WebNovelType.Completed
+                    it.startsWith("連載(未完)") -> WebNovelType.Ongoing
+                    it.startsWith("連載(連載中)") -> WebNovelType.Ongoing
+                    it.startsWith("短編") -> WebNovelType.ShortStory
+                    else -> throw RuntimeException("Unable to parse novel type:$it")
                 }
             }
 
         val attentions = mutableSetOf<WebNovelAttention>()
         val keywords = mutableListOf<String>()
-        row("原作").select("a").map { it.text() }.forEach {
+        row("Original Work").select("a").map { it.text() }.forEach {
             keywords.add(it)
         }
-        listOf("タグ", "必須タグ")
+        listOf("Tag", "Required Tag")
             .flatMap { row(it).select("a") }
             .map { it.text() }
             .forEach {
                 when (it) {
-                    "残酷な描写" -> attentions.add(WebNovelAttention.残酷描写)
+                    "残酷な描写" -> attentions.add(WebNovelAttention.CruelDescription)
                     "R-15" -> attentions.add(WebNovelAttention.R15)
                     "R-18" -> attentions.add(WebNovelAttention.R18)
                     else -> keywords.add(it)
                 }
             }
 
-        val points = row("総合評価")
+        val points = row("Overall Rating")
             .text()
             .filter { it.isDigit() }
             .toIntOrNull()
 
-        val totalCharacters = row("合計文字数")
+        val totalCharacters = row("Total Characters")
             .text()
             .filter { it.isDigit() }
             .toInt()
 
-        val introduction = row("あらすじ")
+        val introduction = row("Synopsis")
             .text()
 
         val toc = if (doc1.selectFirst("span[itemprop=name]") != null) {
@@ -135,7 +135,7 @@ class Hameln(
         } else {
             listOf(
                 RemoteNovelMetadata.TocItem(
-                    title = "无名",
+                    title = "Untitled",
                     chapterId = "default",
                 )
             )

@@ -68,7 +68,7 @@ export const generateEsIndexWeb = async () => {
       authors: it.authors.map((a: any) => a.name),
       titleJp: it.titleJp,
       titleZh: it.titleZh,
-      type: it.type ?? '连载中',
+      type: it.type ?? 'Serializing',
       attentions: it.attentions ?? [],
       keywords: it.keywords ?? [],
       hasGpt: (it.gpt ?? 0) > 0,
@@ -94,5 +94,5 @@ export const generateEsIndexWeb = async () => {
   }
 
   const stat = await es.count({ index });
-  console.log(`完成 Mongo:${total} ES:${stat.count}`);
+  console.log(`Finished Mongo:${total} ES:${stat.count}`);
 };

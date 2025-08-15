@@ -99,7 +99,7 @@ interface ChatCompletion {
     prompt_tokens: number;
     total_tokens: number;
   };
-  // llamacpp特有
+  // specific to llamacpp
   completion_probabilities?: Array<{
     content: string;
     probs: Array<{

@@ -64,9 +64,9 @@ class WebNovelEsDataSource(
 
                 // Filter type
                 when (filterType) {
-                    WebNovelFilter.Type.连载中 -> WebNovelType.连载中
-                    WebNovelFilter.Type.已完结 -> WebNovelType.已完结
-                    WebNovelFilter.Type.短篇 -> WebNovelType.短篇
+                    WebNovelFilter.Type.Ongoing -> WebNovelType.Ongoing
+                    WebNovelFilter.Type.Completed -> WebNovelType.Completed
+                    WebNovelFilter.Type.ShortStory -> WebNovelType.ShortStory
                     else -> null
                 }?.let {
                     mustQueries.add(term(WebNovelMetadataEsModel::type, it.serialName()))
@@ -74,14 +74,14 @@ class WebNovelEsDataSource(
 
                 // Filter level
                 when (filterLevel) {
-                    WebNovelFilter.Level.一般向 -> mustNotQueries
+                    WebNovelFilter.Level.ForAllAges -> mustNotQueries
                     WebNovelFilter.Level.R18 -> mustQueries
                     else -> null
                 }?.add(
                     terms(
                         WebNovelMetadataEsModel::attentions,
                         WebNovelAttention.R18.serialName(),
-                        WebNovelAttention.性描写.serialName(),
+                        WebNovelAttention.SexualDescription.serialName(),
                     )
                 )
 
@@ -147,17 +147,17 @@ class WebNovelEsDataSource(
                     )
                 }
                 when (filterSort) {
-                    WebNovelFilter.Sort.相关 -> if (queryWords.isEmpty()) {
+                    WebNovelFilter.Sort.Related -> if (queryWords.isEmpty()) {
                         sort {
                             add(WebNovelMetadataEsModel::updateAt)
                         }
                     }
 
-                    WebNovelFilter.Sort.点击 -> sort {
+                    WebNovelFilter.Sort.Click -> sort {
                         add(WebNovelMetadataEsModel::visited)
                     }
 
-                    WebNovelFilter.Sort.更新 -> sort {
+                    WebNovelFilter.Sort.Update -> sort {
                         add(WebNovelMetadataEsModel::updateAt)
                     }
                 }

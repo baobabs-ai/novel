@@ -31,14 +31,14 @@ suspend inline fun ApplicationCall.doOrRespondError(block: () -> Unit) {
     } catch (e: Throwable) {
         val httpMethod = request.httpMethod.value
         val uri = request.uri
-        application.environment.log.warn("已捕获异常 $httpMethod-$uri:", e.message)
+        application.environment.log.warn("Caught exception $httpMethod-$uri:", e.message)
 
         e.printStackTrace()
 
         if (e is HttpException) {
             respond(e.status, e.message)
         } else {
-            respond(HttpStatusCode.InternalServerError, e.message ?: "未知错误")
+            respond(HttpStatusCode.InternalServerError, e.message ?: "Unknown error")
         }
     }
 }

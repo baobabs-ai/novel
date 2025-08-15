@@ -9,14 +9,14 @@ defineProps<{
 
 <template>
   <template v-if="result?.ok">
-    <n-empty v-if="showEmpty && showEmpty(result.value)" description="空列表" />
+    <n-empty v-if="showEmpty && showEmpty(result.value)" description="Empty list" />
     <slot v-else :value="result.value" />
   </template>
 
   <n-result
     v-else-if="result && !result.ok"
     status="error"
-    title="加载错误"
+    title="Loading error"
     :description="result.error.message"
   />
 </template>

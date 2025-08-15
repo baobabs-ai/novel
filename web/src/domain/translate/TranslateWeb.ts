@@ -32,21 +32,21 @@ export const translateWeb = async (
   // Task
   let task: WebTranslateTask;
   try {
-    callback.log('获取翻译任务');
-    // 临时手段解决timeout，等数据库大修完成后删去
+    callback.log('Getting translation task');
+    // Temporary solution to solve timeout, will be removed after database overhaul
     try {
       task = await getTranslateTask();
     } catch (e: unknown) {
-      callback.log('获取翻译任务-延迟10s重试');
+      callback.log('Getting translation task - retrying after 10s delay');
       await delay(10_000, signal);
       task = await getTranslateTask();
     }
   } catch (e) {
     if (e instanceof DOMException && e.name === 'AbortError') {
-      callback.log(`中止翻译任务`);
+      callback.log(`Aborting translation task`);
       return 'abort';
     } else {
-      callback.log(`发生错误，结束翻译任务：${e}`);
+      callback.log(`An error occurred, ending the translation task: ${e}`);
       return;
     }
   }
@@ -78,9 +78,9 @@ export const translateWeb = async (
         if (/^第?[０-９0-9]+話?$/.test(wordJp)) {
           return wordJp.replace('話', '话');
         } else if (wordJp === '閑話') {
-          return '闲话';
+          return 'Idle talk';
         } else if (wordJp === '幕間') {
-          return '幕间';
+          return 'Interlude';
         }
       };
       const tocWordsNeedTranslate = tocWords.filter((wordJp) => {
@@ -138,32 +138,32 @@ export const translateWeb = async (
     const coder = createMetadataCoder();
 
     if (forceMetadata) {
-      callback.log('重新翻译目录');
+      callback.log('Re-translate table of contents');
     }
 
     if (coder.needUpload) {
       if (translator.id === 'gpt') {
-        callback.log('目前GPT翻译目录超级不稳定，跳过');
+        callback.log('Currently, the GPT translation directory is super unstable, skipping');
       } else {
-        callback.log('翻译元数据');
+        callback.log('Translating metadata');
         const textsDst = await translator.translate(coder.encoded, {
           glossary: task.glossary,
           signal,
         });
 
-        callback.log(`上传元数据`);
+        callback.log(`Uploading metadata`);
         await updateMetadataTranslation(coder.recover(textsDst));
       }
     }
   } catch (e) {
     if (e === 'quit') {
-      callback.log(`发生错误，结束翻译任务`);
+      callback.log(`An error occurred, ending the translation task`);
       return;
     } else if (e instanceof DOMException && e.name === 'AbortError') {
-      callback.log(`中止翻译任务`);
+      callback.log(`Aborting translation task`);
       return 'abort';
     } else {
-      callback.log(`发生错误，跳过：${await formatError(e)}`);
+      callback.log(`An error occurred, skipping: ${await formatError(e)}`);
     }
   }
 
@@ -187,7 +187,7 @@ export const translateWeb = async (
 
   callback.onStart(chapters.length);
   if (chapters.length === 0) {
-    callback.log(`没有需要更新的章节`);
+    callback.log(`No chapters to update`);
   }
 
   const forceSeg = level === 'all';
@@ -197,7 +197,7 @@ export const translateWeb = async (
       const cTask = await getChapterTranslateTask(chapterId);
 
       if (!forceSeg && cTask.glossaryId === cTask.oldGlossaryId) {
-        callback.log(`无需翻译`);
+        callback.log(`No translation needed`);
 
         callback.onChapterSuccess({});
       } else {
@@ -208,7 +208,7 @@ export const translateWeb = async (
           force: forceSeg,
           signal,
         });
-        callback.log(`上传章节`);
+        callback.log(`Uploading chapter`);
         const { jp, zh } = await updateChapterTranslation(chapterId, {
           glossaryId: cTask.glossaryId,
           paragraphsZh: textsZh,
@@ -217,13 +217,13 @@ export const translateWeb = async (
       }
     } catch (e) {
       if (e === 'quit') {
-        callback.log(`发生错误，结束翻译任务`);
+        callback.log(`An error occurred, ending the translation task`);
         return;
       } else if (e instanceof DOMException && e.name === 'AbortError') {
-        callback.log(`中止翻译任务`);
+        callback.log(`Aborting translation task`);
         return 'abort';
       } else {
-        callback.log(`发生错误，跳过：${await formatError(e)}`);
+        callback.log(`An error occurred, skipping: ${await formatError(e)}`);
         callback.onChapterFailure();
       }
     }

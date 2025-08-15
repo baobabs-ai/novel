@@ -7,7 +7,7 @@ import util.epub.Navigation
 import util.epub.createEpubXhtml
 import java.nio.file.Path
 
-private const val MISSING_EPISODE_HINT = "该章节缺失。"
+private const val MISSING_EPISODE_HINT = "This chapter is missing."
 
 suspend fun makeEpubFile(
     filePath: Path,
@@ -62,7 +62,7 @@ suspend fun makeEpubFile(
                 it.appendElement("p").appendText(MISSING_EPISODE_HINT)
             } else {
                 chapter.missingTranslations.forEach { id ->
-                    it.appendElement("p").appendText("${id}翻译缺失。")
+                    it.appendElement("p").appendText("${id} translation is missing.")
                         .attr("style", "opacity:0.4;")
                 }
 

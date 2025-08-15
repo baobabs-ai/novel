@@ -75,9 +75,9 @@ class Alphapolis(
             .text()
             .let {
                 when (it) {
-                    "連載中" -> WebNovelType.连载中
-                    "完結" -> WebNovelType.已完结
-                    else -> throw RuntimeException("无法解析的小说类型:$it")
+                    "連載中" -> WebNovelType.Ongoing
+                    "完結" -> WebNovelType.Completed
+                    else -> throw RuntimeException("Unable to parse novel type:$it")
                 }
             }
 
@@ -96,13 +96,13 @@ class Alphapolis(
             .select(".content-tags > .tag")
             .map { it.text() }
 
-        val points = row("累計ポイント")
+        val points = row("Total Points")
             .text()
             .substringBefore("pt")
             .filter { it.isDigit() }
             .toInt()
 
-        val totalCharacters = row("文字数")
+        val totalCharacters = row("Character Count")
             .text()
             .filter { it.isDigit() }
             .toInt()
@@ -181,7 +181,7 @@ class Alphapolis(
         }
         val paragraphs = str.lines().map { it.trimStart() }
         if (paragraphs.size < 5) {
-            throw RuntimeException("章节内容太少，爬取频率太快导致未加载")
+            throw RuntimeException("Chapter content is too short, crawling frequency is too fast and not loaded")
         }
         return RemoteChapter(paragraphs = paragraphs)
     }

@@ -30,7 +30,7 @@ const INDEX_SPECS: { [key: string]: IndexDescription[] } = {
   [MONGO.WEB_READ_HISTORY]: [
     { key: { userId: 1, novelId: 1 }, unique: true },
     { key: { userId: 1, createAt: 1 } },
-    { key: { createAt: 1 }, expireAfterSeconds: 100 * 24 * 3600 }, // 100天
+    { key: { createAt: 1 }, expireAfterSeconds: 100 * 24 * 3600 }, // 100 days
   ],
   [MONGO.WEB_NOVEL]: [
     { key: { providerId: 1, bookId: 1 }, unique: true }, //
@@ -113,6 +113,6 @@ export const ensureMongoIndex = async () => {
   }
 
   if (unmatched.length > 0) {
-    console.log(`警告，索引数量不匹配：${JSON.stringify(unmatched)}`);
+    console.log(`Warning, index count mismatch: ${JSON.stringify(unmatched)}`);
   }
 };
