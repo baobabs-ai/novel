@@ -56,7 +56,7 @@ export const createLocalVolumeRepository = async () => {
       },
     );
     if (chapter === undefined) {
-      throw '章节不存在';
+      throw 'Chapter does not exist';
     }
     const metadata = await dao.updateMetadata(
       id,
@@ -68,7 +68,7 @@ export const createLocalVolumeRepository = async () => {
       },
     );
     if (metadata === undefined) {
-      throw '小说不存在';
+      throw 'Novel does not exist';
     }
     return metadata.toc.filter((it) => it[translatorId] !== undefined).length;
   };

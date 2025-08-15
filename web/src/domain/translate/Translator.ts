@@ -47,7 +47,7 @@ export class Translator {
 
   sakuraModel() {
     if (this.segTranslator instanceof SakuraTranslator) {
-      return this.segTranslator.model?.id ?? '未知';
+      return this.segTranslator.model?.id ?? 'Unknown';
     } else {
       return '';
     }
@@ -80,13 +80,13 @@ export class Translator {
         const size = segs.length;
         for (const [index, [segJp, oldSegZh]] of segs.entries()) {
           const segZh = await this.translateSeg(segJp, {
-            logPrefix: `分段${index + 1}/${size}`,
+            logPrefix: `Segment ${index + 1}/${size}`,
             ...context,
             prevSegs: segsZh,
             oldSegZh,
           });
           if (segJp.length !== segZh.length) {
-            throw new Error('翻译结果行数不匹配。不应当出现，请反馈给站长。');
+            throw new Error('The number of lines in the translation result does not match. This should not happen, please report it to the administrator.');
           }
           segsZh.push(segZh);
         }
@@ -119,17 +119,17 @@ export class Translator {
     glossary = glossary || {};
     oldGlossary = oldGlossary || {};
 
-    // 检测分段是否需要重新翻译
+    // Check if the segment needs to be re-translated
     const segGlossary = filterGlossary(glossary, seg);
     if (!force && oldSegZh !== undefined) {
       const segOldGlossary = filterGlossary(oldGlossary, seg);
       if (isEqual(segGlossary, segOldGlossary)) {
-        this.log(logPrefix + '　术语表无变化，无需翻译');
+        this.log(logPrefix + '　The glossary has not changed, no translation is needed');
         return oldSegZh;
       }
     }
 
-    // 检测是否有分段缓存存在
+    // Check if a segment cache exists
     let cacheKey: string | undefined;
     if (this.segCache) {
       try {
@@ -142,16 +142,16 @@ export class Translator {
         cacheKey = this.segCache.cacheKey(seg, extra);
         const cachedSegOutput = await this.segCache.get(cacheKey);
         if (cachedSegOutput && cachedSegOutput.length === seg.length) {
-          this.log(logPrefix + '　从缓存恢复');
+          this.log(logPrefix + '　Restored from cache');
           return cachedSegOutput;
         }
       } catch (e) {
-        console.error('缓存读取失败');
+        console.error('Failed to read cache');
         console.error(e);
       }
     }
 
-    // 翻译
+    // Translate
     this.log(logPrefix);
     const segOutput = await this.segTranslator.translate(seg, {
       glossary: segGlossary,
@@ -159,10 +159,10 @@ export class Translator {
       signal,
     });
     if (segOutput.length !== seg.length) {
-      throw new Error('分段翻译结果行数不匹配，请反馈给站长');
+      throw new Error('The number of lines in the segmented translation result does not match, please report it to the administrator');
     }
 
-    // 翻译器通常不会保留行首空格，尝试手动恢复
+    // The translator usually does not keep leading spaces, try to restore them manually
     for (let i = 0; i < seg.length; i++) {
       const lineJp = seg[i];
       if (lineJp.trim().length === 0) continue;
@@ -170,12 +170,12 @@ export class Translator {
       segOutput[i] = space + segOutput[i].trimStart();
     }
 
-    // 保存分段缓存
+    // Save segment cache
     if (this.segCache && cacheKey !== undefined) {
       try {
         await this.segCache.save(cacheKey, segOutput);
       } catch (e) {
-        console.error('缓存保存失败');
+        console.error('Failed to save cache');
         console.error(e);
       }
     }
@@ -244,7 +244,7 @@ const emptyLineFilterWrapper = async (
   const oldTextZhFiltered: string[] = [];
   for (let i = 0; i < textJp.length; i++) {
     const lineJp = textJp[i].replace(/\r?\n|\r/g, '');
-    if (!(lineJp.trim() === '' || lineJp.startsWith('<图片>'))) {
+    if (!(lineJp.trim() === '' || lineJp.startsWith('<Image>'))) {
       textJpFiltered.push(lineJp);
       if (oldTextZh !== undefined) {
         const lineZh = oldTextZh[i];
@@ -261,7 +261,7 @@ const emptyLineFilterWrapper = async (
   const recoveredTextZh: string[] = [];
   for (const lineJp of textJp) {
     const realLineJp = lineJp.replace(/\r?\n|\r/g, '');
-    if (realLineJp.trim() === '' || realLineJp.startsWith('<图片>')) {
+    if (realLineJp.trim() === '' || realLineJp.startsWith('<Image>')) {
       recoveredTextZh.push(lineJp);
     } else {
       const outputLine = textZh.shift();

@@ -19,7 +19,7 @@ export const runCatching = <T>(callback: Promise<T>): Promise<Result<T>> => {
       if (error instanceof HTTPError) {
         let messageOverride: string | null = null;
         if (error.response.status === 429) {
-          messageOverride = '操作额度耗尽，等明天再试吧';
+          messageOverride = 'Operation limit exhausted, please try again tomorrow';
         }
         return error.response
           .text()
@@ -27,7 +27,7 @@ export const runCatching = <T>(callback: Promise<T>): Promise<Result<T>> => {
             Err(`[${error.response.status}]${messageOverride ?? message}`),
           );
       } else if (error instanceof TimeoutError) {
-        return Err('请求超时');
+        return Err('Request timed out');
       } else {
         return Err(`${error}`);
       }

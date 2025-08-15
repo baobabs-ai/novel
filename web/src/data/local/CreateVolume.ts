@@ -12,7 +12,7 @@ export const createVolume = async (
 ) => {
   const id = file.name;
   if ((await dao.getMetadata(id)) !== undefined) {
-    throw Error('小说已经存在');
+    throw Error('Novel already exists');
   }
 
   const chapters: { chapterId: string; paragraphs: string[] }[] = [];

@@ -23,7 +23,7 @@ export const parseFile = async (
   allowExts = ['epub', 'txt', 'srt'],
 ) => {
   const ext = file.name.split('.').pop()?.toLowerCase();
-  if (ext === undefined) throw '无法获取文件后缀名';
+  if (ext === undefined) throw 'Unable to get file extension';
   if (allowExts.includes(ext)) {
     try {
       if (ext === 'txt') {
@@ -34,8 +34,8 @@ export const parseFile = async (
         return await Srt.fromFile(file);
       }
     } catch (e) {
-      throw `无法解析${ext.toUpperCase()}文件，因为:${e}`;
+      throw `Unable to parse ${ext.toUpperCase()} file, because: ${e}`;
     }
   }
-  throw '不支持的文件格式';
+  throw 'Unsupported file format';
 };

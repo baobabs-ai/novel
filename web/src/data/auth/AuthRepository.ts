@@ -31,21 +31,21 @@ export const createAuthRepository = () => {
       if (!auth.profile) return '';
 
       const roleToString = {
-        admin: '管理员',
-        trusted: '信任用户',
-        member: '普通用户',
-        restricted: '受限用户',
-        banned: '封禁用户',
+        admin: 'Administrator',
+        trusted: 'Trusted User',
+        member: 'Normal User',
+        restricted: 'Restricted User',
+        banned: 'Banned User',
       };
       return (
         roleToString[auth.profile.role] ??
-        '未知用户' + (auth.adminMode ? '+' : '')
+        'Unknown User' + (auth.adminMode ? '+' : '')
       );
     };
 
     return {
       user: {
-        username: profile?.username ?? '未登录',
+        username: profile?.username ?? 'Not logged in',
         role: buildRoleLabel(authData.value),
         createAt: profile?.createdAt ?? Date.now() / 1000,
       },
@@ -85,7 +85,7 @@ export const createAuthRepository = () => {
     });
 
   const refreshIfNeeded = () => {
-    // 清空过期 Access Token
+    // Clear expired Access Token
     if (
       authData.value.profile &&
       Date.now() > authData.value.profile.expiredAt * 1000
@@ -93,14 +93,14 @@ export const createAuthRepository = () => {
       authData.value.profile = undefined;
     }
 
-    // 刷新 Access Token，冷却时间为1小时
+    // Refresh Access Token, cooldown is 1 hour
     const cooldown = 3600 * 1000;
     const sinceIssuedAt = Date.now() - (authData.value.profile?.issuedAt ?? 0);
     if (sinceIssuedAt < cooldown) {
       return;
     }
     return refresh().catch(async (e) => {
-      console.warn('更新授权失败：' + (await formatError(e)));
+      console.warn('Failed to update authorization:' + (await formatError(e)));
     });
   };
 

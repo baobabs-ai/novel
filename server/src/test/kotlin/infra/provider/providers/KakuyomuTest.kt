@@ -21,29 +21,29 @@ class KakuyomuTest : DescribeSpec(), KoinTest {
 
     init {
         describe("getRank") {
-            it("常规") {
-                provider.getRank(mapOf("genre" to "综合", "range" to "每周"))
+            it("Normal") {
+                provider.getRank(mapOf("genre" to "Comprehensive", "range" to "Weekly"))
             }
         }
 
         describe("getMetadata") {
-            it("常规") {
+            it("Normal") {
                 // https://kakuyomu.jp/works/1177354054892870623
                 val metadata = provider.getMetadata("1177354054892870623")
                 metadata.title.shouldBe("転生七女ではじめる異世界ライフ 〜万能魔力があれば貴族社会も余裕で生きられると聞いたのですが？！〜")
                 metadata.authors.first().name.shouldBe("四葉夕卜")
                 metadata.authors.first().link.shouldBe("https://kakuyomu.jp/users/yutoyotsuba")
-                metadata.type.shouldBe(WebNovelType.连载中)
-                metadata.attentions.shouldBe(listOf(WebNovelAttention.残酷描写))
+                metadata.type.shouldBe(WebNovelType.Ongoing)
+                metadata.attentions.shouldBe(listOf(WebNovelAttention.CruelDescription))
                 metadata.keywords.shouldContain("マイペース女主人公")
-                metadata.toc[0].title.shouldBe("第１章　アトウッド家")
+                metadata.toc[0].title.shouldBe("Chapter 1 Atwood Family")
                 metadata.toc[0].chapterId.shouldBeNull()
                 metadata.toc[0].createAt.shouldBeNull()
-                metadata.toc[1].title.shouldBe("プロローグ")
+                metadata.toc[1].title.shouldBe("Prologue")
                 metadata.toc[1].chapterId.shouldBe("1177354054892870701")
                 metadata.toc[1].createAt.shouldBe(Instant.parse("2019-12-10T03:00:12Z"))
             }
-            it("多级目录") {
+            it("Multi-level directory") {
                 // https://kakuyomu.jp/works/16816452218603293395
                 val metadata = provider.getMetadata("16816452218603293395")
                 metadata.toc[0].title.shouldBe("高天原の神々とまつろわぬ者たち")
@@ -56,7 +56,7 @@ class KakuyomuTest : DescribeSpec(), KoinTest {
                 metadata.toc[2].chapterId.shouldBe("16816452218603528179")
                 metadata.toc[2].createAt.shouldBe(Instant.parse("2021-02-13T08:47:34Z"))
             }
-            it("神奇格式，标题没了") {
+            it("Strange format, title is gone") {
                 // https://kakuyomu.jp/works/1177354054891338293
                 val metadata = provider.getMetadata("1177354054891338293")
                 metadata.title.shouldBe("君は死ねない灰かぶりの魔女")
@@ -64,7 +64,7 @@ class KakuyomuTest : DescribeSpec(), KoinTest {
         }
 
         describe("getEpisode") {
-            it("常规") {
+            it("Normal") {
                 // https://kakuyomu.jp/works/16817139555217983105/episodes/16817139555218610896
                 val episode = provider.getChapter("16817139555217983105", "16817139555218610896")
                 episode.paragraphs.first().shouldBe("「あ～あ、女の子と甘酸っぱい青春を送りたいなぁ！」")

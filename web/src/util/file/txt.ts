@@ -24,10 +24,10 @@ export class Txt extends BaseFile {
       if (text !== undefined) break;
     }
     if (text === undefined) {
-      throw '未知编码';
+      throw 'Unknown encoding';
     }
 
-    // 修复换行符格式
+    // Fix newline format
     text = text.replaceAll('\r\n', '\n').replaceAll('\r', '\n');
 
     this.text = text;

@@ -65,7 +65,7 @@ class WebNovelFavoredRepository(
         @Serializable
         data class NovelWithContext(
             val novel: WebNovel,
-            val favoredId: String, // 小说所属的收藏夹ID
+            val favoredId: String, // The ID of the favorites folder to which the novel belongs
         )
         @Serializable
         data class PageModel(
@@ -87,7 +87,7 @@ class WebNovelFavoredRepository(
             FavoredNovelListSort.UpdateAt -> descending(WebNovelFavoriteDbModel::updateAt.field())
         }
         
-        // 搜索字符的筛选条件
+        // Filter condition for search string
         val novelFilters = mutableListOf<Bson>()
         val queryKeywords = mutableListOf<String>()
         if (!queryString.isNullOrBlank()) {
@@ -97,7 +97,7 @@ class WebNovelFavoredRepository(
                 if (token.startsWith('>') || token.startsWith('<')) {
                     val number = token.substring(1).toIntOrNull()
                     if (number != null) {
-                        // 使用 $expr 和聚合操作符 $size 来动态比较数组长度
+                        // Use $expr and the $size aggregation operator to dynamically compare array lengths
                         val operator = if (token.startsWith('>')) "\$gt" else "\$lt"
                         val exprFilter = BsonDocument(
                             "\$expr",
@@ -105,7 +105,7 @@ class WebNovelFavoredRepository(
                                 operator,
                                 BsonArray(
                                     listOf(
-                                        BsonDocument("\$size", BsonString("\$novel.toc")), // 获取 toc 数组的长度
+                                        BsonDocument("\$size", BsonString("\$novel.toc")), // Get the length of the toc array
                                         BsonInt32(number)
                                     )
                                 )
@@ -147,24 +147,24 @@ class WebNovelFavoredRepository(
             novelFilters.add(Filters.and(keywordFilters))
         }
 
-        // 平台来源的筛选条件
+        // Filter condition for platform source
         if (filterProvider.isNotEmpty()) {
             novelFilters.add(Filters.`in`("novel.${WebNovel::providerId.field()}", filterProvider))
         }
 
-        // 连载状态类型的筛选条件
-        if (filterType != WebNovelFilter.Type.全部) {
+        // Filter condition for serialization status type
+        if (filterType != WebNovelFilter.Type.All) {
             novelFilters.add(eq("novel.${WebNovel::type.field()}", WebNovelType.valueOf(filterType.name)))
         }
 
-        // 限制等级的筛选条件
+        // Filter condition for rating
         when (filterLevel) {
-            WebNovelFilter.Level.一般向 -> novelFilters.add(Filters.ne("novel.${WebNovel::attentions.field()}", WebNovelAttention.R18))
+            WebNovelFilter.Level.ForAllAges -> novelFilters.add(Filters.ne("novel.${WebNovel::attentions.field()}", WebNovelAttention.R18))
             WebNovelFilter.Level.R18 -> novelFilters.add(Filters.eq("novel.${WebNovel::attentions.field()}", WebNovelAttention.R18))
             else -> {}
         }
 
-        // 翻译状态的筛选条件
+        // Filter condition for translation status
         when (filterTranslate) {
             WebNovelFilter.Translate.GPT3 -> novelFilters.add(Filters.gt("novel.${WebNovel::gpt.field()}", 0L))
             WebNovelFilter.Translate.Sakura -> novelFilters.add(Filters.gt("novel.${WebNovel::sakura.field()}", 0L))
@@ -214,7 +214,7 @@ class WebNovelFavoredRepository(
             Page(
                 items = doc.items.map { novelWithContext ->
                     val favored = if (favoredId == null) {
-                        // favoredId为null时的模式为查询所有收藏夹，这时把查询小说的收藏夹发送回去
+                        // When favoredId is null, the mode is to query all favorites, and at this time, send back the favorites of the queried novel
                         novelWithContext.favoredId
                     } else {
                         null

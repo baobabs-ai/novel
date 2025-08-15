@@ -51,33 +51,33 @@ class Novelup(
             .text()
             .let {
                 when (it) {
-                    "連載中" -> WebNovelType.连载中
-                    "完結済" -> WebNovelType.已完结
-                    else -> throw RuntimeException("无法解析的小说类型:$it")
+                    "連載中" -> WebNovelType.Ongoing
+                    "完結済" -> WebNovelType.Completed
+                    else -> throw RuntimeException("Unable to parse novel type:$it")
                 }
             }
 
-        val attentions = row("セルフレイティング")
+        val attentions = row("Self-rating")
             .textNodes()
             .mapNotNull {
                 when (it.text().trim()) {
-                    "残酷描写あり" -> WebNovelAttention.残酷描写
-                    "暴力描写あり" -> WebNovelAttention.暴力描写
-                    "性的表現あり" -> WebNovelAttention.性描写
+                    "残酷描写あり" -> WebNovelAttention.CruelDescription
+                    "暴力描写あり" -> WebNovelAttention.ViolenceDescription
+                    "性的表現あり" -> WebNovelAttention.SexualDescription
                     else -> null
                 }
             }
 
-        val keywords = row("タグ")
+        val keywords = row("Tag")
             .children()
             .map { it.text() }
 
-        val points = row("応援ポイント")
+        val points = row("Support points")
             .text()
             .filter { it.isDigit() }
             .toInt()
 
-        val totalCharacters = row("文字数")
+        val totalCharacters = row("Character Count")
             .text()
             .filter { it.isDigit() }
             .toInt()

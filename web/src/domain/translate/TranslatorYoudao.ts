@@ -23,7 +23,7 @@ export class YoudaoTranslator implements SegmentTranslator {
       await this.api.rlog();
       await this.api.refreshKey();
     } catch (e) {
-      this.log('无法获得Key，使用默认值');
+      this.log('Unable to get key, using default value');
     }
     return this;
   }
@@ -58,7 +58,7 @@ export class YoudaoTranslator implements SegmentTranslator {
     );
 
     if (decodedJson === undefined) {
-      this.log(`　错误：${decoded}`);
+      this.log(`　Error: ${decoded}`);
       throw 'quit';
     } else {
       try {
@@ -67,7 +67,7 @@ export class YoudaoTranslator implements SegmentTranslator {
         );
         return result;
       } catch (e) {
-        this.log(`　错误：${decoded}`);
+        this.log(`　Error: ${decoded}`);
         throw 'quit';
       }
     }

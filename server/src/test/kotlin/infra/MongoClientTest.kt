@@ -16,7 +16,7 @@ class MongoClientTest : DescribeSpec(), KoinTest {
     private val mongo by inject<MongoClient>()
 
     init {
-        describe("临时测试") {
+        describe("Temporary Test") {
             val userFavoredWebCollection =
                 mongo.database.getCollection<WebNovelFavoriteDbModel>(
                     MongoCollectionNames.WEB_FAVORITE,

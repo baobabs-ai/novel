@@ -122,7 +122,7 @@ class Syosetu(
                     ?.forEach {
                         when (it) {
                             "R15" -> attentions.add(WebNovelAttention.R15)
-                            "残酷な描写あり" -> attentions.add(WebNovelAttention.残酷描写)
+                            "残酷な描写あり" -> attentions.add(WebNovelAttention.CruelDescription)
                             else -> keywords.add(it)
                         }
                     }
@@ -167,7 +167,7 @@ class Syosetu(
             .selectFirst("dt:containsOwn(${label})")
             ?.nextElementSibling()
 
-        val author = row("作者名")!!
+        val author = row("Author Name")!!
             .let { el ->
                 WebNovelAuthor(
                     name = el.text(),
@@ -179,8 +179,8 @@ class Syosetu(
             .text()
             .let {
                 when (it) {
-                    "完結済" -> WebNovelType.Finished
-                    "連載中" -> WebNovelType.Serializing
+                    "完結済" -> WebNovelType.Completed
+                    "連載中" -> WebNovelType.Ongoing
                     "短編" -> WebNovelType.ShortStory
                     else -> throw RuntimeException("Unable to parse novel type:$it")
                 }
@@ -188,13 +188,13 @@ class Syosetu(
 
         val attentions = mutableSetOf<WebNovelAttention>()
         val keywords = mutableListOf<String>()
-        row("キーワード")
+        row("Keywords")
             ?.text()
             ?.split(" ")
             ?.forEach {
                 when (it) {
                     "R15" -> attentions.add(WebNovelAttention.R15)
-                    "残酷な描写あり" -> attentions.add(WebNovelAttention.残酷描写)
+                    "残酷な描写あり" -> attentions.add(WebNovelAttention.CruelDescription)
                     else -> keywords.add(it)
                 }
             }
@@ -206,17 +206,17 @@ class Syosetu(
                 else throw RuntimeException("Unable to parse novel tag:$it")
             }
 
-        val points = row("総合評価")
+        val points = row("Overall Rating")
             ?.text()
             ?.filter { it.isDigit() }
             ?.toIntOrNull()
 
-        val totalCharacters = row("文字数")!!
+        val totalCharacters = row("Character Count")!!
             .text()
             .filter { it.isDigit() }
             .toInt()
 
-        val introduction = row("あらすじ")!!
+        val introduction = row("Synopsis")!!
             .text()
 
         val toc = if (doc1.selectFirst("div.p-eplist") == null) {
@@ -291,7 +291,7 @@ class Syosetu(
                 .firstElementChild()
                 ?.firstElementChild()
                 ?.takeIf { it.tagName() == "img" }
-                ?.let { "<image>https:${it.attr("src")}" }
+                ?.let { "<Image>https:${it.attr("src")}" }
                 ?: p.text()
         }
         return RemoteChapter(paragraphs = paragraphs)

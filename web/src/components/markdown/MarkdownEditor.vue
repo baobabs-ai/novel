@@ -21,7 +21,7 @@ const value = defineModel<string>('value', { required: true });
 useEventListener(window, 'beforeunload', (e) => {
   if (value.value.trim()) {
     e.preventDefault();
-    return '有未保存的编辑，确定要离开吗？';
+    return 'There are unsaved edits, are you sure you want to leave?';
   }
 });
 
@@ -33,7 +33,7 @@ const onTabUpdate = (value: number) => {
 };
 
 // ==============================
-// 草稿
+// Draft
 // ==============================
 
 const createdAt = Date.now();
@@ -103,11 +103,11 @@ const elEditor = useTemplateRef('editor');
           />
         </div>
       </n-tab-pane>
-      <n-tab-pane tab="预览" :name="1">
+      <n-tab-pane tab="Preview" :name="1">
         <div style="padding: 0px 16px">
           <MarkdownView
             :mode="mode"
-            :source="(value as string) || '没有可预览的内容'"
+            :source="(value as string) || 'No content to preview'"
           />
         </div>
       </n-tab-pane>

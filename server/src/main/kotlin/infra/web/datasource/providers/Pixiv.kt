@@ -74,7 +74,7 @@ class Pixiv(
             return RemoteNovelMetadata(
                 title = title,
                 authors = listOf(author),
-                type = WebNovelType.短篇,
+                type = WebNovelType.ShortStory,
                 keywords = keywords,
                 attentions = attentions,
                 points = null,
@@ -82,7 +82,7 @@ class Pixiv(
                 introduction = introduction,
                 toc = listOf(
                     RemoteNovelMetadata.TocItem(
-                        title = "无名",
+                        title = "Untitled",
                         chapterId = chapterId,
                     )
                 ),
@@ -151,11 +151,11 @@ class Pixiv(
                 keywords.addAll(keywordsBuffer)
 
                 if (arr1.size < 30) {
-                    // 只有一页
+                    // Only one page
                     return RemoteNovelMetadata(
                         title = title,
                         authors = listOf(author),
-                        type = WebNovelType.连载中,
+                        type = WebNovelType.Ongoing,
                         keywords = keywords,
                         attentions = attentions,
                         points = null,
@@ -189,7 +189,7 @@ class Pixiv(
             return RemoteNovelMetadata(
                 title = title,
                 authors = listOf(author),
-                type = WebNovelType.连载中,
+                type = WebNovelType.Ongoing,
                 keywords = keywords,
                 attentions = attentions,
                 points = null,
@@ -224,7 +224,7 @@ class Pixiv(
     private fun cleanFormat(line: String): String {
         return line
             .replace(rubyPattern, "$1")
-            .replace(chapterPattern, "章节：$1")
+            .replace(chapterPattern, "Chapter:$1")
             .replace("[newpage]", "")
     }
 
@@ -242,7 +242,7 @@ class Pixiv(
             if (imageUrl == null) {
                 cleanFormat(line)
             } else {
-                "<图片>${imageUrl}"
+                "<Image>${imageUrl}"
             }
         }
         return RemoteChapter(paragraphs = paragraphs)

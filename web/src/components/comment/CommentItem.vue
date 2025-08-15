@@ -28,19 +28,19 @@ const blockUserCommentRepository = Locator.blockUserCommentRepository();
 const options = computed(() => {
   const options = [
     {
-      label: '复制',
+      label: 'Copy',
       key: 'copy',
     },
   ];
   if (whoami.value.asAdmin) {
     if (comment.hidden) {
       options.push({
-        label: '解除隐藏',
+        label: 'Unhide',
         key: 'unhide',
       });
     } else {
       options.push({
-        label: '隐藏',
+        label: 'Hide',
         key: 'hide',
       });
     }
@@ -51,12 +51,12 @@ const options = computed(() => {
     )
   ) {
     options.push({
-      label: '解除屏蔽',
+      label: 'Unblock',
       key: 'unblock',
     });
   } else {
     options.push({
-      label: '屏蔽用户',
+      label: 'Block user',
       key: 'block',
     });
   }
@@ -107,7 +107,7 @@ const isBlocked = computed(() => {
 
     <c-button
       v-if="topLevel && whoami.allowAdvancedFeatures"
-      label="回复"
+      label="Reply"
       :icon="CommentOutlined"
       require-login
       quaternary
@@ -119,8 +119,8 @@ const isBlocked = computed(() => {
 
     <c-button-confirm
       v-if="isDeletable"
-      hint="真的要删除评论吗？"
-      label="删除"
+      hint="Are you sure you want to delete this comment?"
+      label="Delete"
       :icon="DeleteOutlined"
       require-login
       quaternary
@@ -138,8 +138,8 @@ const isBlocked = computed(() => {
   </n-flex>
 
   <n-card embedded :bordered="false" size="small" style="margin-top: 2px">
-    <n-text v-if="comment.hidden" depth="3">[隐藏]</n-text>
-    <n-text v-else-if="isBlocked" depth="3">[屏蔽]</n-text>
+    <n-text v-if="comment.hidden" depth="3">[Hidden]</n-text>
+    <n-text v-else-if="isBlocked" depth="3">[Blocked]</n-text>
     <MarkdownView
       v-else
       mode="comment"

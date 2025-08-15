@@ -22,7 +22,7 @@ const content = ref('');
 
 const reply = async () => {
   if (content.value.length === 0) {
-    message.info('回复内容不能为空');
+    message.info('Reply content cannot be empty');
     return;
   }
 
@@ -37,7 +37,7 @@ const reply = async () => {
         content.value = '';
         emit('replied');
       }),
-    '回复发布',
+    'Reply posted',
     message,
   );
 };
@@ -55,13 +55,13 @@ const reply = async () => {
     />
     <n-flex style="margin-top: 10px">
       <c-button
-        label="发布"
+        label="Post"
         require-login
         :round="false"
         type="primary"
         @action="reply()"
       />
-      <c-button label="取消" :round="false" @action="emit('cancel')" />
+      <c-button label="Cancel" :round="false" @action="emit('cancel')" />
     </n-flex>
   </div>
 </template>

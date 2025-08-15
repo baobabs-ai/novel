@@ -17,7 +17,7 @@ class AlphapolisTest : DescribeSpec(), KoinTest {
 
     init {
         describe("getMetadata") {
-            it("常规") {
+            it("Normal") {
                 // https://www.alphapolis.co.jp/novel/638978238/525733370
                 val metadata = provider.getMetadata("638978238-525733370")
                 metadata.title.shouldStartWith("今までの功績を改竄され")
@@ -28,7 +28,7 @@ class AlphapolisTest : DescribeSpec(), KoinTest {
                 metadata.toc[0].title.shouldBe("第一話")
                 metadata.toc[0].chapterId.shouldBe("6857738")
             }
-            it("折叠") {
+            it("Collapsed") {
                 // https://www.alphapolis.co.jp/novel/761693105/571330821
                 provider.getMetadata("761693105-571330821")
             }
@@ -39,12 +39,12 @@ class AlphapolisTest : DescribeSpec(), KoinTest {
         }
 
         describe("getEpisode") {
-            it("常规") {
+            it("Normal") {
                 // https://www.alphapolis.co.jp/novel/638978238/525733370/episode/6857739
                 val episode = provider.getChapter("638978238-525733370", "6857739")
                 episode.paragraphs.getOrNull(1).shouldBe("「これからどうすっかなぁ…」")
             }
-            it("ruby标签") {
+            it("ruby tag") {
                 // https://www.alphapolis.co.jp/novel/606793319/240579102/episode/5375163
                 val episode = provider.getChapter("606793319-240579102", "5375163")
                 episode.paragraphs.first().shouldBe("海斗の携帯は瑛人の顔に当たり、地面に落ちる")

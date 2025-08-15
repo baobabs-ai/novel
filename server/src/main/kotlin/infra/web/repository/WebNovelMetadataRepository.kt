@@ -173,7 +173,7 @@ class WebNovelMetadataRepository(
     ): Result<WebNovel> {
         val local = get(providerId, novelId)
 
-        // 不在数据库中
+        // Not in the database
         if (local == null) {
             return getRemote(providerId, novelId)
                 .onSuccess {
@@ -183,12 +183,12 @@ class WebNovelMetadataRepository(
                 }
         }
 
-        // 在数据库中，暂停更新
+        // In the database, update paused
         if (local.pauseUpdate) {
             return Result.success(local)
         }
 
-        // 在数据库中，没有过期
+        // In the database, not expired
         val sinceLastSync = Clock.System.now() - local.syncAt
         val expiredDuration = expiredMinutes?.minutes
             ?: if (providerId == Pixiv.id) {
@@ -201,10 +201,10 @@ class WebNovelMetadataRepository(
             return Result.success(local)
         }
 
-        // 在数据库中，过期，合并
+        // In the database, expired, merge
         val remoteNovel = getRemote(providerId, novelId)
             .getOrElse {
-                // 无法更新，大概率小说被删了
+                // Unable to update, the novel was probably deleted
                 return Result.success(local)
             }
         val merged = mergeNovel(
@@ -434,7 +434,7 @@ private fun mergeTocUnstable(
         return MergedResult(
             simpleMergeToc(remoteToc, localToc),
             true,
-            "有未知章节被删了"
+            "Some unknown chapters have been deleted"
         )
     } else {
         val hasEpisodeTitleChanged = localIdToTitle.any { (eid, localTitle) ->
@@ -444,7 +444,7 @@ private fun mergeTocUnstable(
         return MergedResult(
             simpleMergeToc(remoteToc, localToc),
             remoteIdToTitle.size != localIdToTitle.size,
-            if (hasEpisodeTitleChanged) "有章节标题变化" else null
+            if (hasEpisodeTitleChanged) "Some chapter titles have changed" else null
         )
     }
 }
@@ -460,7 +460,7 @@ private fun mergeTocStable(
     return MergedResult(
         simpleMergeToc(remoteToc, localToc),
         !(noEpAdded && noEpDeleted),
-        if (noEpDeleted) null else "有章节被删了"
+        if (noEpDeleted) null else "Some chapters have been deleted"
     )
 }
 

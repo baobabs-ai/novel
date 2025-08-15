@@ -63,19 +63,19 @@ defineExpose({
 <template>
   <n-card
     v-show="show"
-    :title="`${title} [${running ? '运行中' : '已结束'}]`"
+    :title="`${title} [${running ? 'Running' : 'Finished'}]`"
     embedded
     :bordered="false"
   >
     <template #header-extra>
       <n-flex align="center">
         <c-button
-          :label="enableAutoScroll ? '暂停滚动' : '自动滚动'"
+          :label="enableAutoScroll ? 'Pause scrolling' : 'Auto scroll'"
           size="small"
           @action="enableAutoScroll = !enableAutoScroll"
         />
         <c-button
-          :label="expandLog ? '收起日志' : '展开日志'"
+          :label="expandLog ? 'Collapse log' : 'Expand log'"
           size="small"
           @action="expandLog = !expandLog"
         />
@@ -90,7 +90,7 @@ defineExpose({
         <div v-for="log of logs" :key="log.message">
           {{ log.message }}
           <span v-if="log.detail" @click="showDetail(log.message, log.detail!)">
-            [详细]
+            [Detail]
           </span>
         </div>
       </n-scrollbar>
@@ -99,7 +99,7 @@ defineExpose({
 
     <c-modal
       v-model:show="showLogDetailModal"
-      :title="`日志详情 - ${selectedLogMessage}`"
+      :title="`Log detail - ${selectedLogMessage}`"
     >
       <n-p
         v-for="line of selectedLogDetail"

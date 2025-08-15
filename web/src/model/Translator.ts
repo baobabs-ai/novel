@@ -61,8 +61,8 @@ export type TranslateTaskDesc =
   | LocalTranslateTaskDesc;
 
 export type TranslateTaskParams = {
-  level: 'normal' | 'expire' | 'all' | 'sync'; // 翻译等级
-  forceMetadata: boolean; // 强制重翻元数据
+  level: 'normal' | 'expire' | 'all' | 'sync'; // Translation level
+  forceMetadata: boolean; // Force re-translation of metadata
   startIndex: number;
   endIndex: number;
 };

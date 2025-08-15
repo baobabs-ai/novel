@@ -20,9 +20,9 @@ const verifyButtonLabel = computed(() => {
   if (verifyState.value === undefined) {
     return props.label;
   } else if (verifyState.value.state === 'sending') {
-    return '发送中';
+    return 'Sending';
   } else {
-    return `${verifyState.value.seconds}秒冷却`;
+    return `${verifyState.value.seconds}s cooldown`;
   }
 });
 
@@ -35,7 +35,7 @@ async function realSendEmail() {
     .sendEmail()
     .then(() => {
       verifyState.value = { state: 'cooldown', seconds: 60 };
-      message.info('邮件已发送');
+      message.info('Email sent');
 
       const timer = window.setInterval(() => {
         if (
@@ -51,7 +51,7 @@ async function realSendEmail() {
     })
     .catch(async (e) => {
       verifyState.value = undefined;
-      message.error('邮件发送失败:' + (await formatError(e)));
+      message.error('Failed to send email:' + (await formatError(e)));
     });
 }
 </script>

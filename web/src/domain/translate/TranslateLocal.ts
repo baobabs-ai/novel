@@ -33,15 +33,15 @@ export const translateLocal = async (
   // Task
   let metadata: LocalVolumeMetadata;
   try {
-    callback.log(`获取未翻译章节 ${volumeId}`);
+    callback.log(`Getting untranslated chapters ${volumeId}`);
     const metadataOrUndefined = await getVolume();
     if (metadataOrUndefined === undefined) {
-      throw '小说不存在';
+      throw 'Novel does not exist';
     } else {
       metadata = metadataOrUndefined;
     }
   } catch (e: unknown) {
-    callback.log(`发生错误，结束翻译任务：${e}`);
+    callback.log(`An error occurred, ending the translation task: ${e}`);
     return;
   }
 
@@ -71,7 +71,7 @@ export const translateLocal = async (
 
   callback.onStart(chapters.length);
   if (chapters.length === 0) {
-    callback.log(`没有需要更新的章节`);
+    callback.log(`No chapters to update`);
   }
 
   const forceSeg = level === 'all';

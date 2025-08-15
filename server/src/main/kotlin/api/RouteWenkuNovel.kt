@@ -294,7 +294,7 @@ class WenkuNovelApi(
 
         if (metadata.level == WenkuNovelLevel.ForAdults) {
             if (user == null) {
-                throwUnauthorized("Please log in first")
+                throwUnauthorized("请先登录")
             } else {
                 user.shouldBeOldAss()
             }
@@ -452,7 +452,7 @@ class WenkuNovelApi(
         val novel = metadataRepo.get(novelId)
             ?: throwNovelNotFound()
         if (glossary == novel.glossary)
-            throwBadRequest("Glossary has not changed")
+            throwBadRequest("术语表未更改")
         metadataRepo.updateGlossary(
             novelId = novelId,
             glossary = glossary,
@@ -491,8 +491,8 @@ class WenkuNovelApi(
             )
         } catch (e: VolumeCreateException) {
             when (e) {
-                is VolumeCreateException.VolumeAlreadyExist -> throwConflict("Volume already exists")
-                is VolumeCreateException.VolumeUnpackFailure -> throwInternalServerError("Unpacking failed, due to ${e.cause?.message}")
+                is VolumeCreateException.VolumeAlreadyExist -> throwConflict("卷已存在")
+                is VolumeCreateException.VolumeUnpackFailure -> throwInternalServerError("解包失败，原因： ${e.cause?.message}")
             }
         }
 
@@ -536,10 +536,10 @@ class WenkuNovelApi(
         validateVolumeId(volumeId)
 
         if (translations.isEmpty())
-            throwBadRequest("No translation type set")
+            throwBadRequest("未设置翻译类型")
 
         if (mode == NovelFileMode.Jp)
-            throwBadRequest("Unsupported type")
+            throwBadRequest("不支持的类型")
 
         val newFileName = volumeRepo.makeTranslationVolumeFile(
             novelId = novelId,
@@ -547,7 +547,7 @@ class WenkuNovelApi(
             mode = mode,
             translationsMode = translationsMode,
             translations = translations.distinct(),
-        ) ?: throwNotFound("Volume not found")
+        ) ?: throwNotFound("卷不存在")
 
         return newFileName
     }
@@ -577,7 +577,7 @@ class WenkuNovelTranslateV2Api(
         val novel = metadataRepo.get(novelId)
             ?: throwNovelNotFound()
         val volume = volumeRepo.getVolume(novelId, volumeId)
-            ?: throwNotFound("Volume not found")
+            ?: throwNotFound("卷不存在")
 
         val toc = volume.listChapter().map {
             val chapterGlossary = volume.getChapterGlossary(translatorId, it)
@@ -624,9 +624,9 @@ class WenkuNovelTranslateV2Api(
         val novel = metadataRepo.get(novelId)
             ?: throwNovelNotFound()
         val volume = volumeRepo.getVolume(novelId, volumeId)
-            ?: throwNotFound("Volume not found")
+            ?: throwNotFound("卷不存在")
         val chapter = volume.getChapter(chapterId)
-            ?: throwNotFound("Chapter not found")
+            ?: throwNotFound("章节不存在")
 
         val oldTranslation = volume.getTranslation(translatorId, chapterId)
         val chapterGlossary = volume.getChapterGlossary(translatorId, chapterId)
@@ -663,7 +663,7 @@ class WenkuNovelTranslateV2Api(
         sakuraVersion: String?,
     ): Int {
         if (translatorId == TranslatorId.Sakura && sakuraVersion != "0.9") {
-            throwBadRequest("Old version of Sakura is no longer allowed to upload")
+            throwBadRequest("旧版Sakura不再允许上传")
         }
 
         validateVolumeId(volumeId)
@@ -671,17 +671,17 @@ class WenkuNovelTranslateV2Api(
         val novel = metadataRepo.get(novelId)
             ?: throwNovelNotFound()
         if ((glossaryId ?: "no glossary") != (novel.glossaryUuid ?: "no glossary")) {
-            throwBadRequest("Glossary is invalid")
+            throwBadRequest("术语表无效")
         }
 
         val volume = volumeRepo.getVolume(novelId, volumeId)
-            ?: throwNotFound("Volume not found")
+            ?: throwNotFound("卷不存在")
 
         val jpLines = volume.getChapter(chapterId)
-            ?: throwNotFound("Chapter not found")
+            ?: throwNotFound("章节不存在")
 
         if (jpLines.size != paragraphsZh.size)
-            throwBadRequest("Translated line number does not match")
+            throwBadRequest("翻译行数不匹配")
 
         volume.setTranslation(
             translatorId = translatorId,

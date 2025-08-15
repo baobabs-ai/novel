@@ -26,7 +26,7 @@ let currentValue = modelValue.value.value;
 const handelClick = (option: Option) => {
   let desc = false;
   if (currentValue != option.value) {
-    // 当前切换了选项，重置desc
+    // When the option is switched, reset desc
     currentValue = option.value;
     desc = props.defaultDesc;
   } else {

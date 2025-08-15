@@ -13,11 +13,11 @@ const parseAuthor = (elements: HTMLCollectionOf<Element>) => {
         ?.replace(/,$/, '') ?? '';
     const name =
       element.getElementsByTagName('a').item(0)?.textContent?.trim() ?? '';
-    if (contribution.endsWith('(著)') || contribution.endsWith('(作者)')) {
+    if (contribution.endsWith('(author)') || contribution.endsWith('(author)')) {
       authors.push(name);
     } else if (
-      contribution.endsWith('(イラスト)') ||
-      contribution.endsWith('(插图作者)')
+      contribution.endsWith('(illustrator)') ||
+      contribution.endsWith('(illustrator)')
     ) {
       artists.push(name);
     }
@@ -80,7 +80,7 @@ const parseProductSet = (doc: Document) => {
 const parseProductVolume = (doc: Document) => {
   const title = doc.getElementById('productTitle')!.textContent!;
   const subtitle = doc.getElementById('productSubtitle')?.textContent ?? '';
-  const r18 = subtitle.includes('成人') || subtitle.includes('アダルト');
+  const r18 = subtitle.includes('Adult') || subtitle.includes('アダルト');
 
   const { authors, artists } = parseAuthor(
     doc.getElementsByClassName('author'),
@@ -114,11 +114,11 @@ const parseProductVolume = (doc: Document) => {
     getElementContain('span', label)?.parentElement?.nextElementSibling
       ?.nextElementSibling?.textContent;
 
-  const getPublisher = () => getCarouselElement('出版社') ?? undefined;
+  const getPublisher = () => getCarouselElement('Publisher') ?? undefined;
 
   const getPublishAt = () => {
     const dateStr =
-      getCarouselElement('出版日期') ?? getCarouselElement('発売日');
+      getCarouselElement('Publication Date') ?? getCarouselElement('Release Date');
     if (!dateStr) return;
 
     const regex1 = /(\d+)年 (\d+)月 (\d+)日/; // 2018年 6月 9日
@@ -128,7 +128,7 @@ const parseProductVolume = (doc: Document) => {
     if (match) {
       const [, yearStr, monthStr, dayStr] = match;
       const year = parseInt(yearStr, 10);
-      const month = parseInt(monthStr, 10) - 1; // JavaScript月份从0开始
+      const month = parseInt(monthStr, 10) - 1; // JavaScript months start from 0
       const day = parseInt(dayStr, 10);
       const date = new Date(year, month, day);
       return date.getTime() / 1000;

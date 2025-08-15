@@ -119,13 +119,13 @@ class WebNovelChapterRepository(
             .getOrElse { return Result.failure(it) }
 
         if (local == null) {
-            // 本地不存在
+            // Local does not exist
             webNovelChapterCollection
                 .insertOne(remote)
             updateMetadataJp(providerId, novelId)
             return Result.success(remote)
         } else if (remote.paragraphs != local.paragraphs) {
-            // 本地存在，但不是最新
+            // Local exists, but not the latest
             webNovelChapterCollection
                 .replaceOne(
                     WebNovelChapter.byId(providerId, novelId, chapterId),
@@ -145,7 +145,7 @@ class WebNovelChapterRepository(
             }
             return Result.success(remote)
         } else {
-            // 本地存在，且已是最新
+            // Local exists, and is the latest
             return Result.success(local)
         }
     }

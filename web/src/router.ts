@@ -271,7 +271,7 @@ const router = createRouter({
           ],
         },
 
-        // 兼容旧路由
+// Compatible with old routes
         { path: '/novel-list', redirect: '/novel' }, // 2024-06-25
         { path: '/wenku-list', redirect: '/wenku' }, // 2024-06-25
         { path: '/sakura-workspace', redirect: '/workspace/sakura' },
@@ -290,7 +290,7 @@ const router = createRouter({
       const decodedHash = encodeURIComponent(to.hash.substring(1));
       const element = document.getElementById(decodedHash);
       if (element) {
-        const top = element.getBoundingClientRect().top + window.scrollY - 58; // 50 是 navbar 的高度
+        const top = element.getBoundingClientRect().top + window.scrollY - 58; // 50 is the height of the navbar
         setTimeout(() => window.scrollTo({ top }));
         return { top };
       }

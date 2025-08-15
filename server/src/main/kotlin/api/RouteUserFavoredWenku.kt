@@ -128,10 +128,10 @@ class UserFavoredWenkuApi(
         user: User,
         title: String,
     ): String {
-        if (title.length > 20) throwBadRequest("收藏夹标题至多为20个字符")
+        if (title.length > 20) throwBadRequest("Favorites title can be up to 20 characters")
 
         val (_, favoredWenku) = userFavoredRepo.getFavoredList(user.id)!!
-        if (favoredWenku.size >= 20) throwBadRequest("收藏夹最多只能创建20个")
+        if (favoredWenku.size >= 20) throwBadRequest("You can only create up to 20 favorites")
 
         val newFavoredWenku = favoredWenku.toMutableList()
         val id = UUID.randomUUID().toString()
@@ -149,7 +149,7 @@ class UserFavoredWenkuApi(
         favoredId: String,
         title: String,
     ) {
-        if (title.length > 20) throwBadRequest("收藏夹标题至多为20个字符")
+        if (title.length > 20) throwBadRequest("Favorites title can be up to 20 characters")
 
         val (_, favoredWenku) = userFavoredRepo.getFavoredList(user.id)!!
 
@@ -165,7 +165,7 @@ class UserFavoredWenkuApi(
         user: User,
         favoredId: String,
     ) {
-        if (favoredId == "default") throwBadRequest("不可以删除默认收藏夹")
+        if (favoredId == "default") throwBadRequest("Cannot delete default favorites")
 
         val (_, favoredWenku) = userFavoredRepo.getFavoredList(user.id)!!
 
@@ -200,14 +200,14 @@ class UserFavoredWenkuApi(
         novelId: String,
     ) {
         val novel = metadataRepo.get(novelId)
-            ?: throwNotFound("小说不存在")
+            ?: throwNotFound("Novel does not exist")
 
         val total = favoredRepo.countFavoredNovelByUserId(
             userId = user.id,
             favoredId = favoredId,
         )
         if (total >= 5000) {
-            throwBadRequest("收藏夹已达到上限")
+            throwBadRequest("Favorites has reached the upper limit")
         }
         favoredRepo.updateFavoredNovel(
             userId = ObjectId(user.id),
@@ -222,7 +222,7 @@ class UserFavoredWenkuApi(
         novelId: String,
     ) {
         if (!metadataRepo.exist(novelId)) {
-            throwNotFound("小说不存在")
+            throwNotFound("Novel does not exist")
         }
         favoredRepo.deleteFavoredNovel(
             userId = ObjectId(user.id),

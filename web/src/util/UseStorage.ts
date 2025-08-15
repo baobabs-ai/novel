@@ -42,7 +42,7 @@ function useStorage<T extends object>(
       if (ev.storageArea !== storage) return;
 
       if (ev.key !== key) {
-        // 当调用clear()时，ev.key为null
+        // When clear() is called, ev.key is null
         if (ev.key == null) data.value = defaults;
         return;
       }

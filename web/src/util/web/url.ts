@@ -104,7 +104,7 @@ const alphapolis: Provider = {
   },
 };
 
-// 弃用，为了兼容以前的小说暂时保留
+// Deprecated, kept for compatibility with older novels
 const novelism: Provider = {
   parseUrl(url: string): string | undefined {
     return undefined;

@@ -58,7 +58,7 @@ private class TxtWriter(
 
     private fun BufferedWriter.writeTranslateStatus(novel: WebNovel){
         with(novel) {
-            write("总计: $jp / 百度: $baidu / 有道: $youdao / GPT: $gpt / Sakura: $sakura")
+            write("Total: $jp / Baidu: $baidu / Youdao: $youdao / GPT: $gpt / Sakura: $sakura")
         }
     }
 
@@ -79,11 +79,11 @@ private class TxtWriter(
     }
 
     private fun BufferedWriter.writeMissingChapter() {
-        write("该章节缺失。\n\n")
+        write("This chapter is missing.\n\n")
     }
 
     private fun BufferedWriter.writeMissingTranslation(translation: TranslatorId) {
-        write("${translation}翻译缺失。\n\n")
+        write("${translation} translation is missing.\n\n")
     }
 
     fun BufferedWriter.writeNovel(

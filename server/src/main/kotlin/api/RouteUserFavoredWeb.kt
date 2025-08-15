@@ -102,20 +102,20 @@ fun Route.routeUserFavoredWeb() {
                     queryString = loc.query?.ifBlank { null },
                     filterProvider = loc.provider,
                     filterType = when (loc.type) {
-                        1 -> WebNovelFilter.Type.连载中
-                        2 -> WebNovelFilter.Type.已完结
-                        3 -> WebNovelFilter.Type.短篇
-                        else -> WebNovelFilter.Type.全部
+                        1 -> WebNovelFilter.Type.Ongoing
+                        2 -> WebNovelFilter.Type.Completed
+                        3 -> WebNovelFilter.Type.ShortStory
+                        else -> WebNovelFilter.Type.All
                     },
                     filterLevel = when (loc.level) {
-                        1 -> WebNovelFilter.Level.一般向
+                        1 -> WebNovelFilter.Level.ForAllAges
                         2 -> WebNovelFilter.Level.R18
-                        else -> WebNovelFilter.Level.全部
+                        else -> WebNovelFilter.Level.All
                     },
                     filterTranslate = when (loc.translate) {
                         1 -> WebNovelFilter.Translate.GPT3
                         2 -> WebNovelFilter.Translate.Sakura
-                        else -> WebNovelFilter.Translate.全部
+                        else -> WebNovelFilter.Translate.All
                     },
                     filterSort = loc.sort,
                     page = loc.page,
@@ -156,10 +156,10 @@ class UserFavoredWebApi(
         user: User,
         title: String,
     ): String {
-        if (title.length > 20) throwBadRequest("收藏夹标题至多为20个字符")
+        if (title.length > 20) throwBadRequest("Favorites title can be up to 20 characters")
 
         val (favoredWeb) = userFavoredRepo.getFavoredList(user.id)!!
-        if (favoredWeb.size >= 20) throwBadRequest("收藏夹最多只能创建20个")
+        if (favoredWeb.size >= 20) throwBadRequest("You can only create up to 20 favorites")
 
         val newFavoredWeb = favoredWeb.toMutableList()
         val id = UUID.randomUUID().toString()
@@ -177,7 +177,7 @@ class UserFavoredWebApi(
         favoredId: String,
         title: String,
     ) {
-        if (title.length > 20) throwBadRequest("收藏夹标题至多为20个字符")
+        if (title.length > 20) throwBadRequest("Favorites title can be up to 20 characters")
 
         val (favoredWeb) = userFavoredRepo.getFavoredList(user.id)!!
 
@@ -193,7 +193,7 @@ class UserFavoredWebApi(
         user: User,
         favoredId: String,
     ) {
-        if (favoredId == "default") throwBadRequest("不可以删除默认收藏夹")
+        if (favoredId == "default") throwBadRequest("Cannot delete default favorites")
 
         val (favoredWeb) = userFavoredRepo.getFavoredList(user.id)!!
 
@@ -247,14 +247,14 @@ class UserFavoredWebApi(
         novelId: String,
     ) {
         val novel = metadataRepo.get(providerId, novelId)
-            ?: throwNotFound("小说不存在")
+            ?: throwNotFound("Novel does not exist")
 
         val total = favoredRepo.countFavoredNovelByUserId(
             userId = user.id,
             favoredId = favoredId,
         )
         if (total >= 5000) {
-            throwBadRequest("收藏夹已达到上限")
+            throwBadRequest("Favorites has reached the upper limit")
         }
         favoredRepo.updateFavoredNovel(
             userId = ObjectId(user.id),
@@ -270,7 +270,7 @@ class UserFavoredWebApi(
         novelId: String,
     ) {
         val novel = metadataRepo.get(providerId, novelId)
-            ?: throwNotFound("小说不存在")
+            ?: throwNotFound("Novel does not exist")
         favoredRepo.deleteFavoredNovel(
             userId = ObjectId(user.id),
             novelId = novel.id,

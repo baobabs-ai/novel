@@ -20,7 +20,7 @@ namespace NovelMark {
           const src = node.getAttribute('src')?.trim();
           if (!src) return;
           ensureNewLine();
-          text += `<图片>${src}\n`;
+          text += `<Image>${src}\n`;
         } else if (skipTag.includes(tagName)) {
           return;
         } else {
@@ -40,11 +40,11 @@ namespace NovelMark {
   export const toXhtml = (doc: Document, mark: string): Element[] => {
     const elements: Element[] = [];
     for (const line of mark.split('\n')) {
-      if (line.startsWith('<图片>')) {
+      if (line.startsWith('<Image>')) {
         const el = doc.createElement('img');
-        el.setAttribute('src', line.slice('<图片>'.length));
+        el.setAttribute('src', line.slice('<Image>'.length));
         elements.push(el);
-      } else if (line.startsWith('<分割线>')) {
+      } else if (line.startsWith('<hr>')) {
         const el = doc.createElement('hr');
         elements.push(el);
       } else {
@@ -61,7 +61,7 @@ namespace NovelMark {
     const buf: string[] = [];
     for (const line of text.split('\n')) {
       if (line === '--------') {
-        buf.push('<分割线>');
+        buf.push('<hr>');
       } else {
         buf.push(line);
       }
@@ -72,7 +72,7 @@ namespace NovelMark {
   export const toText = (nml: string): string => {
     const buf: string[] = [];
     for (const line of nml.split('\n')) {
-      if (line.startsWith('<分割线>')) {
+      if (line.startsWith('<hr>')) {
         buf.push('--------');
       } else {
         buf.push(line);

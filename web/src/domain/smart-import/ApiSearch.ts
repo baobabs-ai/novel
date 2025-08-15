@@ -11,11 +11,11 @@ const parseSearch = (doc: Document) => {
         return false;
       }
 
-      // 排除漫画
+      // Exclude manga
       if (
         Array.from(item.getElementsByTagName('a'))
           .map((el) => el.text)
-          .some((text) => text === 'コミック (紙)' || text === 'コミック')
+          .some((text) => text === 'Comic (Paper)' || text === 'Comic')
       ) {
         return false;
       }
