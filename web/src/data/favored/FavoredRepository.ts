@@ -51,7 +51,7 @@ export const createFavoredRepository = () => {
     } else if (type === 'wenku') {
       await FavoredApi.updateFavoredWenku(id, { title });
     }
-    const favored = favoreds.value[type].find((it) => it.id === id);
+    const favored = favoreds.value[type].find((it: { id: string; }) => it.id === id);
     if (favored !== undefined) {
       favored.title = title;
     }
@@ -66,7 +66,7 @@ export const createFavoredRepository = () => {
     } else if (type === 'wenku') {
       await FavoredApi.deleteFavoredWenku(id);
     }
-    favoreds.value[type] = favoreds.value[type].filter((it) => it.id !== id);
+    favoreds.value[type] = favoreds.value[type].filter((it: { id: string; }) => it.id !== id);
   };
 
   const favoriteNovel = async (

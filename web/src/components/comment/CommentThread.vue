@@ -42,7 +42,7 @@ const loadReplies = async (page: number) => {
   }
 };
 
-watch(currentPage, async (page) => loadReplies(page));
+watch(currentPage, async (page: number) => loadReplies(page));
 
 function onReplied() {
   showInput.value = false;

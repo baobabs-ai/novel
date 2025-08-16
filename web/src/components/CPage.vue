@@ -172,7 +172,7 @@ const loadMore = async () => {
     <n-pagination
       v-if="pageNumber > 1"
       :page="page"
-      @update-page="(page) => onUpdatePage(page)"
+      @update-page="(page: number) => onUpdatePage(page)"
       :page-count="pageNumber"
       :page-slot="7"
       style="margin-top: 20px"
@@ -195,7 +195,7 @@ const loadMore = async () => {
     <n-pagination
       v-if="pageNumber > 1"
       :page="innerPage"
-      @update-page="(page) => onUpdatePage(page)"
+      @update-page="(page: number) => onUpdatePage(page)"
       :page-count="pageNumber"
       :page-slot="7"
     />

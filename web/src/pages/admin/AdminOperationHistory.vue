@@ -45,14 +45,16 @@ const deleteHistory = (id: string) =>
     OperationRepository.deleteOperationHistory(id).then(() => {
       if (historiesResult.value?.ok) {
         historiesResult.value.value.items =
-          historiesResult.value.value.items.filter((it) => it.id !== id);
+          historiesResult.value.value.items.filter(
+            (it: OperationHistory) => it.id !== id,
+          );
       }
     }),
     '删除',
     message,
   );
 
-watch(currentPage, (page) => loadPage(page), { immediate: true });
+watch(currentPage, (page: number) => loadPage(page), { immediate: true });
 
 watch(type, () => {
   if (currentPage.value === 1) loadPage(1);

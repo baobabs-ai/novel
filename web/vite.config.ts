@@ -100,13 +100,13 @@ export default defineConfig(({ command, mode }) => {
     },
     plugins: [
       vue(),
-      imagemin({}),
+      // imagemin({}),
       createHtmlPlugin({
         minify: { minifyJS: true },
       }),
       tsconfigPaths({ loose: true }),
       AutoImport({
-        dts: './src/auto-imports.d.ts',
+        dts: 'auto-imports.d.ts',
         imports: [
           'vue',
           'vue-router',
@@ -123,7 +123,7 @@ export default defineConfig(({ command, mode }) => {
         ],
       }),
       Components({
-        dts: './src/components.d.ts',
+        dts: 'components.d.ts',
         resolvers: [NaiveUiResolver()],
         dirs: ['./**/components/**'],
       }),
