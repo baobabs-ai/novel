@@ -32,7 +32,7 @@ const getNovel = (novelId: string) =>
 
 interface WenkuNovelCreateBody {
   title: string;
-  titleZh: string;
+  titleEn: string;
   cover?: string;
   authors: string[];
   artists: string[];
@@ -54,7 +54,7 @@ const updateGlossary = (id: string, json: { [key: string]: string }) =>
 const createVolume = (
   novelId: string,
   volumeId: string,
-  type: 'jp' | 'zh',
+  type: 'jp' | 'zh' | 'en',
   file: File,
   onProgress: (p: number) => void,
 ) =>
@@ -115,7 +115,7 @@ const createFileUrl = ({
 }: {
   novelId: string;
   volumeId: string;
-  mode: 'zh' | 'zh-jp' | 'jp-zh';
+  mode: 'zh' | 'zh-jp' | 'jp-zh' | 'en' | 'en-jp' | 'jp-en';
   translationsMode: 'parallel' | 'priority';
   translations: ('sakura' | 'baidu' | 'youdao' | 'gpt')[];
 }) => {

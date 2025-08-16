@@ -1,4 +1,4 @@
-type Locale = 'zh-cn' | 'zh-tw';
+type Locale = 'zh-cn' | 'zh-tw' | 'en-us';
 
 type Converter = {
   toView: (text: string) => string;
@@ -11,7 +11,7 @@ export const defaultConverter: Converter = {
 };
 
 export async function useOpenCC(locale: Locale) {
-  if (locale === 'zh-cn') {
+  if (locale === 'zh-cn' || locale === 'en-us') {
     return defaultConverter;
   } else if (locale === 'zh-tw') {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

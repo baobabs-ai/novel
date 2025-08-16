@@ -114,7 +114,7 @@ const textUnderlineOffset = computed(() => {
   margin-right: 0.5em;
 }
 #chapter-content p .first {
-  opacity: v-bind('setting.mixZhOpacity');
+  opacity: v-bind('setting.mixEnOpacity');
 }
 #chapter-content p .second {
   opacity: v-bind('setting.mixJpOpacity');

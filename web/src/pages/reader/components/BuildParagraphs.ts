@@ -32,7 +32,7 @@ export const buildParagraphs = (
   const needSpeakJp =
     setting.mode === 'jp' || setting.speakLanguages.includes('jp');
   const needSpeakZh =
-    setting.mode === 'zh' || setting.speakLanguages.includes('zh');
+    setting.mode === 'en' || setting.speakLanguages.includes('en');
 
   if (setting.mode === 'jp') {
     styles.push({
@@ -42,7 +42,7 @@ export const buildParagraphs = (
       needSpeak: needSpeakJp,
     });
   } else {
-    if (setting.mode === 'jp-zh') {
+    if (setting.mode === 'jp-en') {
       styles.push({
         paragraphs: chapter.paragraphs,
         source: 'J',
@@ -112,7 +112,7 @@ export const buildParagraphs = (
       }
     }
 
-    if (setting.mode === 'zh-jp') {
+    if (setting.mode === 'en-jp') {
       styles.push({
         paragraphs: chapter.paragraphs,
         source: 'J',
