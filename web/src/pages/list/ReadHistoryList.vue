@@ -29,7 +29,7 @@ const clearHistory = () =>
     readHistoryRepository.clearReadHistoryWeb().then(() => {
       window.location.reload();
     }),
-    '清空',
+    'Clear',
     message,
   );
 
@@ -38,36 +38,36 @@ const deleteHistory = (providerId: string, novelId: string) =>
     readHistoryRepository.deleteReadHistoryWeb(providerId, novelId).then(() => {
       window.location.reload();
     }),
-    '删除',
+    'Delete',
     message,
   );
 </script>
 
 <template>
   <div class="layout-content">
-    <n-h1>阅读历史</n-h1>
+    <n-h1>Reading history</n-h1>
 
     <n-flex style="margin-bottom: 24px">
       <c-button-confirm
-        hint="真的要清空记录吗？"
-        label="清空记录"
+        hint="Are you sure you want to clear the records?"
+        label="Clear records"
         :icon="DeleteOutlineOutlined"
         @action="clearHistory()"
       />
       <c-button
         v-if="readHistoryPaused"
-        label="继续记录历史"
+        label="Continue recording history"
         @action="readHistoryRepository.resumeReadHistory()"
       />
       <c-button
         v-else
-        label="暂停记录历史"
+        label="Pause recording history"
         @action="readHistoryRepository.pauseReadHistory()"
       />
     </n-flex>
 
     <n-text v-if="readHistoryPaused" type="warning">
-      注意：历史功能已暂停
+      Note: The history function has been suspended
     </n-text>
 
     <novel-page :page="page" :loader="loader" :options="[]" v-slot="{ items }">
@@ -75,7 +75,7 @@ const deleteHistory = (providerId: string, novelId: string) =>
         <template #action="item">
           <c-button
             size="tiny"
-            label="删除"
+            label="Delete"
             style="margin-top: 2px"
             @action="deleteHistory(item.providerId, item.novelId)"
           />

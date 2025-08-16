@@ -15,7 +15,7 @@ const message = useMessage();
 const store = useBookshelfLocalStore();
 
 const deleteVolume = (volumeId: string) =>
-  doAction(store.deleteVolume(volumeId), '删除', message);
+  doAction(store.deleteVolume(volumeId), 'Delete', message);
 </script>
 
 <template>
@@ -25,13 +25,13 @@ const deleteVolume = (volumeId: string) =>
         <n-text>{{ volume.id }}</n-text>
 
         <n-text depth="3">
-          <n-time :time="volume.createAt" type="relative" /> / 总计
+          <n-time :time="volume.createAt" type="relative" /> / Total
           {{ volume.toc.length }}
         </n-text>
 
         <n-flex :size="8">
           <c-button
-            label="载入"
+            label="Load"
             size="tiny"
             secondary
             @action="$emit('volumeLoaded', volume.id)"
@@ -47,7 +47,7 @@ const deleteVolume = (volumeId: string) =>
           <div style="flex: 1" />
 
           <c-button-confirm
-            :hint="`真的要删除《${volume.id}》吗？`"
+            :hint="`Are you sure you want to delete '${volume.id}'?`"
             :icon="DeleteOutlineOutlined"
             size="tiny"
             secondary

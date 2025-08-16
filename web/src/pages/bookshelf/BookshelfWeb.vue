@@ -24,10 +24,10 @@ const { setting } = Locator.settingRepository();
 
 const options = computed(() => [
   {
-    label: '来源',
+    label: 'Source',
     tags: [
       'Kakuyomu',
-      '成为小说家吧',
+      "Let's become a novelist",
       'Novelup',
       'Hameln',
       'Pixiv',
@@ -36,22 +36,22 @@ const options = computed(() => [
     multiple: true,
   },
   {
-    label: '类型',
-    tags: ['全部', '连载中', '已完结', '短篇'],
+    label: 'Type',
+    tags: ['All', 'In serialization', 'Completed', 'Short story'],
   },
   {
-    label: '分级',
-    tags: ['全部', '一般向', 'R18'],
+    label: 'Rating',
+    tags: ['All', 'For all ages', 'R18'],
   },
   {
-    label: '翻译',
-    tags: ['全部', 'GPT', 'Sakura'],
+    label: 'Translate',
+    tags: ['All', 'GPT', 'Sakura'],
   },
   {
-    label: '排序',
+    label: 'Sort',
     tags: setting.value.favoriteCreateTimeFirst
-      ? ['收藏时间', '更新时间']
-      : ['更新时间', '收藏时间'],
+      ? ['Favorite time', 'Update time']
+      : ['Update time', 'Favorite time'],
   },
 ]);
 
@@ -59,12 +59,12 @@ const loader = computed<Loader<WebNovelOutlineDto>>(() => {
   const { favoredId } = props;
   return (page, query, selected) => {
     if (query !== '') {
-      document.title = '我的收藏 搜索：' + query;
+      document.title = 'My favorites search: ' + query;
     }
     const parseProviderBitFlags = (n: number): string => {
       const providerMap: { [key: string]: string } = {
         Kakuyomu: 'kakuyomu',
-        成为小说家吧: 'syosetu',
+        "Let's become a novelist": 'syosetu',
         Novelup: 'novelup',
         Hameln: 'hameln',
         Pixiv: 'pixiv',
@@ -77,12 +77,12 @@ const loader = computed<Loader<WebNovelOutlineDto>>(() => {
     };
 
     const parseSort = (sortIndex: number): 'create' | 'update' => {
-      const sortOption = (options.value.find((opt) => opt.label === '排序')
+      const sortOption = (options.value.find((opt) => opt.label === 'Sort')
         ?.tags ?? [])[sortIndex];
       switch (sortOption) {
-        case '收藏时间':
+        case 'Favorite time':
           return 'create';
-        case '更新时间':
+        case 'Update time':
         default:
           return 'update';
       }
@@ -138,7 +138,7 @@ const novelListRef = ref<InstanceType<typeof NovelListWeb>>();
   <bookshelf-layout :menu-key="`web/${favoredId}`">
     <n-flex style="margin-bottom: 24px">
       <c-button
-        label="选择"
+        label="Select"
         :icon="ChecklistOutlined"
         @action="showControlPanel = !showControlPanel"
       />

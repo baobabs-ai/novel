@@ -18,11 +18,11 @@ const onClick = async (e: MouseEvent) => {
   if (!props.onAction) return;
 
   if (props.requireLogin === true && !whoami.value.isSignedIn) {
-    message.info('请先登录');
+    message.info('Please log in first');
     return;
   }
   if (running.value) {
-    message.warning('处理中...');
+    message.warning('Processing...');
     return;
   }
   const ret = props.onAction(e);

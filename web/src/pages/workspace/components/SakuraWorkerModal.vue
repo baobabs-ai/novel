@@ -35,7 +35,7 @@ const formRules: FormRules = {
   id: [
     {
       validator: (rule: FormItemRule, value: string) => value.trim().length > 0,
-      message: '名字不能为空',
+      message: 'Name cannot be empty',
       trigger: 'input',
     },
     {
@@ -43,14 +43,14 @@ const formRules: FormRules = {
         workspaceRef.value.workers
           .filter(({ id }) => id !== props.worker?.id)
           .find(({ id }) => id === value) === undefined,
-      message: '名字不能重复',
+      message: 'Name cannot be repeated',
       trigger: 'input',
     },
   ],
   endpoint: [
     {
       validator: (rule: FormItemRule, value: string) => value.trim().length > 0,
-      message: '链接不能为空',
+      message: 'Link cannot be empty',
       trigger: 'input',
     },
     {
@@ -62,7 +62,7 @@ const formRules: FormRules = {
           return false;
         }
       },
-      message: '链接不合法',
+      message: 'Link is not valid',
       trigger: 'input',
     },
   ],
@@ -92,14 +92,14 @@ const submit = async () => {
   }
 };
 
-const verb = computed(() => (props.worker === undefined ? '添加' : '更新'));
+const verb = computed(() => (props.worker === undefined ? 'Add' : 'Update'));
 </script>
 
 <template>
   <c-modal
     :show="show"
     @update:show="$emit('update:show', $event)"
-    :title="verb + 'Sakura翻译器'"
+    :title="verb + 'Sakura Translator'"
   >
     <n-form
       ref="formRef"
@@ -108,22 +108,22 @@ const verb = computed(() => (props.worker === undefined ? '添加' : '更新'));
       label-placement="left"
       label-width="auto"
     >
-      <n-form-item-row path="id" label="名字">
+      <n-form-item-row path="id" label="Name">
         <n-input
           v-model:value="formValue.id"
-          placeholder="给你的翻译器起个名字"
+          placeholder="Give your translator a name"
           :input-props="{ spellcheck: false }"
         />
       </n-form-item-row>
-      <n-form-item-row path="endpoint" label="链接">
+      <n-form-item-row path="endpoint" label="Link">
         <n-input
           v-model:value="formValue.endpoint"
-          placeholder="翻译器的链接"
+          placeholder="Translator link"
           :input-props="{ spellcheck: false }"
         />
       </n-form-item-row>
 
-      <n-form-item-row path="segLength" label="分段长度">
+      <n-form-item-row path="segLength" label="Segment length">
         <n-input-number
           v-model:value="formValue.segLength"
           :show-button="false"
@@ -131,7 +131,7 @@ const verb = computed(() => (props.worker === undefined ? '添加' : '更新'));
         />
       </n-form-item-row>
 
-      <n-form-item-row path="prevSegLength" label="前文长度">
+      <n-form-item-row path="prevSegLength" label="Previous text length">
         <n-input-number
           v-model:value="formValue.prevSegLength"
           :show-button="false"
@@ -140,13 +140,13 @@ const verb = computed(() => (props.worker === undefined ? '添加' : '更新'));
       </n-form-item-row>
 
       <n-text type="error" style="font-size: 12px">
-        # 前文长度是临时功能，非默认500无法上传
+        # Previous text length is a temporary function, cannot upload if not the default 500
       </n-text>
       <br />
       <n-text depth="3" style="font-size: 12px">
-        # 分段长度还在测试中，非默认500无法上传
+        # Segment length is still under testing, cannot upload if not the default 500
         <br />
-        # 链接例子：http://127.0.0.1:8080
+        # Link example: http://127.0.0.1:8080
       </n-text>
     </n-form>
 

@@ -1,0 +1,349 @@
+# This file will contain a log of all the bugs that have been fixed.
+
+File: web/src/components/CButton.vue - Replaced '请先登录' with 'Please log in first'.
+File: web/src/components/CButton.vue - Replaced '处理中...' with 'Processing...'.
+
+File: web/src/pages/workspace/components/ToolboxItemFixOcr.vue - Replaced 'OCR输出的文本通常存在额外的换行符，导致翻译器错误。当前修复方法是检测每一行的结尾是否是字符（汉字/日文假名/韩文字符/英文字母/全角半角逗号），如果是的话则删除行尾的换行符。' with 'Text output by OCR often has extra newlines, causing translator errors. The current fix is to detect if the end of each line is a character (Chinese/Japanese/Korean/English/full-width or half-width comma), and if so, remove the newline at the end of the line.'.
+File: web/src/pages/workspace/components/ToolboxItemFixOcr.vue - Replaced '发生错误：${e}' with 'Error: ${e}'.
+File: web/src/pages/workspace/components/ToolboxItemFixOcr.vue - Replaced '修复' with 'Fix'.
+
+File: web/src/pages/workspace/components/ToolboxItemGlossary.vue - Replaced '已经将翻译结果复制到剪切板' with 'The translation result has been copied to the clipboard'.
+File: web/src/pages/workspace/components/ToolboxItemGlossary.vue - Replaced '未选择Sakura翻译器' with 'Sakura translator not selected'.
+File: web/src/pages/workspace/components/ToolboxItemGlossary.vue - Replaced '翻译器错误：${e}' with 'Translator error: ${e}'.
+File: web/src/pages/workspace/components/ToolboxItemGlossary.vue - Replaced '术语表辅助制作工具正在开发中，当前方案分为识别和翻译两步。' with 'The glossary-making tool is under development. The current plan is divided into two steps: recognition and translation.'.
+File: web/src/pages/workspace/components/ToolboxItemGlossary.vue - Replaced '识别阶段：根据片假名词汇出现频率判断可能是术语的词汇。' with 'Recognition stage: Identify possible terminology based on the frequency of katakana vocabulary.'.
+File: web/src/pages/workspace/components/ToolboxItemGlossary.vue - Replaced '翻译阶段：直接翻译日语词汇。' with 'Translation stage: Directly translate Japanese vocabulary.'.
+File: web/src/pages/workspace/components/ToolboxItemGlossary.vue - Replaced '注意，这是辅助制作，不是全自动生成，使用前务必检查结果。' with 'Note that this is an auxiliary production, not a fully automatic generation. Be sure to check the results before use.'.
+File: web/src/pages/workspace/components/ToolboxItemGlossary.vue - Replaced '次数下限' with 'Minimum number of times'.
+File: web/src/pages/workspace/components/ToolboxItemGlossary.vue - Replaced '操作' with 'Operation'.
+File: web/src/pages/workspace/components/ToolboxItemGlossary.vue - Replaced '复制术语表' with 'Copy glossary'.
+File: web/src/pages/workspace/components/ToolboxItemGlossary.vue - Replaced '百度翻译' with 'Baidu Translate'.
+File: web/src/pages/workspace/components/ToolboxItemGlossary.vue - Replaced '有道翻译' with 'Youdao Translate'.
+File: web/src/pages/workspace/components/ToolboxItemGlossary.vue - Replaced '未选中' with 'Not selected'.
+File: web/src/pages/workspace/components/ToolboxItemGlossary.vue - Replaced '选择翻译器' with 'Select translator'.
+File: web/src/pages/workspace/components/ToolboxItemGlossary.vue - Replaced '撤销删除' with 'Undo delete'.
+File: web/src/pages/workspace/components/ToolboxItemGlossary.vue - Replaced '移除' with 'Remove'.
+File: web/src/pages/workspace/components/ToolboxItemGlossary.vue - Replaced '请输入中文翻译' with 'Please enter Chinese translation'.
+File: web/src/pages/workspace/components/ToolboxItemGlossary.vue - Replaced '选择Sakura翻译器' with 'Select Sakura translator'.
+
+File: web/src/pages/workspace/components/LocalVolumeListSpecificTranslation.vue - Replaced '删除' with 'Delete'.
+File: web/src/pages/workspace/components/LocalVolumeListSpecificTranslation.vue - Replaced '${success}本小说已排队，${failed}本失败' with '${success} novels have been queued, ${failed} failed'.
+File: web/src/pages/workspace/components/LocalVolumeListSpecificTranslation.vue - Replaced '排队成功' with 'Queue successful'.
+File: web/src/pages/workspace/components/LocalVolumeListSpecificTranslation.vue - Replaced '排队失败：翻译任务已经存在' with 'Queue failed: translation task already exists'.
+File: web/src/pages/workspace/components/LocalVolumeListSpecificTranslation.vue - Replaced '文件生成错误：${error}' with 'File generation error: ${error}'.
+File: web/src/pages/workspace/components/LocalVolumeListSpecificTranslation.vue - Replaced '全部' with 'All'.
+File: web/src/pages/workspace/components/LocalVolumeListSpecificTranslation.vue - Replaced '已完成' with 'Finished'.
+File: web/src/pages/workspace/components/LocalVolumeListSpecificTranslation.vue - Replaced '未完成' with 'Unfinished'.
+File: web/src/pages/workspace/components/LocalVolumeListSpecificTranslation.vue - Replaced '全部排队' with 'Queue all'.
+File: web/src/pages/workspace/components/LocalVolumeListSpecificTranslation.vue - Replaced '状态' with 'Status'.
+File: web/src/pages/workspace/components/LocalVolumeListSpecificTranslation.vue - Replaced '语言' with 'Language'.
+File: web/src/pages/workspace/components/LocalVolumeListSpecificTranslation.vue - Replaced '总计' with 'Total'.
+File: web/src/pages/workspace/components/LocalVolumeListSpecificTranslation.vue - Replaced '完成' with 'Finished'.
+File: web/src/pages/workspace/components/LocalVolumeListSpecificTranslation.vue - Replaced '过期' with 'Expired'.
+File: web/src/pages/workspace/components/LocalVolumeListSpecificTranslation.vue - Replaced '排队' with 'Queue'.
+File: web/src/pages/workspace/components/LocalVolumeListSpecificTranslation.vue - Replaced '阅读' with 'Read'.
+File: web/src/pages/workspace/components/LocalVolumeListSpecificTranslation.vue - Replaced '下载' with 'Download'.
+File: web/src/pages/workspace/components/LocalVolumeListSpecificTranslation.vue - Replaced '真的要删除《${volume.id}》吗？' with 'Are you sure you want to delete '${volume.id}'?'.
+
+File: web/src/pages/workspace/components/LocalVolumeList.vue - Replaced '批量删除' with 'Batch delete'.
+File: web/src/pages/workspace/components/LocalVolumeList.vue - Replaced '没有选中小说' with 'No novel selected'.
+File: web/src/pages/workspace/components/LocalVolumeList.vue - Replaced '${success}本小说被打包，${failed}本失败' with '${success} novels were packaged, ${failed} failed'.
+File: web/src/pages/workspace/components/LocalVolumeList.vue - Replaced '没有选中小说' with 'No novel selected'.
+File: web/src/pages/workspace/components/LocalVolumeList.vue - Replaced '${success}本小说被删除，${failed}本失败' with '${success} novels were deleted, ${failed} failed'.
+File: web/src/pages/workspace/components/LocalVolumeList.vue - Replaced '本地小说' with 'Local novel'.
+File: web/src/pages/workspace/components/LocalVolumeList.vue - Replaced '下载' with 'Download'.
+File: web/src/pages/workspace/components/LocalVolumeList.vue - Replaced '搜索' with 'Search'.
+File: web/src/pages/workspace/components/LocalVolumeList.vue - Replaced '搜索文件名' with 'Search file name'.
+File: web/src/pages/workspace/components/LocalVolumeList.vue - Replaced '收藏' with 'Favorites'.
+File: web/src/pages/workspace/components/LocalVolumeList.vue - Replaced '排序' with 'Sort'.
+File: web/src/pages/workspace/components/LocalVolumeList.vue - Replaced '没有文件' with 'No files'.
+File: web/src/pages/workspace/components/LocalVolumeList.vue - Replaced '清空所有文件' with 'Clear all files'.
+File: web/src/pages/workspace/components/LocalVolumeList.vue - Replaced '这将清空你的浏览器里面保存的所有EPUB/TXT文件，包括已经翻译的章节和术语表，无法恢复。 你确定吗？' with 'This will clear all EPUB/TXT files saved in your browser, including translated chapters and glossaries, and cannot be recovered. Are you sure?'.
+File: web/src/pages/workspace/components/LocalVolumeList.vue - Replaced '确定' with 'Confirm'.
+
+File: web/src/pages/workspace/components/GptWorkerModal.vue - Replaced '不能为空' with 'cannot be empty'.
+File: web/src/pages/workspace/components/GptWorkerModal.vue - Replaced '名字' with 'Name'.
+File: web/src/pages/workspace/components/GptWorkerModal.vue - Replaced '名字不能重复' with 'Name cannot be repeated'.
+File: web/src/pages/workspace/components/GptWorkerModal.vue - Replaced '模型' with 'Model'.
+File: web/src/pages/workspace/components/GptWorkerModal.vue - Replaced '链接' with 'Link'.
+File: web/src/pages/workspace/components/GptWorkerModal.vue - Replaced '链接不合法' with 'Link is not valid'.
+File: web/src/pages/workspace/components/GptWorkerModal.vue - Replaced '有重复的Key，请确保使用的API支持并发' with 'There are duplicate keys, please ensure that the API used supports concurrency'.
+File: web/src/pages/workspace/components/GptWorkerModal.vue - Replaced '添加' with 'Add'.
+File: web/src/pages/workspace/components/GptWorkerModal.vue - Replaced '更新' with 'Update'.
+File: web/src/pages/workspace/components/GptWorkerModal.vue - Replaced 'GPT翻译器' with 'GPT Translator'.
+File: web/src/pages/workspace/components/GptWorkerModal.vue - Replaced '给你的翻译器起个名字' with 'Give your translator a name'.
+File: web/src/pages/workspace/components/GptWorkerModal.vue - Replaced '模型名称' with 'Model name'.
+File: web/src/pages/workspace/components/GptWorkerModal.vue - Replaced '兼容OpenAI的API链接，默认使用deepseek' with 'OpenAI-compatible API link, deepseek is used by default'.
+File: web/src/pages/workspace/components/GptWorkerModal.vue - Replaced '请输入Api key' with 'Please enter Api key'.
+File: web/src/pages/workspace/components/GptWorkerModal.vue - Replaced '# 链接例子：https://api.deepseek.com' with '# Link example: https://api.deepseek.com'.
+
+File: web/src/pages/workspace/components/SakuraWorkerModal.vue - Replaced '名字不能为空' with 'Name cannot be empty'.
+File: web/src/pages/workspace/components/SakuraWorkerModal.vue - Replaced '名字不能重复' with 'Name cannot be repeated'.
+File: web/src/pages/workspace/components/SakuraWorkerModal.vue - Replaced '链接不能为空' with 'Link cannot be empty'.
+File: web/src/pages/workspace/components/SakuraWorkerModal.vue - Replaced '链接不合法' with 'Link is not valid'.
+File: web/src/pages/workspace/components/SakuraWorkerModal.vue - Replaced '添加' with 'Add'.
+File: web/src/pages/workspace/components/SakuraWorkerModal.vue - Replaced '更新' with 'Update'.
+File: web/src/pages/workspace/components/SakuraWorkerModal.vue - Replaced 'Sakura翻译器' with 'Sakura Translator'.
+File: web/src/pages/workspace/components/SakuraWorkerModal.vue - Replaced '名字' with 'Name'.
+File: web/src/pages/workspace/components/SakuraWorkerModal.vue - Replaced '给你的翻译器起个名字' with 'Give your translator a name'.
+File: web/src/pages/workspace/components/SakuraWorkerModal.vue - Replaced '链接' with 'Link'.
+File: web/src/pages/workspace/components/SakuraWorkerModal.vue - Replaced '翻译器的链接' with 'Translator link'.
+File: web/src/pages/workspace/components/SakuraWorkerModal.vue - Replaced '分段长度' with 'Segment length'.
+File: web/src/pages/workspace/components/SakuraWorkerModal.vue - Replaced '前文长度' with 'Previous text length'.
+File: web/src/pages/workspace/components/SakuraWorkerModal.vue - Replaced '# 前文长度是临时功能，非默认500无法上传' with '# Previous text length is a temporary function, cannot upload if not the default 500'.
+File: web/src/pages/workspace/components/SakuraWorkerModal.vue - Replaced '# 分段长度还在测试中，非默认500无法上传' with '# Segment length is still under testing, cannot upload if not the default 500'.
+File: web/src/pages/workspace/components/SakuraWorkerModal.vue - Replaced '# 链接例子：http://127.0.0.1:8080' with '# Link example: http://127.0.0.1:8080'.
+
+File: web/src/pages/workspace/components/LocalVolumeListKatakana.vue - Replaced '删除' with 'Delete'.
+File: web/src/pages/workspace/components/LocalVolumeListKatakana.vue - Replaced '总计' with 'Total'.
+File: web/src/pages/workspace/components/LocalVolumeListKatakana.vue - Replaced '载入' with 'Load'.
+File: web/src/pages/workspace/components/LocalVolumeListKatakana.vue - Replaced '真的要删除《${volume.id}》吗？' with 'Are you sure you want to delete '${volume.id}'?'.
+
+File: web/src/pages/workspace/GptWorkspace.vue - Replaced '任务被翻译器占用' with 'The task is occupied by the translator'.
+File: web/src/pages/workspace/GptWorkspace.vue - Replaced '缓存清除' with 'Cache cleared'.
+File: web/src/pages/workspace/GptWorkspace.vue - Replaced 'GPT工作区' with 'GPT Workspace'.
+File: web/src/pages/workspace/GptWorkspace.vue - Replaced '使用教程' with 'User guide'.
+File: web/src/pages/workspace/GptWorkspace.vue - Replaced '不再支持GPT web，推荐使用deepseek API，价格很低。' with 'GPT web is no longer supported. It is recommended to use the deepseek API, the price is very low.'.
+File: web/src/pages/workspace/GptWorkspace.vue - Replaced '本地小说支持韩语等其他语种，网络小说/文库小说暂时只允许日语。' with 'Local novels support other languages such as Korean, while online novels/library novels only support Japanese for the time being.'.
+File: web/src/pages/workspace/GptWorkspace.vue - Replaced '翻译器' with 'Translator'.
+File: web/src/pages/workspace/GptWorkspace.vue - Replaced '添加翻译器' with 'Add translator'.
+File: web/src/pages/workspace/GptWorkspace.vue - Replaced '真的要清空缓存吗？' with 'Are you sure you want to clear the cache?'.
+File: web/src/pages/workspace/GptWorkspace.vue - Replaced '清空缓存' with 'Clear cache'.
+File: web/src/pages/workspace/GptWorkspace.vue - Replaced '没有翻译器' with 'No translator'.
+File: web/src/pages/workspace/GptWorkspace.vue - Replaced '任务队列' with 'Task queue'.
+File: web/src/pages/workspace/GptWorkspace.vue - Replaced '本地书架' with 'Local bookshelf'.
+File: web/src/pages/workspace/GptWorkspace.vue - Replaced '真的要清空队列吗？' with 'Are you sure you want to clear the queue?'.
+File: web/src/pages/workspace/GptWorkspace.vue - Replaced '清空队列' with 'Clear queue'.
+File: web/src/pages/workspace/GptWorkspace.vue - Replaced '没有任务' with 'No tasks'.
+
+File: web/src/pages/workspace/Interactive.vue - Replaced '百度' with 'Baidu'.
+File: web/src/pages/workspace/Interactive.vue - Replaced '有道' with 'Youdao'.
+File: web/src/pages/workspace/Interactive.vue - Replaced '未选择GPT翻译器' with 'GPT translator not selected'.
+File: web/src/pages/workspace/Interactive.vue - Replaced '未选择Sakura翻译器' with 'Sakura translator not selected'.
+File: web/src/pages/workspace/Interactive.vue - Replaced '翻译器错误：${e}' with 'Translator error: ${e}'.
+File: web/src/pages/workspace/Interactive.vue - Replaced '已经将翻译结果复制到剪切板' with 'The translation result has been copied to the clipboard'.
+File: web/src/pages/workspace/Interactive.vue - Replaced '交互翻译' with 'Interactive translation'.
+File: web/src/pages/workspace/Interactive.vue - Replaced '翻译' with 'Translate'.
+File: web/src/pages/workspace/Interactive.vue - Replaced '操作' with 'Operation'.
+File: web/src/pages/workspace/Interactive.vue - Replaced '翻译' with 'Translate'.
+File: web/src/pages/workspace/Interactive.vue - Replaced '清空' with 'Clear'.
+File: web/src/pages/workspace/Interactive.vue - Replaced '复制到剪贴板' with 'Copy to clipboard'.
+File: web/src/pages/workspace/Interactive.vue - Replaced '输入需要翻译的文本' with 'Enter the text to be translated'.
+File: web/src/pages/workspace/Interactive.vue - Replaced '翻译结果' with 'Translation results'.
+File: web/src/pages/workspace/Interactive.vue - Replaced '翻译历史' with 'Translation history'.
+File: web/src/pages/workspace/Interactive.vue - Replaced '清空' with 'Clear'.
+File: web/src/pages/workspace/Interactive.vue - Replaced '没有翻译历史' with 'No translation history'.
+File: web/src/pages/workspace/Interactive.vue - Replaced '日文' with 'Japanese'.
+File: web/src/pages/workspace/Interactive.vue - Replaced '中文' with 'Chinese'.
+
+File: web/src/pages/workspace/SakuraWorkspace.vue - Replaced '全部任务都已经完成' with 'All tasks have been completed'.
+File: web/src/pages/workspace/SakuraWorkspace.vue - Replaced '任务被翻译器占用' with 'The task is occupied by the translator'.
+File: web/src/pages/workspace/SakuraWorkspace.vue - Replaced '缓存清除' with 'Cache cleared'.
+File: web/src/pages/workspace/SakuraWorkspace.vue - Replaced 'Sakura工作区' with 'Sakura Workspace'.
+File: web/src/pages/workspace/SakuraWorkspace.vue - Replaced '本地部署教程' with 'Local deployment tutorial'.
+File: web/src/pages/workspace/SakuraWorkspace.vue - Replaced 'AutoDL教程' with 'AutoDL tutorial'.
+File: web/src/pages/workspace/SakuraWorkspace.vue - Replaced '控制台' with 'Console'.
+File: web/src/pages/workspace/SakuraWorkspace.vue - Replaced '允许上传的模型如下，禁止一切试图突破上传检查的操作。' with 'The allowed models to be uploaded are as follows, and any attempt to break through the upload check is prohibited.'.
+File: web/src/pages/workspace/SakuraWorkspace.vue - Replaced '国内镜像' with 'Domestic mirror'.
+File: web/src/pages/workspace/SakuraWorkspace.vue - Replaced '翻译器' with 'Translator'.
+File: web/src/pages/workspace/SakuraWorkspace.vue - Replaced '添加翻译器' with 'Add translator'.
+File: web/src/pages/workspace/SakuraWorkspace.vue - Replaced '真的要清空缓存吗？' with 'Are you sure you want to clear the cache?'.
+File: web/src/pages/workspace/SakuraWorkspace.vue - Replaced '清空缓存' with 'Clear cache'.
+File: web/src/pages/workspace/SakuraWorkspace.vue - Replaced '没有翻译器' with 'No translator'.
+File: web/src/pages/workspace/SakuraWorkspace.vue - Replaced '任务队列' with 'Task queue'.
+File: web/src/pages/workspace/SakuraWorkspace.vue - Replaced '本地书架' with 'Local bookshelf'.
+File: web/src/pages/workspace/SakuraWorkspace.vue - Replaced '真的要清空队列吗？' with 'Are you sure you want to clear the queue?'.
+File: web/src/pages/workspace/SakuraWorkspace.vue - Replaced '清空队列' with 'Clear queue'.
+File: web/src/pages/workspace/SakuraWorkspace.vue - Replaced '没有任务' with 'No tasks'.
+
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '没有选中小说' with 'No novel selected'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '${success}本小说被删除，${failed}本失败' with '${success} novels were deleted, ${failed} failed'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '无需移动' with 'No need to move'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '${success}本小说已移动，${failed}本失败' with '${success} novels have been moved, ${failed} failed'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '${success}本小说已排队，${failed}本失败' with '${success} novels have been queued, ${failed} failed'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '全选' with 'Select all'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '反选' with 'Invert selection'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '删除' with 'Delete'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '确定删除' with 'Confirm deletion'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '本小说' with 'novels'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '确定' with 'Confirm'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '已选择${selectedNovels.length}本小说' with 'Selected ${selectedNovels.length} novels'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '移动小说功能暂时关闭' with 'The move novel function is temporarily closed'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '移动小说（低配版，很慢，等到显示移动完成）' with 'Move novels (low-spec version, very slow, wait until the move is complete)'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '移动' with 'Move'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '生成翻译任务' with 'Generate translation task'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '常规' with 'Normal'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '过期' with 'Expired'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '重翻' with 'Re-translate'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '常规：只翻译未翻译的章节' with 'Normal: Only translate untranslated chapters'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '过期：翻译术语表过期的章节' with 'Expired: Translate chapters with expired glossaries'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '重翻：重翻全部章节' with 'Re-translate: Re-translate all chapters'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '重翻目录' with 'Re-translate table of contents'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '前5话' with 'First 5 chapters'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '倒序添加' with 'Add in reverse order'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '* 请确保你知道自己在干啥，不要随便使用危险功能' with '* Please make sure you know what you are doing, do not use dangerous functions casually'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '排队GPT' with 'Queue GPT'.
+File: web/src/pages/bookshelf/components/BookshelfWebControl.vue - Replaced '排队Sakura' with 'Queue Sakura'.
+
+File: web/src/pages/bookshelf/components/BookshelfLayout.vue - Replaced '我的收藏' with 'My favorites'.
+File: web/src/pages/bookshelf/components/BookshelfLayout.vue - Replaced '收藏夹' with 'Favorites'.
+
+File: web/src/pages/bookshelf/components/BookshelfMenuItem.vue - Replaced '编辑信息' with 'Edit information'.
+File: web/src/pages/bookshelf/components/BookshelfMenuItem.vue - Replaced '删除' with 'Delete'.
+File: web/src/pages/bookshelf/components/BookshelfMenuItem.vue - Replaced '收藏夹标题不能为空' with 'Bookshelf title cannot be empty'.
+File: web/src/pages/bookshelf/components/BookshelfMenuItem.vue - Replaced '收藏夹更新' with 'Bookshelf updated'.
+File: web/src/pages/bookshelf/components/BookshelfMenuItem.vue - Replaced '清空收藏夹失败，${failed}本未删除' with 'Failed to clear bookshelf, ${failed} items were not deleted'.
+File: web/src/pages/bookshelf/components/BookshelfMenuItem.vue - Replaced '收藏夹删除' with 'Bookshelf deleted'.
+File: web/src/pages/bookshelf/components/BookshelfMenuItem.vue - Replaced '编辑收藏夹' with 'Edit bookshelf'.
+File: web/src/pages/bookshelf/components/BookshelfMenuItem.vue - Replaced '标题' with 'Title'.
+File: web/src/pages/bookshelf/components/BookshelfMenuItem.vue - Replaced '收藏夹标题' with 'Bookshelf title'.
+File: web/src/pages/bookshelf/components/BookshelfMenuItem.vue - Replaced '确定' with 'Confirm'.
+File: web/src/pages/bookshelf/components/BookshelfMenuItem.vue - Replaced '删除收藏夹' with 'Delete bookshelf'.
+File: web/src/pages/bookshelf/components/BookshelfMenuItem.vue - Replaced '确定删除收藏夹' with 'Are you sure you want to delete the bookshelf'.
+File: web/src/pages/bookshelf/components/BookshelfMenuItem.vue - Replaced '注意，删除本地收藏夹的同时也会清空收藏夹内所有小说。' with 'Note that deleting a local bookshelf will also clear all the novels in it.'.
+
+File: web/src/pages/bookshelf/BookshelfWeb.vue - Replaced '来源' with 'Source'.
+File: web/src/pages/bookshelf/BookshelfWeb.vue - Replaced '成为小说家吧' with 'Let\'s become a novelist'.
+File: web/src/pages/bookshelf/BookshelfWeb.vue - Replaced '类型' with 'Type'.
+File: web/src/pages/bookshelf/BookshelfWeb.vue - Replaced '全部' with 'All'.
+File: web/src/pages/bookshelf/BookshelfWeb.vue - Replaced '连载中' with 'In serialization'.
+File: web/src/pages/bookshelf/BookshelfWeb.vue - Replaced '已完结' with 'Completed'.
+File: web/src/pages/bookshelf/BookshelfWeb.vue - Replaced '短篇' with 'Short story'.
+File: web/src/pages/bookshelf/BookshelfWeb.vue - Replaced '分级' with 'Rating'.
+File: web/src/pages/bookshelf/BookshelfWeb.vue - Replaced '一般向' with 'For all ages'.
+File: web/src/pages/bookshelf/BookshelfWeb.vue - Replaced '翻译' with 'Translate'.
+File: web/src/pages/bookshelf/BookshelfWeb.vue - Replaced '排序' with 'Sort'.
+File: web/src/pages/bookshelf/BookshelfWeb.vue - Replaced '收藏时间' with 'Favorite time'.
+File: web/src/pages/bookshelf/BookshelfWeb.vue - Replaced '更新时间' with 'Update time'.
+File: web/src/pages/bookshelf/BookshelfWeb.vue - Replaced '我的收藏 搜索：' with 'My favorites search:'.
+File: web/src/pages/bookshelf/BookshelfWeb.vue - Replaced '选择' with 'Select'.
+
+File: web/src/pages/home/components/Migrate.vue - Replaced '接收到消息' with 'Message received'.
+File: web/src/pages/home/components/Migrate.vue - Replaced '开始迁移数据' with 'Start migrating data'.
+File: web/src/pages/home/components/Migrate.vue - Replaced '发送migrate消息' with 'Send migrate message'.
+File: web/src/pages/home/components/Migrate.vue - Replaced '机翻站已切换到新的域名' with 'The machine translation station has been switched to a new domain name'.
+File: web/src/pages/home/components/Migrate.vue - Replaced '从books导入设置' with 'Import settings from books'.
+File: web/src/pages/home/components/Migrate.vue - Replaced '从books1导入设置' with 'Import settings from books1'.
+File: web/src/pages/home/components/Migrate.vue - Replaced '下载浏览器扩展（适配新域名）' with 'Download browser extension (adapted to the new domain name)'.
+
+File: web/src/pages/forum/ForumArticleEdit.vue - Replaced '小说交流' with 'Novel communication'.
+File: web/src/pages/forum/ForumArticleEdit.vue - Replaced '使用指南' with 'User guide'.
+File: web/src/pages/forum/ForumArticleEdit.vue - Replaced '反馈与建议' with 'Feedback and suggestions'.
+File: web/src/pages/forum/ForumArticleEdit.vue - Replaced '标题长度不能少于2个字符' with 'Title length cannot be less than 2 characters'.
+File: web/src/pages/forum/ForumArticleEdit.vue - Replaced '标题长度不能超过80个字符' with 'Title length cannot exceed 80 characters'.
+File: web/src/pages/forum/ForumArticleEdit.vue - Replaced '正文长度不能少于2个字符' with 'Content length cannot be less than 2 characters'.
+File: web/src/pages/forum/ForumArticleEdit.vue - Replaced '正文长度不能超过2万个字符' with 'Content length cannot exceed 20,000 characters'.
+File: web/src/pages/forum/ForumArticleEdit.vue - Replaced '未选择要发表的版块' with 'No section selected for publication'.
+File: web/src/pages/forum/ForumArticleEdit.vue - Replaced '载入失败' with 'Loading failed'.
+File: web/src/pages/forum/ForumArticleEdit.vue - Replaced '文章未载入，无法提交' with 'The article has not been loaded and cannot be submitted'.
+File: web/src/pages/forum/ForumArticleEdit.vue - Replaced '发布' with 'Publish'.
+File: web/src/pages/forum/ForumArticleEdit.vue - Replaced '更新' with 'Update'.
+File: web/src/pages/forum/ForumArticleEdit.vue - Replaced '编辑' with 'Edit'.
+File: web/src/pages/forum/ForumArticleEdit.vue - Replaced '文章' with 'Article'.
+File: web/src/pages/forum/ForumArticleEdit.vue - Replaced '标题' with 'Title'.
+File: web/src/pages/forum/ForumArticleEdit.vue - Replaced '请输入标题' with 'Please enter the title'.
+File: web/src/pages/forum/ForumArticleEdit.vue - Replaced '版块' with 'Section'.
+File: web/src/pages/forum/ForumArticleEdit.vue - Replaced '正文' with 'Content'.
+File: web/src/pages/forum/ForumArticleEdit.vue - Replaced '请输入正文' with 'Please enter the content'.
+File: web/src/pages/forum/ForumArticleEdit.vue - Replaced '提交' with 'Submit'.
+
+File: web/src/pages/list/ReadHistoryList.vue - Replaced '清空' with 'Clear'.
+File: web/src/pages/list/ReadHistoryList.vue - Replaced '删除' with 'Delete'.
+File: web/src/pages/list/ReadHistoryList.vue - Replaced '阅读历史' with 'Reading history'.
+File: web/src/pages/list/ReadHistoryList.vue - Replaced '真的要清空记录吗？' with 'Are you sure you want to clear the records?'.
+File: web/src/pages/list/ReadHistoryList.vue - Replaced '清空记录' with 'Clear records'.
+File: web/src/pages/list/ReadHistoryList.vue - Replaced '继续记录历史' with 'Continue recording history'.
+File: web/src/pages/list/ReadHistoryList.vue - Replaced '暂停记录历史' with 'Pause recording history'.
+File: web/src/pages/list/ReadHistoryList.vue - Replaced '注意：历史功能已暂停' with 'Note: The history function has been suspended'.
+
+File: web/src/pages/novel/components/TranslateOptions.vue - Replaced '选项' with 'Options'.
+File: web/src/pages/novel/components/TranslateOptions.vue - Replaced '常规' with 'Normal'.
+File: web/src/pages/novel/components/TranslateOptions.vue - Replaced '过期' with 'Expired'.
+File: web/src/pages/novel/components/TranslateOptions.vue - Replaced '重翻' with 'Re-translate'.
+File: web/src/pages/novel/components/TranslateOptions.vue - Replaced '源站同步' with 'Sync with source'.
+File: web/src/pages/novel/components/TranslateOptions.vue - Replaced '常规：只翻译未翻译的章节' with 'Normal: Only translate untranslated chapters'.
+File: web/src/pages/novel/components/TranslateOptions.vue - Replaced '过期：翻译术语表过期的章节' with 'Expired: Translate chapters with expired glossaries'.
+File: web/src/pages/novel/components/TranslateOptions.vue - Replaced '重翻：重翻全部章节' with 'Re-translate: Re-translate all chapters'.
+File: web/src/pages/novel/components/TranslateOptions.vue - Replaced '源站同步：用于原作者修改了原文的情况导致不一致的情况，可能清空现有翻译，慎用！!' with 'Sync from source station: used when the original author modifies the original text, which may cause inconsistencies. It may clear the existing translation, use with caution!'.
+File: web/src/pages/novel/components/TranslateOptions.vue - Replaced '重翻目录' with 'Re-translate table of contents'.
+File: web/src/pages/novel/components/TranslateOptions.vue - Replaced '* 请确保你知道自己在干啥，不要随便使用危险功能' with '* Please make sure you know what you are doing, do not use dangerous functions casually'.
+File: web/src/pages/novel/components/TranslateOptions.vue - Replaced '范围' with 'Range'.
+File: web/src/pages/novel/components/TranslateOptions.vue - Replaced '从' with 'From'.
+File: web/src/pages/novel/components/TranslateOptions.vue - Replaced '到' with 'To'.
+File: web/src/pages/novel/components/TranslateOptions.vue - Replaced '均分' with 'Equally divided'.
+File: web/src/pages/novel/components/TranslateOptions.vue - Replaced '个任务' with 'tasks'.
+File: web/src/pages/novel/components/TranslateOptions.vue - Replaced '章节序号看下面目录方括号里的数字。“从0到10”表示从第0章到第9章，不包含第10章。均分任务只对排队生效，最大为10。' with 'For the chapter number, see the number in square brackets in the table of contents below. "From 0 to 10" means from chapter 0 to chapter 9, not including chapter 10. The equal task is only effective for queuing, and the maximum is 10.'.
+File: web/src/pages/novel/components/TranslateOptions.vue - Replaced '操作' with 'Operation'.
+File: web/src/pages/novel/components/TranslateOptions.vue - Replaced '下载设置' with 'Download settings'.
+File: web/src/pages/novel/components/TranslateOptions.vue - Replaced '语言' with 'Language'.
+File: web/src/pages/novel/components/TranslateOptions.vue - Replaced '翻译' with 'Translate'.
+File: web/src/pages/novel/components/TranslateOptions.vue - Replaced '文件' with 'File'.
+File: web/src/pages/novel/components/TranslateOptions.vue - Replaced '# 某些EPUB阅读器无法正确显示日文段落的浅色字体' with '# Some EPUB readers cannot correctly display light-colored fonts in Japanese paragraphs'.
+
+File: web/src/pages/novel/WebNovelEdit.vue - Replaced '载入失败' with 'Loading failed'.
+File: web/src/pages/novel/WebNovelEdit.vue - Replaced '小说未载入，无法提交' with 'The novel has not been loaded and cannot be submitted'.
+File: web/src/pages/novel/WebNovelEdit.vue - Replaced '编辑' with 'Edit'.
+File: web/src/pages/novel/WebNovelEdit.vue - Replaced '编辑网络小说' with 'Edit web novel'.
+File: web/src/pages/novel/WebNovelEdit.vue - Replaced '文库链接' with 'Wenku link'.
+File: web/src/pages/novel/WebNovelEdit.vue - Replaced '文库版ID' with 'Wenku version ID'.
+File: web/src/pages/novel/WebNovelEdit.vue - Replaced '日文标题' with 'Japanese title'.
+File: web/src/pages/novel/WebNovelEdit.vue - Replaced '中文标题' with 'Chinese title'.
+File: web/src/pages/novel/WebNovelEdit.vue - Replaced '日文简介' with 'Japanese introduction'.
+File: web/src/pages/novel/WebNovelEdit.vue - Replaced '中文简介' with 'Chinese introduction'.
+File: web/src/pages/novel/WebNovelEdit.vue - Replaced '目录' with 'Table of contents'.
+File: web/src/pages/novel/WebNovelEdit.vue - Replaced '注意，手动编辑目录可能会被其他人覆盖。如果你不满意目录的翻译，可以先用翻译器重翻试试。' with 'Note that manual editing of the table of contents may be overwritten by others. If you are not satisfied with the translation of the table of contents, you can try re-translating it with a translator first.'.
+File: web/src/pages/novel/WebNovelEdit.vue - Replaced '提交' with 'Submit'.
+
+File: server/src/main/kotlin/api/RouteWenkuNovel.kt - Replaced '请先登录' with 'Please log in first'.
+File: server/src/main/kotlin/api/RouteWenkuNovel.kt - Replaced '术语表未更改' with 'Glossary not changed'.
+File: server/src/main/kotlin/api/RouteWenkuNovel.kt - Replaced '卷已存在' with 'Volume already exists'.
+File: server/src/main/kotlin/api/RouteWenkuNovel.kt - Replaced '解包失败，原因：' with 'Unpacking failed, reason:'.
+File: server/src/main/kotlin/api/RouteWenkuNovel.kt - Replaced '未设置翻译类型' with 'Translation type not set'.
+File: server/src/main/kotlin/api/RouteWenkuNovel.kt - Replaced '不支持的类型' with 'Unsupported type'.
+File: server/src/main/kotlin/api/RouteWenkuNovel.kt - Replaced '卷不存在' with 'Volume does not exist'.
+File: server/src/main/kotlin/api/RouteWenkuNovel.kt - Replaced '章节不存在' with 'Chapter does not exist'.
+File: server/src/main/kotlin/api/RouteWenkuNovel.kt - Replaced '旧版Sakura不再允许上传' with 'Older versions of Sakura are no longer allowed to be uploaded'.
+File: server/src/main/kotlin/api/RouteWenkuNovel.kt - Replaced '术语表无效' with 'Glossary is invalid'.
+File: server/src/main/kotlin/api/RouteWenkuNovel.kt - Replaced '翻译行数不匹配' with 'The number of translated lines does not match'.
+
+File: web/src/pages/util.ts - Replaced '成功' with 'Success'.
+File: web/src/pages/util.ts - Replaced '失败:' with 'Failed:'.
+File: web/src/pages/util.ts - Replaced '// 优先使用 navigator 提供的复制方法' with '// Prefer to use the copy method provided by the navigator'.
+File: web/src/pages/util.ts - Replaced '// 回退到传统复制方法' with '// Fallback to traditional copy method'.
+File: web/src/pages/util.ts - Replaced '// 创建临时可编辑元素，使用div元素避免弹出输入法' with '// Create a temporary editable element, use a div element to avoid popping up the input method'.
+File: web/src/pages/util.ts - Replaced '// modal 内的复制，需要一个 modal 内部的元素作为 parentNode 来储存临时文本' with '// For copying within a modal, a modal-internal element is needed as a parentNode to store the temporary text'.
+
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '没有选中小说' with 'No novel selected'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '${success}本小说被删除，${failed}本失败' with '${success} novels were deleted, ${failed} failed'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '${success}本小说机翻被打包，${failed}本失败' with '${success} machine-translated novels were packaged, ${failed} failed'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '${success}本小说原文被打包，${failed}本失败' with '${success} original novels were packaged, ${failed} failed'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '无需移动' with 'No need to move'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '${success}本小说已移动，${failed}本失败' with '${success} novels have been moved, ${failed} failed'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '${success}本小说已排队，${failed}本失败' with '${success} novels have been queued, ${failed} failed'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '全选' with 'Select all'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '反选' with 'Invert selection'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '下载原文' with 'Download original text'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '下载机翻' with 'Download machine translation'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '下载设置' with 'Download settings'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '删除' with 'Delete'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '确定删除' with 'Confirm deletion'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '本小说' with 'novels'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '确定' with 'Confirm'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '已选择${selectedIds.length}本小说' with 'Selected ${selectedIds.length} novels'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '移动小说功能暂时关闭' with 'The move novel function is temporarily closed'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '移动小说' with 'Move novel'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '移动' with 'Move'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '生成翻译任务' with 'Generate translation task'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '选项' with 'Options'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '过期' with 'Expired'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '重翻' with 'Re-translate'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '过期：翻译术语表过期的章节' with 'Expired: Translate chapters with expired glossaries'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '重翻：重翻全部章节' with 'Re-translate: Re-translate all chapters'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '倒序添加' with 'Add in reverse order'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '操作' with 'Operation'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '排队GPT' with 'Queue GPT'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '排队Sakura' with 'Queue Sakura'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '下载设置' with 'Download settings'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '语言' with 'Language'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '翻译' with 'Translate'.
+File: web/src/pages/bookshelf/components/BookshelfLocalControl.vue - Replaced '# 某些EPUB阅读器无法正确显示日文段落的浅色字体' with '# Some EPUB readers cannot correctly display light-colored fonts in Japanese paragraphs'.

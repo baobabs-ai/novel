@@ -41,10 +41,10 @@ export const doAction = (
 ) =>
   promise
     .then(() => {
-      message.info(label + '成功');
+      message.info(label + ' Success');
     })
     .catch(async (e) => {
-      message.error(label + '失败:' + (await formatError(e)));
+      message.error(label + ' Failed:' + (await formatError(e)));
     });
 
 type KeyPredicate = (event: KeyboardEvent) => boolean;
@@ -77,7 +77,7 @@ export const copyToClipBoard = async (
   text: string,
   parentNode?: HTMLElement | null,
 ) => {
-  // 优先使用 navigator 提供的复制方法
+  // Prefer to use the copy method provided by the navigator
   try {
     if (navigator.clipboard?.writeText) {
       await navigator.clipboard.writeText(text);
@@ -85,8 +85,8 @@ export const copyToClipBoard = async (
     }
   } catch {}
 
-  // 回退到传统复制方法
-  // 创建临时可编辑元素，使用div元素避免弹出输入法
+  // Fallback to traditional copy method
+  // Create a temporary editable element, use a div element to avoid popping up the input method
   const textEl = document.createElement('div');
   textEl.innerText = text;
   Object.assign(textEl.style, {
@@ -97,7 +97,7 @@ export const copyToClipBoard = async (
   });
   textEl.contentEditable = 'true';
 
-  // modal 内的复制，需要一个 modal 内部的元素作为 parentNode 来储存临时文本
+  // For copying within a modal, a modal-internal element is needed as a parentNode to store the temporary text
   const targetNode = parentNode ?? document.body;
   targetNode.appendChild(textEl);
 

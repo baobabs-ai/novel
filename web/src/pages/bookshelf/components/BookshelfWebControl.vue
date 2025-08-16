@@ -26,7 +26,7 @@ const showDeleteModal = ref(false);
 const openDeleteModal = () => {
   const novels = props.selectedNovels;
   if (novels.length === 0) {
-    message.info('没有选中小说');
+    message.info('No novel selected');
     return;
   }
   showDeleteModal.value = true;
@@ -48,7 +48,7 @@ const deleteSelected = async () => {
   }
   const success = novels.length - failed;
 
-  message.info(`${success}本小说被删除，${failed}本失败`);
+  message.info(`${success} novels were deleted, ${failed} failed`);
 };
 
 // 移动小说
@@ -57,12 +57,12 @@ const targetFavoredId = ref(props.favoredId);
 const moveToFavored = async () => {
   const novels = props.selectedNovels;
   if (novels.length === 0) {
-    message.info('没有选中小说');
+    message.info('No novel selected');
     return;
   }
 
   if (targetFavoredId.value === props.favoredId) {
-    message.info('无需移动');
+    message.info('No need to move');
     return;
   }
 
@@ -81,7 +81,7 @@ const moveToFavored = async () => {
   }
   const success = novels.length - failed;
 
-  message.info(`${success}本小说已移动，${failed}本失败`);
+  message.info(`${success} novels have been moved, ${failed} failed`);
   window.location.reload();
 };
 
@@ -95,7 +95,7 @@ const shouldTopJob = useKeyModifier('Control');
 const queueJobs = (type: 'gpt' | 'sakura') => {
   let novels = props.selectedNovels;
   if (novels.length === 0) {
-    message.info('没有选中小说');
+    message.info('No novel selected');
     return;
   }
 
@@ -130,7 +130,7 @@ const queueJobs = (type: 'gpt' | 'sakura') => {
     }
   });
   const success = novels.length - failed;
-  message.info(`${success}本小说已排队，${failed}本失败`);
+  message.info(`${success} novels have been queued, ${failed} failed`);
 };
 </script>
 
@@ -141,19 +141,19 @@ const queueJobs = (type: 'gpt' | 'sakura') => {
         <n-flex align="baseline">
           <n-button-group size="small">
             <c-button
-              label="全选"
+              label="Select all"
               :round="false"
               @action="$emit('selectAll')"
             />
             <c-button
-              label="反选"
+              label="Invert selection"
               :round="false"
               @action="$emit('invertSelection')"
             />
           </n-button-group>
 
           <c-button
-            label="删除"
+            label="Delete"
             secondary
             :round="false"
             size="small"
@@ -161,32 +161,32 @@ const queueJobs = (type: 'gpt' | 'sakura') => {
             @click="openDeleteModal"
           />
           <c-modal
-            :title="`确定删除 ${
+            :title="`Confirm deletion ${
               selectedNovels.length === 1
                 ? selectedNovels[0].titleZh ?? selectedNovels[0].titleJp
-                : `${selectedNovels.length}本小说`
+                : `${selectedNovels.length} novels`
             }？`"
             v-model:show="showDeleteModal"
           >
             <template #action>
-              <c-button label="确定" type="primary" @action="deleteSelected" />
+              <c-button label="Confirm" type="primary" @action="deleteSelected" />
             </template>
           </c-modal>
         </n-flex>
 
-        <n-text depth="3"> 已选择{{ selectedNovels.length }}本小说 </n-text>
+        <n-text depth="3"> Selected {{ selectedNovels.length }} novels </n-text>
       </n-flex>
     </n-list-item>
 
     <n-list-item v-if="favoreds.web.length > 1">
-      <n-p>移动小说功能暂时关闭</n-p>
+      <n-p>The move novel function is temporarily closed</n-p>
       <n-flex v-if="false" vertical>
-        <b>移动小说（低配版，很慢，等到显示移动完成）</b>
+        <b>Move novels (low-spec version, very slow, wait until the move is complete)</b>
 
         <n-radio-group v-model:value="targetFavoredId">
           <n-flex align="center">
             <c-button
-              label="移动"
+              label="Move"
               size="small"
               :round="false"
               @action="moveToFavored"
@@ -211,58 +211,58 @@ const queueJobs = (type: 'gpt' | 'sakura') => {
       "
     >
       <n-flex vertical>
-        <b>生成翻译任务</b>
+        <b>Generate translation task</b>
 
         <n-flex size="small">
           <n-tooltip trigger="hover">
             <template #trigger>
               <n-flex :size="0" :wrap="false">
                 <tag-button
-                  label="常规"
+                  label="Normal"
                   :checked="translateLevel === 'normal'"
                   @update:checked="translateLevel = 'normal'"
                 />
                 <tag-button
-                  label="过期"
+                  label="Expired"
                   :checked="translateLevel === 'expire'"
                   @update:checked="translateLevel = 'expire'"
                 />
                 <tag-button
-                  label="重翻"
+                  label="Re-translate"
                   type="warning"
                   :checked="translateLevel === 'all'"
                   @update:checked="translateLevel = 'all'"
                 />
               </n-flex>
             </template>
-            常规：只翻译未翻译的章节<br />
-            过期：翻译术语表过期的章节<br />
-            重翻：重翻全部章节<br />
+            Normal: Only translate untranslated chapters<br />
+            Expired: Translate chapters with expired glossaries<br />
+            Re-translate: Re-translate all chapters<br />
           </n-tooltip>
 
-          <tag-button label="重翻目录" v-model:checked="forceMetadata" />
-          <tag-button label="前5话" v-model:checked="first5" />
-          <tag-button label="倒序添加" v-model:checked="reverseOrder" />
+          <tag-button label="Re-translate table of contents" v-model:checked="forceMetadata" />
+          <tag-button label="First 5 chapters" v-model:checked="first5" />
+          <tag-button label="Add in reverse order" v-model:checked="reverseOrder" />
 
           <n-text
             v-if="translateLevel === 'all'"
             type="warning"
             style="font-size: 12px; flex-basis: 100%"
           >
-            <b> * 请确保你知道自己在干啥，不要随便使用危险功能 </b>
+            <b> * Please make sure you know what you are doing, do not use dangerous functions casually </b>
           </n-text>
         </n-flex>
 
         <n-button-group size="small">
           <c-button
             v-if="setting.enabledTranslator.includes('gpt')"
-            label="排队GPT"
+            label="Queue GPT"
             :round="false"
             @action="queueJobs('gpt')"
           />
           <c-button
             v-if="setting.enabledTranslator.includes('sakura')"
-            label="排队Sakura"
+            label="Queue Sakura"
             :round="false"
             @action="queueJobs('sakura')"
           />
