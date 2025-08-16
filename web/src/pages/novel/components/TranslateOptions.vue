@@ -189,14 +189,14 @@ const showDownloadModal = ref(false);
 
         <c-action-wrapper
           v-if="gnid.type === 'web'"
-          title="中文文件名"
+          title="English Filename"
           align="center"
         >
           <n-switch
             size="small"
-            :value="setting.downloadFilenameType === 'zh'"
+            :value="setting.downloadFilenameType === 'en'"
             @update-value="
-              (it: boolean) => (setting.downloadFilenameType = it ? 'zh' : 'jp')
+              (it: boolean) => (setting.downloadFilenameType = it ? 'en' : 'jp')
             "
           />
         </c-action-wrapper>

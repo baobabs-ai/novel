@@ -12,7 +12,7 @@ export const getTranslationFile = async (
     translations,
   }: {
     id: string;
-    mode: 'zh' | 'zh-jp' | 'jp-zh';
+    mode: 'en' | 'en-jp' | 'jp-en' | 'zh' | 'zh-jp' | 'jp-zh';
     translationsMode: 'parallel' | 'priority';
     translations: ('sakura' | 'baidu' | 'youdao' | 'gpt')[];
   },
@@ -60,9 +60,9 @@ export const getTranslationFile = async (
         buffer.push('// This segment of translation is missing.');
       } else {
         const combinedLinesList = zhLinesList;
-        if (mode === 'jp-zh') {
+        if (mode === 'jp-zh' || mode === 'jp-en') {
           combinedLinesList.unshift(jpLines);
-        } else if (mode === 'zh-jp') {
+        } else if (mode === 'zh-jp' || mode === 'en-jp') {
           combinedLinesList.push(jpLines);
         }
         for (let i = 0; i < combinedLinesList[0].length; i++) {
@@ -98,9 +98,9 @@ export const getTranslationFile = async (
         texts.push(zhLines.slice(0, s.text.length));
         zhLines.splice(0, s.text.length);
       }
-      if (mode === 'jp-zh') {
+      if (mode === 'jp-zh' || mode === 'jp-en') {
         texts.unshift(s.text);
-      } else if (mode === 'zh-jp') {
+      } else if (mode === 'zh-jp' || mode === 'en-jp') {
         texts.push(s.text);
       }
 

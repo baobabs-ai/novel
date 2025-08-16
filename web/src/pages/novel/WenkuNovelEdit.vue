@@ -39,11 +39,11 @@ const allowSubmit = ref(novelId === undefined);
 const formRef = ref<FormInst>();
 const formValue = ref({
   title: '',
-  titleZh: '',
+  titleEn: '',
   cover: '',
   authors: <string[]>[],
   artists: <string[]>[],
-  level: '一般向',
+  level: 'For All Ages',
   keywords: <string[]>[],
   introduction: '',
   volumes: <WenkuVolumeDto[]>[],

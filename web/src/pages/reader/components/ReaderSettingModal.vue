@@ -186,9 +186,9 @@ const setCustomFontColor = (color: string) =>
             </n-flex>
           </c-action-wrapper>
 
-          <c-action-wrapper title="主透明度" align="center">
+          <c-action-wrapper title="Main Opacity" align="center">
             <n-slider
-              v-model:value="setting.mixZhOpacity"
+              v-model:value="setting.mixEnOpacity"
               :max="1"
               :min="0"
               :step="0.05"
@@ -198,11 +198,11 @@ const setCustomFontColor = (color: string) =>
               style="flex: auto"
             />
             <n-text style="width: 6em">
-              {{ (setting.mixZhOpacity * 100).toFixed(0) }}%
+              {{ (setting.mixEnOpacity * 100).toFixed(0) }}%
             </n-text>
           </c-action-wrapper>
 
-          <c-action-wrapper title="辅透明度" align="center">
+          <c-action-wrapper title="Secondary Opacity" align="center">
             <n-slider
               v-model:value="setting.mixJpOpacity"
               :max="1"

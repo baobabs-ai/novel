@@ -140,7 +140,7 @@ const createFileUrl = ({
 }: {
   providerId: string;
   novelId: string;
-  mode: 'jp' | 'zh' | 'zh-jp' | 'jp-zh';
+  mode: 'jp' | 'zh' | 'zh-jp' | 'jp-zh' | 'en' | 'en-jp' | 'jp-en';
   translationsMode: 'parallel' | 'priority';
   translations: ('sakura' | 'baidu' | 'youdao' | 'gpt')[];
   type: 'epub' | 'txt';
