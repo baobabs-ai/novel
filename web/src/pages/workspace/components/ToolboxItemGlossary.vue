@@ -89,7 +89,7 @@ const copyTranslationJson = async () => {
   );
   const jsonString = Glossary.toText(obj);
   navigator.clipboard.writeText(jsonString);
-  message.info('已经将翻译结果复制到剪切板');
+  message.info('The translation result has been copied to the clipboard');
 };
 
 const showSakuraSelectModal = ref(false);
@@ -104,7 +104,7 @@ const translateKatakanas = async (id: 'baidu' | 'youdao' | 'sakura') => {
       (it) => it.id === selectedSakuraWorkerId.value,
     );
     if (worker === undefined) {
-      message.error('未选择Sakura翻译器');
+      message.error('Sakura translator not selected');
       return;
     }
     config = {
@@ -126,7 +126,7 @@ const translateKatakanas = async (id: 'baidu' | 'youdao' | 'sakura') => {
     });
     katakanaTranslations.value = jpToZh;
   } catch (e: unknown) {
-    message.error(`翻译器错误：${e}`);
+    message.error(`Translator error: ${e}`);
   }
 };
 </script>
@@ -134,15 +134,15 @@ const translateKatakanas = async (id: 'baidu' | 'youdao' | 'sakura') => {
 <template>
   <n-flex vertical size="large">
     <bulletin>
-      <n-p>术语表辅助制作工具正在开发中，当前方案分为识别和翻译两步。</n-p>
+      <n-p>The glossary-making tool is under development. The current plan is divided into two steps: recognition and translation.</n-p>
       <n-ul>
-        <n-li>识别阶段：根据片假名词汇出现频率判断可能是术语的词汇。</n-li>
-        <n-li>翻译阶段：直接翻译日语词汇。</n-li>
+        <n-li>Recognition stage: Identify possible terminology based on the frequency of katakana vocabulary.</n-li>
+        <n-li>Translation stage: Directly translate Japanese vocabulary.</n-li>
       </n-ul>
-      <n-p><b>注意，这是辅助制作，不是全自动生成，使用前务必检查结果。</b></n-p>
+      <n-p><b>Note that this is an auxiliary production, not a fully automatic generation. Be sure to check the results before use.</b></n-p>
     </bulletin>
 
-    <c-action-wrapper title="次数下限">
+    <c-action-wrapper title="Minimum number of times">
       <n-input-number
         v-model:value="katakanaThredhold"
         clearable
@@ -152,21 +152,21 @@ const translateKatakanas = async (id: 'baidu' | 'youdao' | 'sakura') => {
       />
     </c-action-wrapper>
 
-    <c-action-wrapper title="操作">
+    <c-action-wrapper title="Operation">
       <n-flex vertical>
         <n-button-group size="small">
           <c-button
-            label="复制术语表"
+            label="Copy glossary"
             :round="false"
             @action="copyTranslationJson()"
           />
           <c-button
-            label="百度翻译"
+            label="Baidu Translate"
             :round="false"
             @action="translateKatakanas('baidu')"
           />
           <c-button
-            label="有道翻译"
+            label="Youdao Translate"
             :round="false"
             @action="translateKatakanas('youdao')"
           />
@@ -174,12 +174,12 @@ const translateKatakanas = async (id: 'baidu' | 'youdao' | 'sakura') => {
 
         <n-button-group size="small">
           <c-button
-            :label="`Sakura翻译-${selectedSakuraWorkerId ?? '未选中'}`"
+            :label="`Sakura Translate-${selectedSakuraWorkerId ?? 'Not selected'}`"
             :round="false"
             @action="translateKatakanas('sakura')"
           />
           <c-button
-            label="选择翻译器"
+            label="Select translator"
             :round="false"
             @action="showSakuraSelectModal = true"
           />
@@ -188,7 +188,7 @@ const translateKatakanas = async (id: 'baidu' | 'youdao' | 'sakura') => {
         <n-flex align="center" :wrap="false">
           <c-button
             :disabled="katakanaDeleted.length === 0"
-            label="撤销删除"
+            label="Undo delete"
             :round="false"
             size="small"
             @action="undoDeleteKatakana"
@@ -218,7 +218,7 @@ const translateKatakanas = async (id: 'baidu' | 'youdao' | 'sakura') => {
         <tr v-for="[word, number] in katakanas" :key="word">
           <td>
             <c-icon-button
-              tooltip="移除"
+              tooltip="Remove"
               :icon="DeleteOutlineOutlined"
               text
               size="small"
@@ -233,7 +233,7 @@ const translateKatakanas = async (id: 'baidu' | 'youdao' | 'sakura') => {
             <n-input
               v-model:value="katakanaTranslations[word]"
               size="tiny"
-              placeholder="请输入中文翻译"
+              placeholder="Please enter Chinese translation"
               :theme-overrides="{
                 border: '0',
                 color: 'transprent',
@@ -245,7 +245,7 @@ const translateKatakanas = async (id: 'baidu' | 'youdao' | 'sakura') => {
     </n-scrollbar>
   </n-flex>
 
-  <c-modal title="选择Sakura翻译器" v-model:show="showSakuraSelectModal">
+  <c-modal title="Select Sakura translator" v-model:show="showSakuraSelectModal">
     <n-radio-group v-model:value="selectedSakuraWorkerId">
       <n-flex vertical>
         <n-radio

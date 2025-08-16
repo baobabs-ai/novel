@@ -44,25 +44,25 @@ const formValue = ref(initFormValue());
 
 const emptyCheck = (name: string) => ({
   validator: (rule: FormItemRule, value: string) => value.trim().length > 0,
-  message: name + '不能为空',
+  message: name + ' cannot be empty',
   trigger: 'input',
 });
 
 const formRules: FormRules = {
   id: [
-    emptyCheck('名字'),
+    emptyCheck('Name'),
     {
       validator: (rule: FormItemRule, value: string) =>
         workspaceRef.value.workers
           .filter(({ id }) => id !== props.worker?.id)
           .find(({ id }) => id === value) === undefined,
-      message: '名字不能重复',
+      message: 'Name cannot be repeated',
       trigger: 'input',
     },
   ],
-  model: [emptyCheck('模型')],
+  model: [emptyCheck('Model')],
   endpoint: [
-    emptyCheck('链接'),
+    emptyCheck('Link'),
     {
       validator: (rule: FormItemRule, value: string) => {
         try {
@@ -72,7 +72,7 @@ const formRules: FormRules = {
           return false;
         }
       },
-      message: '链接不合法',
+      message: 'Link is not valid',
       trigger: 'input',
     },
   ],
@@ -84,7 +84,7 @@ const formRules: FormRules = {
         workspaceRef.value.workers
           .filter(({ id }) => id !== props.worker?.id)
           .find(({ key }) => key === value) === undefined,
-      message: '有重复的Key，请确保使用的API支持并发',
+      message: 'There are duplicate keys, please ensure that the API used supports concurrency',
       trigger: 'input',
     },
   ],
@@ -119,14 +119,14 @@ const submit = async () => {
   }
 };
 
-const verb = computed(() => (props.worker === undefined ? '添加' : '更新'));
+const verb = computed(() => (props.worker === undefined ? 'Add' : 'Update'));
 </script>
 
 <template>
   <c-modal
     :show="show"
     @update:show="$emit('update:show', $event)"
-    :title="verb + 'GPT翻译器'"
+    :title="verb + 'GPT Translator'"
   >
     <n-form
       ref="formRef"
@@ -135,25 +135,25 @@ const verb = computed(() => (props.worker === undefined ? '添加' : '更新'));
       label-placement="left"
       label-width="auto"
     >
-      <n-form-item-row path="id" label="名字">
+      <n-form-item-row path="id" label="Name">
         <n-input
           v-model:value="formValue.id"
-          placeholder="给你的翻译器起个名字"
+          placeholder="Give your translator a name"
           :input-props="{ spellcheck: false }"
         />
       </n-form-item-row>
 
-      <n-form-item-row path="model" label="模型">
+      <n-form-item-row path="model" label="Model">
         <n-input
           v-model:value="formValue.model"
-          placeholder="模型名称"
+          placeholder="Model name"
           :input-props="{ spellcheck: false }"
         />
       </n-form-item-row>
-      <n-form-item-row path="endpoint" label="链接">
+      <n-form-item-row path="endpoint" label="Link">
         <n-input
           v-model:value="formValue.endpoint"
-          placeholder="兼容OpenAI的API链接，默认使用deepseek"
+          placeholder="OpenAI-compatible API link, deepseek is used by default"
           :input-props="{ spellcheck: false }"
         />
       </n-form-item-row>
@@ -161,13 +161,13 @@ const verb = computed(() => (props.worker === undefined ? '添加' : '更新'));
       <n-form-item-row path="key" label="Key">
         <n-input
           v-model:value="formValue.key"
-          placeholder="请输入Api key"
+          placeholder="Please enter Api key"
           :input-props="{ spellcheck: false }"
         />
       </n-form-item-row>
 
       <n-text depth="3" style="font-size: 12px">
-        # 链接例子：https://api.deepseek.com
+        # Link example: https://api.deepseek.com
       </n-text>
     </n-form>
 

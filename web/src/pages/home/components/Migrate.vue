@@ -7,11 +7,11 @@ const inOldDomain = location.hostname.includes('fishhawk');
 const open = (url: string) => window.open(url);
 
 window.addEventListener('message', (message) => {
-  console.log('接收到消息', message);
+  console.log('Message received', message);
   const { origin, data } = message;
 
   if (origin.endsWith('fishhawk.top') && data.type == 'migrate') {
-    console.log('开始迁移数据', data);
+    console.log('Start migrating data', data);
 
     if (data.auth) localStorage.setItem(LSKey.Auth, data.auth);
     if (data.blacklist) localStorage.setItem(LSKey.Blacklist, data.blacklist);
@@ -36,7 +36,7 @@ if (inOldDomain && window.opener) {
     setting: localStorage.getItem(LSKey.Setting),
     settingReader: localStorage.getItem(LSKey.SettingReader),
   };
-  console.log('发送migrate消息');
+  console.log('Send migrate message');
   window.opener.postMessage(msg, 'https://n.novelia.cc');
   window.close();
 }
@@ -45,7 +45,7 @@ if (inOldDomain && window.opener) {
 <template>
   <n-p v-if="inOldDomain" style="margin: 0px 0px 4px">
     <b>
-      机翻站已切换到新的域名
+      The machine translation station has been switched to a new domain name
       <n-a href="https://n.novelia.cc/">{{ newDomain }}</n-a>
     </b>
   </n-p>
@@ -55,7 +55,7 @@ if (inOldDomain && window.opener) {
       size="small"
       type="warning"
       secondary
-      label="从books导入设置"
+      label="Import settings from books"
       @click="open('https://books.fishhawk.top')"
       style="font-weight: 700"
     />
@@ -65,7 +65,7 @@ if (inOldDomain && window.opener) {
       size="small"
       type="warning"
       secondary
-      label="从books1导入设置"
+      label="Import settings from books1"
       @click="open('https://books1.fishhawk.top')"
       style="font-weight: 700"
     />
@@ -77,7 +77,7 @@ if (inOldDomain && window.opener) {
       secondary
       tag="a"
       href="https://n.novelia.cc/files-extra/extension.v1.0.12.zip"
-      label="下载浏览器扩展（适配新域名）"
+      label="Download browser extension (adapted to the new domain name)"
       style="font-weight: 700"
     />
   </n-flex>

@@ -100,7 +100,7 @@ export default defineConfig(({ command, mode }) => {
     },
     plugins: [
       vue(),
-      // imagemin({}),
+      imagemin({}),
       createHtmlPlugin({
         minify: { minifyJS: true },
       }),

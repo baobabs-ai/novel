@@ -29,7 +29,7 @@ const showDeleteModal = ref(false);
 const openDeleteModal = () => {
   const ids = props.selectedIds;
   if (ids.length === 0) {
-    message.info('没有选中小说');
+    message.info('No novel selected');
     return;
   }
   showDeleteModal.value = true;
@@ -38,7 +38,7 @@ const openDeleteModal = () => {
 const deleteSelected = async () => {
   const ids = props.selectedIds;
   const { success, failed } = await store.deleteVolumes(ids);
-  message.info(`${success}本小说被删除，${failed}本失败`);
+  message.info(`${success} novels were deleted, ${failed} failed`);
 };
 
 // 下载小说
@@ -47,21 +47,21 @@ const showDownloadModal = ref(false);
 const downloadSelected = async () => {
   const ids = props.selectedIds;
   if (ids.length === 0) {
-    message.info('没有选中小说');
+    message.info('No novel selected');
     return;
   }
   const { success, failed } = await store.downloadVolumes(ids);
-  message.info(`${success}本小说机翻被打包，${failed}本失败`);
+  message.info(`${success} machine-translated novels were packaged, ${failed} failed`);
 };
 
 const downloadRawSelected = async () => {
   const ids = props.selectedIds;
   if (ids.length === 0) {
-    message.info('没有选中小说');
+    message.info('No novel selected');
     return;
   }
   const { success, failed } = await store.downloadRawVolumes(ids);
-  message.info(`${success}本小说原文被打包，${failed}本失败`);
+  message.info(`${success} original novels were packaged, ${failed} failed`);
 };
 
 // 移动小说
@@ -72,12 +72,12 @@ const targetFavoredId = ref(props.favoredId);
 const moveToFavored = async () => {
   const novels = props.selectedIds;
   if (novels.length === 0) {
-    message.info('没有选中小说');
+    message.info('No novel selected');
     return;
   }
 
   if (targetFavoredId.value === props.favoredId) {
-    message.info('无需移动');
+    message.info('No need to move');
     return;
   }
 
@@ -96,7 +96,7 @@ const moveToFavored = async () => {
   }
   const success = novels.length - failed;
 
-  message.info(`${success}本小说已移动，${failed}本失败`);
+  message.info(`${success} novels have been moved, ${failed} failed`);
   await store.loadVolumes();
 };
 
@@ -108,7 +108,7 @@ const shouldTopJob = useKeyModifier('Control');
 const queueJobs = (type: 'gpt' | 'sakura') => {
   let ids = props.selectedIds;
   if (ids.length === 0) {
-    message.info('没有选中小说');
+    message.info('No novel selected');
     return;
   }
 
@@ -121,7 +121,7 @@ const queueJobs = (type: 'gpt' | 'sakura') => {
     type,
     shouldTop: shouldTopJob.value ?? false,
   });
-  message.info(`${success}本小说已排队，${failed}本失败`);
+  message.info(`${success} novels have been queued, ${failed} failed`);
 };
 </script>
 
@@ -132,12 +132,12 @@ const queueJobs = (type: 'gpt' | 'sakura') => {
         <n-flex align="baseline">
           <n-button-group size="small">
             <c-button
-              label="全选"
+              label="Select all"
               :round="false"
               @action="$emit('selectAll')"
             />
             <c-button
-              label="反选"
+              label="Invert selection"
               :round="false"
               @action="$emit('invertSelection')"
             />
@@ -145,24 +145,24 @@ const queueJobs = (type: 'gpt' | 'sakura') => {
 
           <n-button-group size="small">
             <c-button
-              label="下载原文"
+              label="Download original text"
               :round="false"
               @action="downloadRawSelected"
             />
             <c-button
-              label="下载机翻"
+              label="Download machine translation"
               :round="false"
               @action="downloadSelected"
             />
             <c-button
-              label="下载设置"
+              label="Download settings"
               :round="false"
               @action="showDownloadModal = true"
             />
           </n-button-group>
 
           <c-button
-            label="删除"
+            label="Delete"
             secondary
             :round="false"
             size="small"
@@ -170,32 +170,32 @@ const queueJobs = (type: 'gpt' | 'sakura') => {
             @click="openDeleteModal"
           />
           <c-modal
-            :title="`确定删除 ${
+            :title="`Confirm deletion ${
               selectedIds.length === 1
                 ? selectedIds[0]
-                : `${selectedIds.length}本小说`
+                : `${selectedIds.length} novels`
             }？`"
             v-model:show="showDeleteModal"
           >
             <template #action>
-              <c-button label="确定" type="primary" @action="deleteSelected" />
+              <c-button label="Confirm" type="primary" @action="deleteSelected" />
             </template>
           </c-modal>
         </n-flex>
 
-        <n-text depth="3"> 已选择{{ selectedIds.length }}本小说 </n-text>
+        <n-text depth="3"> Selected {{ selectedIds.length }} novels </n-text>
       </n-flex>
     </n-list-item>
 
     <n-list-item v-if="favoreds.local.length > 1">
-      <n-p>移动小说功能暂时关闭</n-p>
+      <n-p>The move novel function is temporarily closed</n-p>
       <n-flex v-if="false" vertical>
-        <b>移动小说</b>
+        <b>Move novel</b>
 
         <n-radio-group v-model:value="targetFavoredId">
           <n-flex align="center">
             <c-button
-              label="移动"
+              label="Move"
               size="small"
               :round="false"
               @action="moveToFavored"
@@ -220,45 +220,45 @@ const queueJobs = (type: 'gpt' | 'sakura') => {
       "
     >
       <n-flex vertical>
-        <b>生成翻译任务</b>
+        <b>Generate translation task</b>
 
-        <c-action-wrapper title="选项">
+        <c-action-wrapper title="Options">
           <n-flex size="small">
             <n-tooltip trigger="hover">
               <template #trigger>
                 <n-flex :size="0" :wrap="false">
                   <tag-button
-                    label="过期"
+                    label="Expired"
                     :checked="translateLevel === 'expire'"
                     @update:checked="translateLevel = 'expire'"
                   />
                   <tag-button
-                    label="重翻"
+                    label="Re-translate"
                     type="warning"
                     :checked="translateLevel === 'all'"
                     @update:checked="translateLevel = 'all'"
                   />
                 </n-flex>
               </template>
-              过期：翻译术语表过期的章节<br />
-              重翻：重翻全部章节<br />
+              Expired: Translate chapters with expired glossaries<br />
+              Re-translate: Re-translate all chapters<br />
             </n-tooltip>
 
-            <tag-button label="倒序添加" v-model:checked="reverseOrder" />
+            <tag-button label="Add in reverse order" v-model:checked="reverseOrder" />
           </n-flex>
         </c-action-wrapper>
 
-        <c-action-wrapper title="操作">
+        <c-action-wrapper title="Operation">
           <n-button-group size="small">
             <c-button
               v-if="setting.enabledTranslator.includes('gpt')"
-              label="排队GPT"
+              label="Queue GPT"
               :round="false"
               @action="queueJobs('gpt')"
             />
             <c-button
               v-if="setting.enabledTranslator.includes('sakura')"
-              label="排队Sakura"
+              label="Queue Sakura"
               :round="false"
               @action="queueJobs('sakura')"
             />
@@ -268,16 +268,16 @@ const queueJobs = (type: 'gpt' | 'sakura') => {
     </n-list-item>
   </n-list>
 
-  <c-modal title="下载设置" v-model:show="showDownloadModal">
+  <c-modal title="Download settings" v-model:show="showDownloadModal">
     <n-flex vertical size="large">
-      <c-action-wrapper title="语言">
+      <c-action-wrapper title="Language">
         <c-radio-group
           v-model:value="setting.downloadFormat.mode"
           :options="Setting.downloadModeOptions"
         />
       </c-action-wrapper>
 
-      <c-action-wrapper title="翻译">
+      <c-action-wrapper title="Translate">
         <n-flex>
           <c-radio-group
             v-model:value="setting.downloadFormat.translationsMode"
@@ -292,7 +292,7 @@ const queueJobs = (type: 'gpt' | 'sakura') => {
       </c-action-wrapper>
 
       <n-text depth="3" style="font-size: 12px">
-        # 某些EPUB阅读器无法正确显示日文段落的浅色字体
+        # Some EPUB readers cannot correctly display light-colored fonts in Japanese paragraphs
       </n-text>
     </n-flex>
   </c-modal>

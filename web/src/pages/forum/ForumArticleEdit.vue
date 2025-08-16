@@ -25,13 +25,13 @@ const store = articleId !== undefined ? useArticleStore(articleId) : undefined;
 
 const articleCategoryOptions = whoami.value.asAdmin
   ? [
-      { value: 'General', label: '小说交流' },
-      { value: 'Guide', label: '使用指南' },
-      { value: 'Support', label: '反馈与建议' },
+      { value: 'General', label: 'Novel communication' },
+      { value: 'Guide', label: 'User guide' },
+      { value: 'Support', label: 'Feedback and suggestions' },
     ]
   : [
-      { value: 'General', label: '小说交流' },
-      { value: 'Support', label: '反馈与建议' },
+      { value: 'General', label: 'Novel communication' },
+      { value: 'Support', label: 'Feedback and suggestions' },
     ];
 
 const allowSubmit = ref(articleId === undefined);
@@ -46,12 +46,12 @@ const formRules: FormRules = {
     {
       validator: (_rule: FormItemRule, value: string) =>
         value.trim().length >= 2,
-      message: '标题长度不能少于2个字符',
+      message: 'Title length cannot be less than 2 characters',
       trigger: 'input',
     },
     {
       validator: (_rule: FormItemRule, value: string) => value.length <= 80,
-      message: '标题长度不能超过80个字符',
+      message: 'Title length cannot exceed 80 characters',
       trigger: 'input',
     },
   ],
@@ -59,12 +59,12 @@ const formRules: FormRules = {
     {
       validator: (_rule: FormItemRule, value: string) =>
         value.trim().length >= 2,
-      message: '正文长度不能少于2个字符',
+      message: 'Content length cannot be less than 2 characters',
       trigger: 'input',
     },
     {
       validator: (_rule: FormItemRule, value: string) => value.length <= 20_000,
-      message: '正文长度不能超过2万个字符',
+      message: 'Content length cannot exceed 20,000 characters',
       trigger: 'input',
     },
   ],
@@ -72,7 +72,7 @@ const formRules: FormRules = {
     {
       validator: (_rule: FormItemRule, value: string | undefined) =>
         value !== undefined,
-      message: '未选择要发表的版块',
+      message: 'No section selected for publication',
       trigger: 'input',
     },
   ],
@@ -88,13 +88,13 @@ store?.loadArticle()?.then((result) => {
     };
     allowSubmit.value = true;
   } else {
-    message.error('载入失败');
+    message.error('Loading failed');
   }
 });
 
 const submit = async () => {
   if (!allowSubmit.value) {
-    message.warning('文章未载入，无法提交');
+    message.warning('The article has not been loaded and cannot be submitted');
     return;
   }
 
@@ -110,7 +110,7 @@ const submit = async () => {
         draftRepo.removeDraft(draftId);
         router.push({ path: `/forum/${id}` });
       }),
-      '发布',
+      'Publish',
       message,
     );
   } else {
@@ -119,7 +119,7 @@ const submit = async () => {
         draftRepo.removeDraft(draftId);
         router.push({ path: `/forum/${articleId}` });
       }),
-      '更新',
+      'Update',
       message,
     );
   }
@@ -128,7 +128,7 @@ const submit = async () => {
 
 <template>
   <div class="layout-content">
-    <n-h1>{{ articleId === undefined ? '发布' : '编辑' }}文章</n-h1>
+    <n-h1>{{ articleId === undefined ? 'Publish' : 'Edit' }} Article</n-h1>
     <n-form
       ref="formRef"
       :model="formValue"
@@ -136,27 +136,27 @@ const submit = async () => {
       :label-placement="isWideScreen ? 'left' : 'top'"
       label-width="auto"
     >
-      <n-form-item-row path="title" label="标题">
+      <n-form-item-row path="title" label="Title">
         <n-input
           v-model:value="formValue.title"
-          placeholder="请输入标题"
+          placeholder="Please enter the title"
           maxlength="80"
           show-count
           :input-props="{ spellcheck: false }"
         />
       </n-form-item-row>
-      <n-form-item-row path="category" label="版块">
+      <n-form-item-row path="category" label="Section">
         <c-radio-group
           v-model:value="formValue.category"
           :options="articleCategoryOptions"
         />
       </n-form-item-row>
-      <n-form-item-row path="content" label="正文">
+      <n-form-item-row path="content" label="Content">
         <MarkdownEditor
           mode="article"
           :draft-id="draftId"
           v-model:value="formValue.content"
-          placeholder="请输入正文"
+          placeholder="Please enter the content"
           :autosize="{ minRows: 8 }"
           maxlength="20000"
           style="width: 100%"
@@ -165,7 +165,7 @@ const submit = async () => {
     </n-form>
 
     <c-button
-      label="提交"
+      label="Submit"
       :icon="UploadOutlined"
       require-login
       size="large"
