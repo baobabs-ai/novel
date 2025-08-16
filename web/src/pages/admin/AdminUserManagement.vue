@@ -34,7 +34,7 @@ async function loadPage(page: number) {
   }
 }
 
-watch(currentPage, (page) => loadPage(page), { immediate: true });
+watch(currentPage, (page: number) => loadPage(page), { immediate: true });
 
 watch(userRole, () => {
   if (currentPage.value === 1) loadPage(1);

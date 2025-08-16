@@ -42,10 +42,15 @@ async function loadComments(page: number) {
   }
 }
 
-watch(currentPage, (page) => loadComments(page), { immediate: true });
-watch(commentPage, (value, oldValue) => {
-  if (oldValue && value) {
-    const node = commentSectionRef.value?.$el as HTMLDivElement | null;
+watch(currentPage, (page: number) => loadComments(page), { immediate: true });
+watch(
+  commentPage,
+  (
+    value: Result<Page<Comment1>> | undefined,
+    oldValue: Result<Page<Comment1>> | undefined,
+  ) => {
+    if (oldValue && value) {
+      const node = commentSectionRef.value?.$el as HTMLDivElement | null;
     if (!node) return;
     const prevTop = node.getBoundingClientRect().top;
     nextTick(() => {

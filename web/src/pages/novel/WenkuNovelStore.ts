@@ -4,16 +4,17 @@ import { Result, runCatching } from '@/util/result';
 
 const repo = Locator.wenkuNovelRepository;
 
+import { VolumeJpDto } from '@/model/WenkuNovel';
+
 type WenkuNovelStore = {
   novelResult: Result<WenkuNovelDto> | undefined;
 };
 
 export const useWenkuNovelStore = (novelId: string) => {
   return defineStore(`WenkuNovel/${novelId}`, {
-    state: () =>
-      <WenkuNovelStore>{
-        novelResult: undefined,
-      },
+    state: (): WenkuNovelStore => ({
+      novelResult: undefined,
+    }),
     actions: {
       async loadNovel(force = false) {
         if (!force && this.novelResult?.ok) {
@@ -23,11 +24,12 @@ export const useWenkuNovelStore = (novelId: string) => {
         this.novelResult = undefined;
         const result = await runCatching(repo.getNovel(novelId));
         if (result.ok) {
-          result.value.volumeEn = result.value.volumeEn.sort((a, b) =>
+          result.value.volumeEn = result.value.volumeEn.sort((a: string, b: string) =>
             a.localeCompare(b),
           );
-          result.value.volumeJp = result.value.volumeJp.sort((a, b) =>
-            a.volumeId.localeCompare(b.volumeId),
+          result.value.volumeJp = result.value.volumeJp.sort(
+            (a: VolumeJpDto, b: VolumeJpDto) =>
+              a.volumeId.localeCompare(b.volumeId),
           );
         }
         this.novelResult = result;
@@ -65,13 +67,14 @@ export const useWenkuNovelStore = (novelId: string) => {
               sakura: 0,
             });
             this.novelResult.value.volumeJp =
-              this.novelResult.value.volumeJp.sort((a, b) =>
-                a.volumeId.localeCompare(b.volumeId),
+              this.novelResult.value.volumeJp.sort(
+                (a: VolumeJpDto, b: VolumeJpDto) =>
+                  a.volumeId.localeCompare(b.volumeId),
               );
           } else {
             this.novelResult.value.volumeEn.push(volumeId);
             this.novelResult.value.volumeEn =
-              this.novelResult.value.volumeEn.sort((a, b) =>
+              this.novelResult.value.volumeEn.sort((a: string, b: string) =>
                 a.localeCompare(b),
               );
           }
@@ -83,10 +86,12 @@ export const useWenkuNovelStore = (novelId: string) => {
         if (this.novelResult?.ok) {
           this.novelResult.value.volumeJp =
             this.novelResult.value.volumeJp.filter(
-              (it) => it.volumeId !== volumeId,
+              (it: VolumeJpDto) => it.volumeId !== volumeId,
             );
           this.novelResult.value.volumeEn =
-            this.novelResult.value.volumeEn.filter((it) => it !== volumeId);
+            this.novelResult.value.volumeEn.filter(
+              (it: string) => it !== volumeId,
+            );
         }
       },
     },

@@ -19,7 +19,7 @@ export const createBlockUserCommentRepository = () => {
 
   const remove = (username: string) => {
     ref.value.usernames = ref.value.usernames.filter(
-      (name) => name !== username,
+      (name: string) => name !== username,
     );
   };
 

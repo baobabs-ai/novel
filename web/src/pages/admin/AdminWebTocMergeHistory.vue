@@ -29,7 +29,7 @@ const deleteDetail = (id: string) =>
     OperationRepository.deleteMergeHistory(id).then(() => {
       if (novelPage.value?.ok) {
         novelPage.value.value.items = novelPage.value.value.items.filter(
-          (it) => it.id !== id,
+          (it: MergeHistoryDto) => it.id !== id,
         );
       }
     }),
@@ -65,7 +65,7 @@ function diffToc(detail: MergeHistoryDto): DiffTocItem[] {
   return diffItems;
 }
 
-watch(currentPage, (page) => loadPage(page), { immediate: true });
+watch(currentPage, (page: number) => loadPage(page), { immediate: true });
 </script>
 
 <template>

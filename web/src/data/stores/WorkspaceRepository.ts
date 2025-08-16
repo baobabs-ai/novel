@@ -34,11 +34,13 @@ const createWorkspaceRepository = <W extends GptWorker | SakuraWorker>(
     ref.value.workers.push(worker);
   };
   const deleteWorker = (id: string) => {
-    ref.value.workers = ref.value.workers.filter((w) => w.id !== id);
+    ref.value.workers = ref.value.workers.filter((w: W) => w.id !== id);
   };
 
   const addJob = (job: TranslateJob) => {
-    const conflictJob = ref.value.jobs.find((it) => it.task === job.task);
+    const conflictJob = ref.value.jobs.find(
+      (it: TranslateJob) => it.task === job.task,
+    );
     if (conflictJob !== undefined) {
       // probe
       console.log(conflictJob);
@@ -50,15 +52,15 @@ const createWorkspaceRepository = <W extends GptWorker | SakuraWorker>(
     }
   };
   const deleteJob = (task: string) => {
-    ref.value.jobs = ref.value.jobs.filter((j) => j.task !== task);
+    ref.value.jobs = ref.value.jobs.filter((j: TranslateJob) => j.task !== task);
   };
   const topJob = (job: TranslateJob) => {
-    ref.value.jobs.sort((a, b) => {
+    ref.value.jobs.sort((a: TranslateJob, b: TranslateJob) => {
       return a.task == job.task ? -1 : b.task == job.task ? 1 : 0;
     });
   };
   const bottomJob = (job: TranslateJob) => {
-    ref.value.jobs.sort((a, b) => {
+    ref.value.jobs.sort((a: TranslateJob, b: TranslateJob) => {
       return a.task == job.task ? 1 : b.task == job.task ? -1 : 0;
     });
   };
@@ -69,7 +71,7 @@ const createWorkspaceRepository = <W extends GptWorker | SakuraWorker>(
   };
   const deleteJobRecord = (job: TranslateJobRecord) => {
     ref.value.uncompletedJobs = ref.value.uncompletedJobs.filter(
-      (j) => j.task !== job.task,
+      (j: TranslateJobRecord) => j.task !== job.task,
     );
   };
   const retryJobRecord = (job: TranslateJobRecord) => {
@@ -162,7 +164,7 @@ export const createSakuraWorkspaceRepository = () =>
       // 2025-2-21
       if (
         workspace.value.workers.find(
-          (it) => it.endpoint === 'https://sakura-share.one',
+          (it: SakuraWorker) => it.endpoint === 'https://sakura-share.one',
         ) === undefined
       ) {
         workspace.value.workers.unshift({

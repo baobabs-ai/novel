@@ -107,7 +107,7 @@ export const createAuthRepository = () => {
   const startRefreshAuth = () => {
     watch(
       () => authData.value.profile?.token,
-      (token) => updateToken(token),
+      (token: string | undefined) => updateToken(token),
       { immediate: true },
     );
     refreshIfNeeded();

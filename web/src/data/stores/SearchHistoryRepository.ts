@@ -23,7 +23,7 @@ const createSearchHistoryRepository = (key: string) => {
 
     const tags = parts.filter((it) => it.endsWith('$'));
     tags.forEach((part) => {
-      const inHistory = ref.value.tags.find((it) => it.tag === part);
+      const inHistory = ref.value.tags.find((it: { tag: string; }) => it.tag === part);
       if (inHistory === undefined) {
         ref.value.tags.push({ tag: part, used: 1 });
       } else {
@@ -31,7 +31,7 @@ const createSearchHistoryRepository = (key: string) => {
       }
     });
 
-    const newQueries = ref.value.queries.filter((it) => it !== query);
+    const newQueries = ref.value.queries.filter((it: string) => it !== query);
     newQueries.unshift(query);
     ref.value.queries = newQueries.slice(0, 8);
   };

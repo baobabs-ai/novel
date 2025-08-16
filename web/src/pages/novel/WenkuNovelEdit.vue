@@ -100,8 +100,11 @@ const formRules: FormRules = {
 
 const amazonUrl = ref('');
 
-store?.loadNovel()?.then((result) => {
-  if (result.ok) {
+import { AmazonNovel, WenkuNovelDto } from '@/model/WenkuNovel';
+import { Result } from '@/util/result';
+
+store?.loadNovel()?.then((result: Result<WenkuNovelDto> | undefined) => {
+  if (result?.ok) {
     const {
       title,
       titleEn,
@@ -121,7 +124,7 @@ store?.loadNovel()?.then((result) => {
       level,
       keywords,
       introduction,
-      volumes: result.value.volumes.map((it) => {
+      volumes: result.value.volumes.map((it: WenkuVolumeDto) => {
         it.cover = prettyCover(it.cover);
         return it;
       }),
@@ -146,7 +149,7 @@ const submit = async () => {
   }
 
   const allPresetKeywords = presetKeywords.value.groups.flatMap(
-    (it) => it.presetKeywords,
+    (it: { presetKeywords: string[] }) => it.presetKeywords,
   );
 
   const body = {
@@ -157,7 +160,7 @@ const submit = async () => {
     artists: formValue.value.artists,
     level: formValue.value.level,
     introduction: formValue.value.introduction,
-    keywords: formValue.value.keywords.filter((it) =>
+    keywords: formValue.value.keywords.filter((it: string) =>
       allPresetKeywords.includes(it),
     ),
     volumes: formValue.value.volumes,
@@ -196,10 +199,10 @@ const populateNovelFromAmazon = async (
     formValue.value.volumes,
     forcePopulateVolumes,
     {
-      log: (message) => {
+      log: (message: string) => {
         msgReactive.content = message;
       },
-      populateNovel: (novel) => {
+      populateNovel: (novel: AmazonNovel) => {
         formValue.value = {
           title: formValue.value.title ? formValue.value.title : novel.title,
           titleEn: formValue.value.titleEn
@@ -222,9 +225,9 @@ const populateNovelFromAmazon = async (
           volumes: novel.volumes,
         };
       },
-      populateVolume: (volume) => {
+      populateVolume: (volume: WenkuVolumeDto) => {
         const index = formValue.value.volumes.findIndex(
-          (it) => it.asin === volume.asin,
+          (it: WenkuVolumeDto) => it.asin === volume.asin,
         );
         if (index >= 0) {
           formValue.value.volumes[index] = volume;
@@ -277,18 +280,18 @@ const moveToNextStep = () => {
   }
 };
 const topVolume = (asin: string) => {
-  formValue.value.volumes.sort((a, b) => {
+  formValue.value.volumes.sort((a: WenkuVolumeDto, b: WenkuVolumeDto) => {
     return a.asin == asin ? -1 : b.asin == asin ? 1 : 0;
   });
 };
 const bottomVolume = (asin: string) => {
-  formValue.value.volumes.sort((a, b) => {
+  formValue.value.volumes.sort((a: WenkuVolumeDto, b: WenkuVolumeDto) => {
     return a.asin == asin ? 1 : b.asin == asin ? -1 : 0;
   });
 };
 const deleteVolume = (asin: string) => {
   formValue.value.volumes = formValue.value.volumes.filter(
-    (it) => it.asin !== asin,
+    (it: WenkuVolumeDto) => it.asin !== asin,
   );
 };
 
@@ -320,7 +323,7 @@ const togglePresetKeyword = (checked: boolean, keyword: string) => {
     formValue.value.keywords.push(keyword);
   } else {
     formValue.value.keywords = formValue.value.keywords.filter(
-      (it) => it !== keyword,
+      (it: string) => it !== keyword,
     );
   }
 };

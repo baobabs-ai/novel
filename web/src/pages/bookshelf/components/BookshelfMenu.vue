@@ -35,7 +35,7 @@ const menuOptions = computed(() => {
   const localGroup = {
     type: 'group',
     label: '本地小说',
-    children: favoreds.value.local.map(({ id, title }) =>
+    children: favoreds.value.local.map(({ id, title }: { id: string; title: string }) =>
       menuOption('local', id, title),
     ),
   };
@@ -43,14 +43,14 @@ const menuOptions = computed(() => {
     const webGroup = {
       type: 'group',
       label: '网络小说',
-      children: favoreds.value.web.map(({ id, title }) =>
+      children: favoreds.value.web.map(({ id, title }: { id: string; title: string }) =>
         menuOption('web', id, title),
       ),
     };
     const wenkuGroup = {
       type: 'group',
       label: '文库小说',
-      children: favoreds.value.wenku.map(({ id, title }) =>
+      children: favoreds.value.wenku.map(({ id, title }: { id: string; title: string }) =>
         menuOption('wenku', id, title),
       ),
     };

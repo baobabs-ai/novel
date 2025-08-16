@@ -9,7 +9,7 @@ const props = defineProps<{
 const show = ref(false);
 watch(
   () => props.running,
-  (running) => {
+  (running: boolean) => {
     if (running) {
       show.value = true;
     }
