@@ -140,7 +140,7 @@ class WebNovelFavoredRepository(
             val keywordFilters = queryKeywords.map { keyword ->
                 Filters.or(
                     Filters.regex("novel.${WebNovel::titleJp.field()}", keyword, "i"),
-                    Filters.regex("novel.${WebNovel::titleZh.field()}", keyword, "i"),
+                    Filters.regex("novel.${WebNovel::titleEn.field()}", keyword, "i"),
                     Filters.regex("novel.${WebNovel::keywords.field()}", keyword, "i")
                 )
             }

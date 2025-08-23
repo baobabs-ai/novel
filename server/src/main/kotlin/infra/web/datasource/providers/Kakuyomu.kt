@@ -117,7 +117,7 @@ class Kakuyomu(
             }
 
         val type = when (val status = work.string("serialStatus")) {
-            "COMPLETED" -> WebNovelType.Finished
+            "COMPLETED" -> WebNovelType.Completed
             "RUNNING" -> WebNovelType.Ongoing
             else -> throw RuntimeException("Unable to parse novel type:$status")
         }
