@@ -369,7 +369,7 @@ class WebNovelApi(
     @Serializable
     data class NovelTocItemDto(
         val titleJp: String,
-        val titleZh: String?,
+        val titleEn: String?,
         val chapterId: String?,
         val createAt: Long?,
     )
@@ -377,7 +377,7 @@ class WebNovelApi(
     private fun WebNovelTocItem.asDto() =
         NovelTocItemDto(
             titleJp = titleJp,
-            titleZh = titleZh,
+            titleEn = titleEn,
             chapterId = chapterId,
             createAt = createAt?.epochSeconds,
         )
@@ -386,7 +386,7 @@ class WebNovelApi(
     data class NovelDto(
         val wenkuId: String?,
         val titleJp: String,
-        val titleZh: String?,
+        val titleEn: String?,
         val authors: List<WebNovelAuthor>,
         val type: WebNovelType?,
         val attentions: List<WebNovelAttention>,
@@ -415,7 +415,7 @@ class WebNovelApi(
         val dto = NovelDto(
             wenkuId = novel.wenkuId,
             titleJp = novel.titleJp,
-            titleZh = novel.titleZh,
+            titleEn = novel.titleEn,
             authors = novel.authors,
             type = novel.type,
             attentions = novel.attentions,
@@ -478,7 +478,7 @@ class WebNovelApi(
     @Serializable
     data class ChapterDto(
         val titleJp: String,
-        val titleZh: String?,
+        val titleEn: String?,
         val prevId: String?,
         val nextId: String?,
         val paragraphs: List<String>,
@@ -506,7 +506,7 @@ class WebNovelApi(
 
         return ChapterDto(
             titleJp = toc[currIndex].titleJp,
-            titleZh = toc[currIndex].titleZh,
+            titleEn = toc[currIndex].titleEn,
             prevId = toc.getOrNull(currIndex - 1)?.chapterId,
             nextId = toc.getOrNull(currIndex + 1)?.chapterId,
             paragraphs = chapter.paragraphs,
@@ -536,17 +536,17 @@ class WebNovelApi(
         val metadata = metadataRepo.get(providerId, novelId)
             ?: throwNovelNotFound()
 
-        val tocZh = mutableMapOf<Int, String>()
+        val tocEn = mutableMapOf<Int, String>()
         val tocRecord = mutableListOf<Operation.WebEdit.Toc>()
         metadata.toc.forEachIndexed { index, item ->
-            val newTitleZh = toc[item.titleJp]
-            if (newTitleZh != null && newTitleZh != item.titleZh) {
-                tocZh[index] = newTitleZh
+            val newTitleEn = toc[item.titleJp]
+            if (newTitleEn != null && newTitleEn != item.titleEn) {
+                tocEn[index] = newTitleEn
                 tocRecord.add(
                     Operation.WebEdit.Toc(
                         jp = item.titleJp,
-                        old = item.titleZh,
-                        new = newTitleZh,
+                        old = item.titleEn,
+                        new = newTitleEn,
                     )
                 )
             }
@@ -572,9 +572,9 @@ class WebNovelApi(
         metadataRepo.updateTranslation(
             providerId = providerId,
             novelId = novelId,
-            titleZh = title.takeIf { it.isNotBlank() },
+            titleEn = title.takeIf { it.isNotBlank() },
             introductionZh = introduction.takeIf { it.isNotBlank() },
-            tocZh = tocZh,
+            tocEn = tocEn,
         )
 
         operationHistoryRepo.create(
@@ -583,11 +583,11 @@ class WebNovelApi(
                 providerId = providerId,
                 novelId = novelId,
                 old = Operation.WebEdit.Data(
-                    titleZh = metadata.titleZh,
+                    titleEn = metadata.titleEn,
                     introductionZh = metadata.introductionZh,
                 ),
                 new = Operation.WebEdit.Data(
-                    titleZh = title,
+                    titleEn = title,
                     introductionZh = introduction,
                 ),
                 toc = tocRecord,
@@ -605,7 +605,7 @@ class WebNovelApi(
         val novel = metadataRepo.get(providerId, novelId)
             ?: throwNovelNotFound()
         if (novel.glossary == glossary)
-            throwBadRequest("Glossary is unchanged")
+            throwBadRequest("Glossary not changed")
         metadataRepo.updateGlossary(
             providerId = providerId,
             novelId = novelId,
@@ -649,7 +649,7 @@ class WebNovelTranslateV2Api(
     @Serializable
     data class TranslateTaskDto(
         val titleJp: String,
-        val titleZh: String?,
+        val titleEn: String?,
         val introductionJp: String,
         val introductionZh: String?,
         val glossaryUuid: String,
@@ -660,7 +660,7 @@ class WebNovelTranslateV2Api(
         data class TocItem(
             val chapterId: String?,
             val titleJp: String,
-            val titleZh: String?,
+            val titleEn: String?,
             val glossaryUuid: String?,
         )
     }
@@ -685,7 +685,7 @@ class WebNovelTranslateV2Api(
                 return@map TranslateTaskDto.TocItem(
                     chapterId = null,
                     titleJp = item.titleJp,
-                    titleZh = item.titleZh,
+                    titleEn = item.titleEn,
                     glossaryUuid = null,
                 )
             }
@@ -705,13 +705,13 @@ class WebNovelTranslateV2Api(
             TranslateTaskDto.TocItem(
                 chapterId = item.chapterId,
                 titleJp = item.titleJp,
-                titleZh = item.titleZh,
+                titleEn = item.titleEn,
                 glossaryUuid = glossaryUuid
             )
         }
         return TranslateTaskDto(
             titleJp = novel.titleJp,
-            titleZh = novel.titleZh,
+            titleEn = novel.titleEn,
             introductionJp = novel.introductionJp,
             introductionZh = novel.introductionZh,
             glossaryUuid = novel.glossaryUuid ?: "no glossary",
@@ -788,32 +788,32 @@ class WebNovelTranslateV2Api(
         val metadata = metadataRepo.get(providerId, novelId)
             ?: throwNovelNotFound()
 
-        val tocZh = mutableMapOf<Int, String>()
+        val tocEn = mutableMapOf<Int, String>()
         metadata.toc.forEachIndexed { index, item ->
-            val newTitleZh = toc[item.titleJp]
-            if (newTitleZh != null) {
-                tocZh[index] = newTitleZh
+            val newTitleEn = toc[item.titleJp]
+            if (newTitleEn != null) {
+                tocEn[index] = newTitleEn
             }
         }
 
         if (title == null &&
             introduction == null &&
-            tocZh.isEmpty()
+            tocEn.isEmpty()
         ) return
 
         metadataRepo.updateTranslation(
             providerId = providerId,
             novelId = novelId,
-            titleZh = title ?: metadata.titleZh,
+            titleEn = title ?: metadata.titleEn,
             introductionZh = introduction ?: metadata.introductionZh,
-            tocZh = tocZh,
+            tocEn = tocEn,
         )
     }
 
     @Serializable
     data class TranslateStateDto(
         val jp: Long,
-        val zh: Long,
+        val en: Long,
     )
 
     suspend fun updateChapterTranslation(
@@ -826,7 +826,7 @@ class WebNovelTranslateV2Api(
         sakuraVersion: String?,
     ): TranslateStateDto {
         if (translatorId == TranslatorId.Sakura && sakuraVersion != "0.9") {
-            throwBadRequest("Old version of Sakura is no longer allowed to upload")
+            throwBadRequest("Older versions of Sakura are no longer allowed to be uploaded")
         }
 
         val novel = metadataRepo.get(providerId, novelId)
@@ -838,10 +838,10 @@ class WebNovelTranslateV2Api(
         val chapter = chapterRepo.get(providerId, novelId, chapterId)
             ?: throwNotFound("Chapter does not exist")
         if (chapter.paragraphs.size != paragraphsZh.size) {
-            throwBadRequest("Translated text length does not match")
+            throwBadRequest("The number of translated lines does not match")
         }
 
-        val zh = chapterRepo.updateTranslation(
+        val en = chapterRepo.updateTranslation(
             providerId = providerId,
             novelId = novelId,
             chapterId = chapterId,
@@ -849,6 +849,6 @@ class WebNovelTranslateV2Api(
             glossary = novel.glossaryUuid?.let { Glossary(it, novel.glossary) },
             paragraphsZh = paragraphsZh,
         )
-        return TranslateStateDto(jp = novel.jp, zh = zh)
+        return TranslateStateDto(jp = novel.jp, en = en)
     }
 }

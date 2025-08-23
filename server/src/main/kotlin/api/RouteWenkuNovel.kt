@@ -266,7 +266,7 @@ class WenkuNovelApi(
     @Serializable
     data class WenkuNovelDto(
         val title: String,
-        val titleZh: String,
+        val titleEn: String,
         val cover: String?,
         val authors: List<String>,
         val artists: List<String>,
@@ -281,7 +281,7 @@ class WenkuNovelApi(
         val volumes: List<WenkuNovelVolume>,
         val visited: Long,
         val favored: String?,
-        val volumeZh: List<String>,
+        val volumeEn: List<String>,
         val volumeJp: List<WenkuNovelVolumeJp>,
     )
 
@@ -311,7 +311,7 @@ class WenkuNovelApi(
 
         val dto = WenkuNovelDto(
             title = metadata.title,
-            titleZh = metadata.titleZh,
+            titleEn = metadata.titleEn,
             cover = metadata.cover,
             authors = metadata.authors,
             artists = metadata.artists,
@@ -326,7 +326,7 @@ class WenkuNovelApi(
             glossary = metadata.glossary,
             visited = metadata.visited,
             favored = null,
-            volumeZh = volumes.zh,
+            volumeEn = volumes.en,
             volumeJp = volumes.jp,
         )
 
@@ -344,7 +344,7 @@ class WenkuNovelApi(
     @Serializable
     class MetadataCreateBody(
         val title: String,
-        val titleZh: String,
+        val titleEn: String,
         val cover: String?,
         val authors: List<String>,
         val artists: List<String>,
@@ -361,7 +361,7 @@ class WenkuNovelApi(
         user.shouldBeOldAss()
         val novelId = metadataRepo.create(
             title = body.title,
-            titleZh = body.titleZh,
+            titleEn = body.titleEn,
             cover = body.cover,
             authors = body.authors,
             artists = body.artists,
@@ -377,7 +377,7 @@ class WenkuNovelApi(
                 old = null,
                 new = Operation.WenkuEdit.Data(
                     title = body.title,
-                    titleZh = body.titleZh,
+                    titleEn = body.titleEn,
                     authors = body.authors,
                     artists = body.artists,
                     introduction = body.introduction,
@@ -411,7 +411,7 @@ class WenkuNovelApi(
         metadataRepo.update(
             novelId = novelId,
             title = body.title,
-            titleZh = body.titleZh,
+            titleEn = body.titleEn,
             cover = body.cover,
             authors = body.authors,
             artists = body.artists,
@@ -427,14 +427,14 @@ class WenkuNovelApi(
                 novelId = novelId,
                 old = Operation.WenkuEdit.Data(
                     title = novel.title,
-                    titleZh = novel.titleZh,
+                    titleEn = novel.titleEn,
                     authors = novel.authors,
                     artists = novel.artists,
                     introduction = novel.introduction,
                 ),
                 new = Operation.WenkuEdit.Data(
                     title = body.title,
-                    titleZh = body.titleZh,
+                    titleEn = body.titleEn,
                     authors = body.authors,
                     artists = body.artists,
                     introduction = body.introduction,
